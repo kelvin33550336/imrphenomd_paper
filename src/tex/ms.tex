@@ -157,8 +157,9 @@ With both mismatches, we apply gradient descent to optimize the tunable coeffici
 Here, $\alpha$ is the learning rate and $\mathcal{L}_{\mathrm{ini}}$ are the original coefficients given in \cite{khan2016frequency}. We take them as the initial waveform coefficients because they lie in the neighborhood of the minimum that we wish to find. With such an optimization procedure, we obtain the optimized coefficients. 
 
 \begin{figure}[t]
+	\script{intrin_space.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/intrin_space.pdf}
+	\includegraphics[width=\columnwidth]{figures/intrin_space.pdf}
 	\caption{Parameter space with mass ratio against normalized reduced spin. Orange: Training waveforms; Blue: Testing waveforms}
 	\label{fig:intrin_space}
 \end{figure}
