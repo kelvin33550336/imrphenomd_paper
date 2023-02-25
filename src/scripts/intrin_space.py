@@ -3,13 +3,8 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import paths
 
-train_data = np.loadtxt(
-    paths.data / "ps_train.txt", unpack=True
-)
-
-test_data = np.loadtxt(
-    paths.data / "q148.txt", unpack=True
-)
+train_data = np.loadtxt(paths.data / "ps_train.dat")
+test_data = np.loadtxt(paths.data / "q148.dat")
 
 # train_data = np.loadtxt('./plotting_data/ps_train.dat', delimiter=' ') # [q, chi_PN, chi1, chi2]
 # test_data = np.loadtxt('./plotting_data/q148.dat', delimiter=' ') # [q, chi_PN, chi1, chi2, ori_loss, opt_loss]
