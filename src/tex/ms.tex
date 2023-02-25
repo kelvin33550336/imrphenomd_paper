@@ -159,7 +159,7 @@ Here, $\alpha$ is the learning rate and $\mathcal{L}_{\mathrm{ini}}$ are the ori
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/intrin_space.pdf}
+	\includegraphics[width=\columnwidth]{../static/intrin_space.pdf}
 	\caption{Parameter space with mass ratio against normalized reduced spin. Orange: Training waveforms; Blue: Testing waveforms}
 	\label{fig:intrin_space}
 \end{figure}
@@ -199,7 +199,7 @@ Here, $\alpha$ is the learning rate and $\mathcal{L}_{\mathrm{ini}}$ are the ori
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=\textwidth]{figures/0154_waveform_comparison.pdf}
+	\includegraphics[width=\textwidth]{../static/0154_waveform_comparison.pdf}
 	\caption{Comparison between original and optimized IMRPhenomD waveforms. Here shows the SXS:BBH:0154 NR waveform, which has mass ratio $q=1$ and $\chi_1=\chi_2=-0.8$. The original mismatch is around $2.8\times10^{-4}$ and the optimized mismatch is around $5.3\times10^{-5}$. Top: It shows the amplitude and phase of NR, original IMRPhenomD and optimized IMRPhenomD waveform. Bottom: It shows the relative error of amplitudes between NR and IMRPhenomD waveforms, and the absolute error of phases between NR and IMRPhenomD waveforms}
 	\label{fig:0154}
 \end{figure*}
@@ -217,19 +217,19 @@ Using a constant noise spectrum with $\mathcal{L}_{\mathrm{mean}}$, we compute t
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/q148.pdf}
+	\includegraphics[width=\columnwidth]{../static/q148.pdf}
 	\caption{Distributions of waveform mismatches. We used $\mathcal{L}_{\mathrm{mean}}$ in optimization with training waveforms listed in Tab.~\ref{tab:q148}. Mismatches are weighted with the constant noise spectrum. Comparing the distributions, the median has decreased by $50.0\%$.}
 	\label{fig:q148}
 \end{figure}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/q148_fl.pdf}
+	\includegraphics[width=\columnwidth]{../static/q148_fl.pdf}
 	\caption{Distributions of waveform mismatches. We used $\mathcal{L}_{\mathrm{fl}}$ in optimization with training waveforms listed in Tab.~\ref{tab:q148}. Mismatches are weighted with the constant noise spectrum. The median has decreased by $22.9\%$.}
 	\label{fig:q148_fl}
 \end{figure}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/q148_q1248_compare.pdf}
+	\includegraphics[width=\columnwidth]{../static/q148_q1248_compare.pdf}
 	\caption{Distributions of $\log_{10}$ difference in mismatch. The distribution labeled \texttt{q148} uses training waveforms listed in Tab.~\ref{tab:q148} while the \texttt{q1248} distribution uses waveforms listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Mismatches are calculated using the constant noise spectrum with the loss function $\mathcal{L}_{\mathrm{mean}}$.}
 	\label{fig:q148_q1248_compare}
 \end{figure}
@@ -252,13 +252,13 @@ Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{f
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/ps_q148_qchi.pdf}
+	\includegraphics[width=\columnwidth]{../static/ps_q148_qchi.pdf}
 	\caption{Parameter space of testing waveforms of $q$~vs.~$\chi_{\mathrm{PN}}$. We use the same mismatch data as Fig.~\ref{fig:q148}. Here, the colorbar represents the $\log_{10}$ difference between optimized and original unweighted mismatches.}
 	\label{fig:ps_q148_qchi}
 \end{figure}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/ps_q148.pdf}
+	\includegraphics[width=\columnwidth]{../static/ps_q148.pdf}
 	\caption{Parameter space of testing waveforms of $\chi_1$~vs.~$\chi_2$. This shows the same result as Fig.~\ref{fig:ps_q148_qchi}, except the axes are different.}
 	\label{fig:ps_q148}
 \end{figure}
@@ -307,14 +307,14 @@ As we see in Fig.~\ref{fig:ps_q148} that the recalibration procedure is signific
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
+	\includegraphics[width=\columnwidth]{../static/all_quadrants.pdf}
 	\caption{Distributions of mismatches after optimizing in separate quadrants. We use a constant noise spectrum to calculate mismatch and $\mathcal{L}_{\mathrm{mean}}$ for the loss function. Generally, most waveforms with mismatch $>10^{-2}$ lies in the fourth quadrant. }
 	\label{fig:all_quadrants}
 \end{figure}
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrant.pdf}
+	\includegraphics[width=\columnwidth]{../static/ps_q148_quadrant.pdf}
 	\caption{Parameter space of testing waveforms. Each quadrant is fitted independently. Colorbar represents log difference of mismatches before and after optimization.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
