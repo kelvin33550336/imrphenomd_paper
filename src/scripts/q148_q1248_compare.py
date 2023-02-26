@@ -8,7 +8,7 @@ q1248_data = np.loadtxt(paths.data / "q1248.dat")
 
 bins = np.arange(-2, 2, 0.125)
 q148_logdiff = np.log10(q148_data[:,5]/q148_data[:,4])
-q1248_logdiff = np.log10(q1248_data[:,5]/q1248_data[:.4])
+q1248_logdiff = np.log10(q1248_data[:,5]/q1248_data[:,4])
 
 plt.hist(q148_logdiff, bins=bins, alpha=0.6, label='q148')
 plt.hist(q1248_logdiff, bins=bins, alpha=0.6, label='q1248')
