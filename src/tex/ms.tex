@@ -200,8 +200,9 @@ Here, $\alpha$ is the learning rate and $\mathcal{L}_{\mathrm{ini}}$ are the ori
 \end{table}
 
 \begin{figure*}[t]
+	\script{0154.py}
 	\centering
-	\includegraphics[width=\textwidth]{../static/0154_waveform_comparison.pdf}
+	\includegraphics[width=\textwidth]{figures/0154.pdf}
 	\caption{Comparison between original and optimized IMRPhenomD waveforms. Here shows the SXS:BBH:0154 NR waveform, which has mass ratio $q=1$ and $\chi_1=\chi_2=-0.8$. The original mismatch is around $2.8\times10^{-4}$ and the optimized mismatch is around $5.3\times10^{-5}$. Top: It shows the amplitude and phase of NR, original IMRPhenomD and optimized IMRPhenomD waveform. Bottom: It shows the relative error of amplitudes between NR and IMRPhenomD waveforms, and the absolute error of phases between NR and IMRPhenomD waveforms}
 	\label{fig:0154}
 \end{figure*}
@@ -218,20 +219,23 @@ Using a constant noise spectrum with $\mathcal{L}_{\mathrm{mean}}$, we compute t
 % \kw{We then compute the mismatch for all testing waveforms and plot the distribution of the mismatch in figure X. We find the distribution...}
 
 \begin{figure}[t]
+	\script{q148.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/q148.pdf}
+	\includegraphics[width=\columnwidth]{figures/q148.pdf}
 	\caption{Distributions of waveform mismatches. We used $\mathcal{L}_{\mathrm{mean}}$ in optimization with training waveforms listed in Tab.~\ref{tab:q148}. Mismatches are weighted with the constant noise spectrum. Comparing the distributions, the median has decreased by $50.0\%$.}
 	\label{fig:q148}
 \end{figure}
 \begin{figure}[t]
+	\script{q148_fl.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/q148_fl.pdf}
+	\includegraphics[width=\columnwidth]{figures/q148_fl.pdf}
 	\caption{Distributions of waveform mismatches. We used $\mathcal{L}_{\mathrm{fl}}$ in optimization with training waveforms listed in Tab.~\ref{tab:q148}. Mismatches are weighted with the constant noise spectrum. The median has decreased by $22.9\%$.}
 	\label{fig:q148_fl}
 \end{figure}
 \begin{figure}[t]
+	\script{q148_q1248_compare.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/q148_q1248_compare.pdf}
+	\includegraphics[width=\columnwidth]{figures/q148_q1248_compare.pdf}
 	\caption{Distributions of $\log_{10}$ difference in mismatch. The distribution labeled \texttt{q148} uses training waveforms listed in Tab.~\ref{tab:q148} while the \texttt{q1248} distribution uses waveforms listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Mismatches are calculated using the constant noise spectrum with the loss function $\mathcal{L}_{\mathrm{mean}}$.}
 	\label{fig:q148_q1248_compare}
 \end{figure}
@@ -246,21 +250,21 @@ Given the ansatz used in the waveform model is unlikely to be fully compatible w
 
 Since we know intrinsic parameters play an important role in the ansatz, we would like to investigate how intrinsic parameters affect the recalibration process. First, we plot the parameter space of $q$ vs. $\chi_{\mathrm{PN}}$ in Fig. \ref{fig:ps_q148_qchi}. In the low mass ratio region, waveforms with both positive and negative log differences are mixed up. On the other hand, along the horizontal line $\chi_{\mathrm{PN}}=0$, waveform mismatches consistently improve under recalibration. 
 
-
-
 Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e. $\chi_1\approx\chi_2$, show good mismatch improvements. We expect to see this feature since the original coefficients were fitted using NR waveforms with equal or similar spin, hence the model prefers waveforms with similar spin. One interesting feature is how the second and fourth quadrants respond to optimization. In the second quadrant ($\chi_1<0$ and $\chi_2>0$), waveforms generally improve with along optimization. However, mismatches in the fourth quadrant ($\chi_1>0$ and $\chi_2<0$) do not improve after optimization. Most waveforms even turned worse after optimization. These waveforms correspond to the waveforms in the high mismatch tail in Fig.~\ref{fig:q148}~and~\ref{fig:q148_fl}. 
 
 % Waveform mismatches in the fourth quadrant, i.e. $\chi_1>0$ and $\chi_2<0$, performed worse after optimized. IMRPhenomD is constructed using single spin parameter, where there are degeneracy between $\chi_1$ and $\chi_2$. In regions with opposite extreme spin components, degeneracy significantly alters intrinsic parameters passed into waveform generation, hence the fourth quadrant shows such feature. 
 
 \begin{figure}[t]
+	\script{ps_q148_qchi.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/ps_q148_qchi.pdf}
+	\includegraphics[width=\columnwidth]{figures/ps_q148_qchi.pdf}
 	\caption{Parameter space of testing waveforms of $q$~vs.~$\chi_{\mathrm{PN}}$. We use the same mismatch data as Fig.~\ref{fig:q148}. Here, the colorbar represents the $\log_{10}$ difference between optimized and original unweighted mismatches.}
 	\label{fig:ps_q148_qchi}
 \end{figure}
 \begin{figure}[t]
+	\script{ps_q148_chi1chi2.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/ps_q148.pdf}
+	\includegraphics[width=\columnwidth]{figures/ps_q148.pdf}
 	\caption{Parameter space of testing waveforms of $\chi_1$~vs.~$\chi_2$. This shows the same result as Fig.~\ref{fig:ps_q148_qchi}, except the axes are different.}
 	\label{fig:ps_q148}
 \end{figure}
@@ -309,15 +313,17 @@ Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{f
 As we see in Fig.~\ref{fig:ps_q148} that the recalibration procedure is significantly different in different regions in the parameter space, we split the parameter space into 4 quadrants and perform separate fitting with training waveforms listed in Table \ref{tab:quadrants}. Note that in the second and fourth quadrants, there are not enough waveforms with $q>4$, hence the result are only valid up to $q\leq4$. From Fig.~\ref{fig:ps_q148_quadrant}, we see that all waveforms, except those in the fourth quadrant, show improvement in mismatch. Many features seen in Fig.~\ref{fig:ps_q148} can be found here again. First, we focus on waveforms with the same spin direction, i.e. $\chi_1\chi_2>0$. Waveforms lying in the neighborhood of the diagonal axis have noticeable improvements in mismatch due to most training waveforms being equal-spin waveforms. For the second quadrant, waveforms improved significantly with only a few defects due to some testing waveforms having $q>4$. In the fourth quadrant, most optimized waveforms have a higher mismatch than the original waveforms, as indicated by the positive log difference of mismatches. As performing optimization in a smaller subspace does not show any improvement compared to the original result, the ansatz mostly does not fit waveforms in the fourth quadrant. 
 
 \begin{figure}[t]
+	\script{all_quadrants.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/all_quadrants.pdf}
+	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
 	\caption{Distributions of mismatches after optimizing in separate quadrants. We use a constant noise spectrum to calculate mismatch and $\mathcal{L}_{\mathrm{mean}}$ for the loss function. Generally, most waveforms with mismatch $>10^{-2}$ lies in the fourth quadrant. }
 	\label{fig:all_quadrants}
 \end{figure}
 
 \begin{figure}[t]
+	\script{ps_q148_quadrants.py}
 	\centering
-	\includegraphics[width=\columnwidth]{../static/ps_q148_quadrant.pdf}
+	\includegraphics[width=\columnwidth]{figures/ps_all_quadrants.pdf}
 	\caption{Parameter space of testing waveforms. Each quadrant is fitted independently. Colorbar represents log difference of mismatches before and after optimization.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
