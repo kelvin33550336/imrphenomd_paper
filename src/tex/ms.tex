@@ -222,15 +222,8 @@ Using a constant noise spectrum with $\mathcal{L}_{\mathrm{mean}}$, we compute t
 	\script{q148.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/q148.pdf}
-	\caption{Distributions of waveform mismatches. We used $\mathcal{L}_{\mathrm{mean}}$ in optimization with training waveforms listed in Tab.~\ref{tab:q148}. Mismatches are weighted with the constant noise spectrum. Comparing the distributions, the median has decreased by $50.0\%$.}
+	\caption{Distributions of waveform mismatches calculated using both $\mathcal{L}_{\mathrm{mean}}$ and $\mathcal{L}_{\mathrm{fl}}$ in recalibration. We use training waveforms listed in Tab.~\ref{tab:q148} and mismatches are weighted with the constant noise spectrum. For the $\mathcal{L}_{\mathrm{mean}}$ distributions, the median decreased by 50.0\% while the median of $\mathcal{L}_{\mathrm{fl}}$ distribution decreased by 22.9\%.}
 	\label{fig:q148}
-\end{figure}
-\begin{figure}[t]
-	\script{q148_fl.py}
-	\centering
-	\includegraphics[width=\columnwidth]{figures/q148_fl.pdf}
-	\caption{Distributions of waveform mismatches. We used $\mathcal{L}_{\mathrm{fl}}$ in optimization with training waveforms listed in Tab.~\ref{tab:q148}. Mismatches are weighted with the constant noise spectrum. The median has decreased by $22.9\%$.}
-	\label{fig:q148_fl}
 \end{figure}
 \begin{figure}[t]
 	\script{q148_q1248_compare.py}
@@ -258,14 +251,14 @@ Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{f
 	\script{ps_q148_qchi.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_qchi.pdf}
-	\caption{Parameter space of testing waveforms of $q$~vs.~$\chi_{\mathrm{PN}}$. We use the same mismatch data as Fig.~\ref{fig:q148}. Here, the colorbar represents the $\log_{10}$ difference between optimized and original unweighted mismatches.}
+	\caption{Parameter space of testing waveforms of $q$~vs.~$\chi_{\mathrm{PN}}$. We use the recalibrated result from $\mathcal{L}_{\mathrm{mean}}$ with the constant noise spectrum and training waveforms in Tab.~\ref{tab:q148}. Here, the colorbar represents the $\log_{10}$ difference between optimized and original unweighted mismatches.}
 	\label{fig:ps_q148_qchi}
 \end{figure}
 \begin{figure}[t]
 	\script{ps_q148_chi1chi2.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_chi1chi2.pdf}
-	\caption{Parameter space of testing waveforms of $\chi_1$~vs.~$\chi_2$. This shows the same result as Fig.~\ref{fig:ps_q148_qchi}, except the axes are different.}
+	\caption{Parameter space of testing waveforms of $\chi_1$~vs.~$\chi_2$. We use the recalibrated result from $\mathcal{L}_{\mathrm{mean}}$ with the constant noise spectrum and training waveforms in Tab.~\ref{tab:q148}.}
 	\label{fig:ps_q148}
 \end{figure}
 
