@@ -13,4 +13,4 @@ plt.colorbar(sc).ax.set_ylabel('$\log(MM_{\mathrm{opt}}/MM_{\mathrm{ori}})$', ro
 plt.xlabel('$\chi_1$')
 plt.ylabel('$\chi_2$')
 
-plt.savefig(paths.figures / "ps_q148_qchi.pdf", bbox_inches="tight")
+plt.savefig(paths.figures / "ps_q148_chi1chi2.pdf", bbox_inches="tight")
