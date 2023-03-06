@@ -36,7 +36,7 @@ mpl.rcParams.update(params)
 
 q148 = np.loadtxt(paths.data / "all_quadrants.dat")
 
-bins = np.arange(-5, -1, 0.25)
+bins = np.arange(-5, -1, 0.2)
 plt.hist(np.log10(q148[:,4]), bins=bins, alpha=0.3, color="C0")
 plt.hist(np.log10(q148[:,4]), bins=bins, label="Original", histtype="step", color="C0")
 plt.hist(np.log10(q148[:,5]), bins=bins, alpha=0.3, color="C1")

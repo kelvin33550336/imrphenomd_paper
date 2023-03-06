@@ -2,19 +2,13 @@
 \documentclass[twocolumn]{aastex631}
 \usepackage{showyourwork}
 
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{verbatim}
-\usepackage{mathtools}
-\usepackage{needspace}
-\usepackage{enumitem}
-\usepackage{etoolbox}
 \usepackage{graphicx}
-\usepackage{microtype}
-\usepackage{afterpage}
-\usepackage{bm}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{algorithmic}
+
+\SetKwInput{Parameters}{Parameters}
+\SetKwInput{Variables}{Variables}
+
 \usepackage{tabularx,booktabs,multirow}
 \usepackage{float}
 \usepackage[italicdiff]{physics}
@@ -140,21 +134,22 @@ $\mathcal{M}_i$ represents the mismatch of an individual training waveform, $\ma
 We have chosen 11-16 NR waveforms from the set of waveforms used in the original calibration process. Originally, 19 waveforms are taken from NR simulations for calibrating IMRPhenomD \citep{khan2016frequency,husa2016frequency}, which they are waveforms from the SXS catalog or BAM simulation. As BAM waveforms are not publicly available, we cannot take the identical training set as them. Instead, we take the available waveforms from the SXS catalog to construct our loss function. They are listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Notice the maximum mass ratio in our training set is lower than that in \citep{khan2016frequency}. Instead of having $q\leq18$, the maximum mass ratio is set as 8. This is because SXS catalog does not have NR waveforms with extremely high mass ratio. In fact, the SXS catalog only has NR waveforms with $q\leq10$. Nevertheless, we are interested in the behavior of IMRPhenomD model with small $q$, as most BBH events observed have $q\leq8$. Hence, we set the maximum mass ratio to 8. 
 
 With both mismatches, we apply gradient descent to optimize the tunable coefficients as follows: 
-\begin{algorithm}[H]
-	\hspace*{\algorithmicindent} \textbf{Input} $\mathcal{L}_{\mathrm{ini}}$
-	\begin{algorithmic}[1]
-		\State{$\mathcal{L}(\lambda) \gets \mathcal{L}_{\mathrm{ini}}$}
-		\State{$\alpha \gets 10^{-6}$}
-		\State{$i \gets 0$}
-		\While{$i<30000$}
-		\State{$\mathcal{L}'(\lambda) \gets \texttt{jax.grad}(\mathcal{L})$}
-		\State{$\lambda \gets \lambda-\alpha\mathcal{L}'(\lambda)$}
-		\EndWhile
-	\end{algorithmic}
-	\hspace*{\algorithmicindent} \textbf{Output} $\lambda$
-	\caption{Gradient Descent}
+\begin{algorithm}
+	\caption{Gradient descent pseudocode}
+	\KwIn{initial coefficients $\lambda_i$}
+	\Parameters{number of iterations $N$, learning rate $\alpha$}
+	\Variables{current coefficients $\lambda$, mismatch gradient $\nabla\mathcal{L}$}
+	\KwResult{output coefficients $\lambda$}
+	$\lambda\leftarrow\lambda_i$\\
+	\tcc{Gradient Descent}
+	\For{$i<N$}{
+		$\mathcal{L}\leftarrow Mismatch(\lambda)$ \\
+		$\nabla\mathcal{L}\leftarrow AutoDiff(\mathcal{L})$\\
+		$\lambda\leftarrow\lambda-\alpha\nabla\mathcal{L}$\\
+	}
+	\Return{$\lambda$}
 \end{algorithm}
-Here, $\alpha$ is the learning rate and $\mathcal{L}_{\mathrm{ini}}$ are the original coefficients given in \citep{khan2016frequency}. We take them as the initial waveform coefficients because they lie in the neighborhood of the minimum that we wish to find. With such an optimization procedure, we obtain the optimized coefficients. 
+Here, $\lambda_i$ are the original coefficients given in \citep{khan2016frequency}. We take them as the initial waveform coefficients because they lie in the neighborhood of the minimum that we wish to find. With such an optimization procedure, we obtain the optimized coefficients. 
 
 \begin{figure}[t]
 	\script{intrin_space.py}
@@ -214,7 +209,7 @@ First, to judge the performance of the optimization scheme, we take $\sim530$ NR
 We first examine the effect of joint optimization on a single waveform. In Fig.~\ref{fig:0154}, we can see that the optimized waveform has better accuracy than the original waveform, especially in the inspiral region, where the amplitude has a $50\%$ decrease in error. We have chosen one of the testing waveforms listed in \citep{khan2016frequency} for a fair comparison. 
 % In general, most waveforms within the neighborhood of the training waveforms show improvement in mismatches. 
 
-Using a constant noise spectrum with $\mathcal{L}_{\mathrm{mean}}$, we compute the mismatch for all testing waveforms and plot the distribution of the mismatch in Fig. \ref{fig:q148}. We find the distribution's peak has shifted to the end with a lower mismatch. Quantitatively, the peak has lowered by almost an order-of-magnitude and the median of distribution has a $\sim50.0\%$ decrease. Using $\mathcal{L}_{\mathrm{fl}}$, the mismatch distribution also has a similar improvement. We see that in Fig.~\ref{fig:q148_fl}, the median of distribution has a $22.9\%$ decrease. However, the distribution does not have a clear peak as Fig.~\ref{fig:q148}. This is due to the problem mentioned in section \ref{subsec:optimization}. Nevertheless, both distributions show improvement and the potential problem did not affect the optimization scheme significantly.  
+Using a constant noise spectrum with $\mathcal{L}_{\mathrm{mean}}$, we compute the mismatch for all testing waveforms and plot the distribution of the mismatch in Fig. \ref{fig:q148}. We find the distribution's peak has shifted to the end with a lower mismatch. Quantitatively, the peak has lowered by almost an order-of-magnitude and the median of distribution has a $\sim50.0\%$ decrease. Using $\mathcal{L}_{\mathrm{fl}}$, the mismatch distribution also has a similar improvement. We see that the median of distribution has a $22.9\%$ decrease. However, the distribution does not have a clear peak as Fig.~\ref{fig:q148}. This is due to the problem mentioned in section \ref{subsec:optimization}. Nevertheless, both distributions show improvement and the potential problem did not affect the optimization scheme significantly.  
 
 % \kw{We then compute the mismatch for all testing waveforms and plot the distribution of the mismatch in figure X. We find the distribution...}
 
@@ -233,7 +228,7 @@ Using a constant noise spectrum with $\mathcal{L}_{\mathrm{mean}}$, we compute t
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
-Similarly, using the same procedures, distributions of mismatches calculated using {\zdethp} noise spectrum show better improvement than the weighted mismatch. The shape of the distribution is similar to Fig.~\ref{fig:q148}~and~\ref{fig:q148_fl}. This effect is expected since the IMRPhenomD model was originally constructed and fitted using the {\zdethp} weighted mismatch. Thus, it should be a model that fits closely to the NR waveforms with the influence of {\zdethp} noise spectrum instead of the constant spectrum. 
+Similarly, using the same procedures, distributions of mismatches calculated using {\zdethp} noise spectrum show better improvement than the weighted mismatch. The shape of the distribution is similar to Fig.~\ref{fig:q148}. This effect is expected since the IMRPhenomD model was originally constructed and fitted using the {\zdethp} weighted mismatch. Thus, it should be a model that fits closely to the NR waveforms with the influence of {\zdethp} noise spectrum instead of the constant spectrum. 
 
 With the success of improving waveforms, we increase the number of training waveforms for optimization. Taking additional waveforms listed in Tab.~\ref{tab:q1248}, we obtain a new set of coefficients. We see in Fig. \ref{fig:q148_q1248_compare}, new waveforms produced only have a very small improvement. The high mismatch tail of the optimized distribution remains similar in length and endpoint as the original distribution, meaning that they cannot be improved using our procedure. Likewise, using additional waveforms to optimize loss function with {\zdethp} spectrum shows the same result, where the new distribution barely shows any improvement. 
 
@@ -243,7 +238,7 @@ Given the ansatz used in the waveform model is unlikely to be fully compatible w
 
 Since we know intrinsic parameters play an important role in the ansatz, we would like to investigate how intrinsic parameters affect the recalibration process. First, we plot the parameter space of $q$ vs. $\chi_{\mathrm{PN}}$ in Fig. \ref{fig:ps_q148_qchi}. In the low mass ratio region, waveforms with both positive and negative log differences are mixed up. On the other hand, along the horizontal line $\chi_{\mathrm{PN}}=0$, waveform mismatches consistently improve under recalibration. 
 
-Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e. $\chi_1\approx\chi_2$, show good mismatch improvements. We expect to see this feature since the original coefficients were fitted using NR waveforms with equal or similar spin, hence the model prefers waveforms with similar spin. One interesting feature is how the second and fourth quadrants respond to optimization. In the second quadrant ($\chi_1<0$ and $\chi_2>0$), waveforms generally improve with along optimization. However, mismatches in the fourth quadrant ($\chi_1>0$ and $\chi_2<0$) do not improve after optimization. Most waveforms even turned worse after optimization. These waveforms correspond to the waveforms in the high mismatch tail in Fig.~\ref{fig:q148}~and~\ref{fig:q148_fl}. 
+Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e. $\chi_1\approx\chi_2$, show good mismatch improvements. We expect to see this feature since the original coefficients were fitted using NR waveforms with equal or similar spin, hence the model prefers waveforms with similar spin. One interesting feature is how the second and fourth quadrants respond to optimization. In the second quadrant ($\chi_1<0$ and $\chi_2>0$), waveforms generally improve with along optimization. However, mismatches in the fourth quadrant ($\chi_1>0$ and $\chi_2<0$) do not improve after optimization. Most waveforms even turned worse after optimization. These waveforms correspond to the waveforms in the high mismatch tail in Fig.~\ref{fig:q148}. 
 
 % Waveform mismatches in the fourth quadrant, i.e. $\chi_1>0$ and $\chi_2<0$, performed worse after optimized. IMRPhenomD is constructed using single spin parameter, where there are degeneracy between $\chi_1$ and $\chi_2$. In regions with opposite extreme spin components, degeneracy significantly alters intrinsic parameters passed into waveform generation, hence the fourth quadrant shows such feature. 
 
@@ -346,7 +341,7 @@ While our work focused mainly on the IMRPhenomD model, this simple yet general m
 
 \section{Conclusion} \label{sec:conclusion}
 
-In this paper, we have presented a systematic method to recalibrate GW models. This method utilizes {\jax}'s automatic differentiation to apply derivative-based optimization to recalibrate GW models jointly. Using the new implementation of the IMRPhenomD model, {\ripple}, which is written in \jax, in conjunction with NR waveforms from the SXS catalog, we recalibrate waveform coefficients of the IMRPhenomD model. In general, the waveform accuracy can be improved by 50\%. Comparing {\zdethp} weighted and unweighted mismatch, weighted mismatches have a slightly better improvement. In contrast, different types of loss function result in significantly different final mismatch distributions, where the result can be seen in Fig.~\ref{fig:q148} and \ref{fig:q148_fl}. By increasing the number of training waveforms, we see a slight improvement increase in Fig.~\ref{fig:q148_q1248_compare}. 
+In this paper, we have presented a systematic method to recalibrate GW models. This method utilizes {\jax}'s automatic differentiation to apply derivative-based optimization to recalibrate GW models jointly. Using the new implementation of the IMRPhenomD model, {\ripple}, which is written in \jax, in conjunction with NR waveforms from the SXS catalog, we recalibrate waveform coefficients of the IMRPhenomD model. In general, the waveform accuracy can be improved by 50\%. Comparing {\zdethp} weighted and unweighted mismatch, weighted mismatches have a slightly better improvement. In contrast, different types of loss function result in significantly different final mismatch distributions, where the result can be seen in Fig.~\ref{fig:q148}. By increasing the number of training waveforms, we see a slight improvement increase in Fig.~\ref{fig:q148_q1248_compare}. 
 
 Furthermore, we investigated how the intrinsic parameters affect the improvement. Fig.~\ref{fig:ps_q148} shows that the optimization procedure has a certain preference for waveforms lying in the second quadrant while the fourth quadrant cannot be improved. To further test this result, we recalibrate waveforms in separate regions in parameter space. As shown in Fig.~\ref{fig:ps_q148_quadrant}, this recalibration process gives further improvement to the second quadrant while the fourth quadrant shows similar result. This indicates that the model's ansatz does not fit waveforms in the fourth quadrant. This phenomenon is due to the reduced spin approximation used in parameterizing the ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
 
