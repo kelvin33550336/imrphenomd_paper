@@ -178,6 +178,7 @@ Here, $m_{1,2}$ and $\chi_{1,2}$ are the primary and secondary mass and spin,
 respectively. Finally, the individual segments are connected in a way that the
 final waveform is continuous in its first derivative \kw{expand a bit}.
 
+\kw{Need to work on this paragraph}
 From Eq. \ref{eq:Lambda}, we can see that the values of $\lambda$ are
 fundamental to waveform generation, which can significantly affect the shape of
 final waveforms. Thus, having a set of accurate waveform coefficients is
@@ -186,15 +187,13 @@ waveforms, which are waveforms computed using NR simulations. In the case of
 \citep{khan2016frequency}, $\lambda$ were obtained by fitting model-generated
 waveforms to NR waveforms. For each NR simulation, they can obtain one set of
 $\Lambda$'s through optimization. With many sets of $\Lambda$, $\lambda$ are
-subsequently found by fitting against Eq. \ref{eq:Lambda}. However, this
-piece-wise fitting deployed by \citep{khan2016frequency} causes calibrated
-coefficients to have systematic biases. Since coefficients were not fitted
-jointly, correlations between segments are omitted. Hence, the model introduces
-systematic biases to $\lambda$ and will be accumulated and passed along to the
-data analysis pipeline. Also, their calibration procedure does not guarantee to
-have the optimal set of $\lambda$, since the process of connecting segments
-alters the previously fitted waveform. The model-generated waveforms do not take
-this effect into account, and thus introduces additional inaccuracies. 
+subsequently found by fitting against Eq. \ref{eq:Lambda}. Since the fitting
+procedure is done in a piece-wise manner, the correlations between different
+segments are omitted, which could limit the accuracy of the model. Also,
+their calibration procedure does not guarantee to have the optimal set of
+$\lambda$, since the process of connecting segments alters the previously fitted
+waveform. The model-generated waveforms do not take this effect into account,
+and thus introduces additional inaccuracies. 
 
 % they did not use mismatch as the loss function
 
