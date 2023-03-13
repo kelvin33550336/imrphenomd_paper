@@ -79,17 +79,18 @@ improve GW models.
 Currently, three families of GW models are commonly used. They are the
 effective-one-body (EOB) \citep{taracchini2014effective}, Numerical Relativity
 (NR) surrogate \citep{varma2019surrogate} and phenomenological (Phenom) models
-\citep{husa2016frequency,khan2016frequency}. EOB models are constructed by
-mapping two masses onto an effective body under an effective metric; NR
-surrogate models construct waveforms using combinations of NR waveforms; Phenom
-models are formulated using specific ansatz and inspiral approximations. While
-EOB and NR surrogate models give better waveform approximants, Phenom waveforms
-can be produced much faster, hence it is used mostly in data analysis tasks that
-requires many waveform generations. This advantage scales up in data analysis
-tasks such as matched filtering and parameter estimation, where many waveforms
-are required in each run. This motivates us to improve upon the current
-framework of Phenom models, thus can retain the advantage of fast waveform
-generation while improving the model's accuracy. 
+\citep{husa2016frequency,khan2016frequency} \kw{Add more citations related to
+the newest models}. EOB models are constructed by mapping two masses onto an
+effective body under an effective metric; NR surrogate models construct
+waveforms using combinations of NR waveforms; Phenom models are formulated using
+specific ansatz and inspiral approximations. While EOB and NR surrogate models
+give better waveform approximants, Phenom waveforms can be produced much faster,
+hence it is used mostly in data analysis tasks that requires many waveform
+generations. This advantage scales up in data analysis tasks such as matched
+filtering and parameter estimation, where many waveforms are required in each
+run. This motivates us to improve upon the current framework of Phenom models,
+thus can retain the advantage of fast waveform generation while improving the
+model's accuracy. 
 
 Automatic differentiation (AD) is a method to calculate derivatives of functions
 up to machine precision. In traditional numerical calculations, derivatives are
@@ -126,12 +127,10 @@ tasks. This showcases the flaws of the ansatz and allows us to have a deeper
 understanding of Phenom models.  
 % \kw{Briefly describe the high level finding in this paper}
 
-The rest of the paper is structured as follows: In
-Sec.~\ref{subsec:waveform_model}, we explain how IMRPhenomD is constructed and
-have a detailed explanation of how waveform coefficients are introduced to the
-model. We discuss the mismatch in Sec.~\ref{subsec:mismatch}, where we explained
-how we calculate it in conjunction with NR waveforms. Then, we describe the
-optimization scheme used for recalibration in Sec.~\ref{subsec:optimization}. In
+The rest of the paper is structured as follows: In Sec.~\ref{sec:method}, we
+review the parameterization of the IMRPhenomD model and the mismatch function
+that is used as an objective function for the calibration, followed by outlining the
+specific optimization scheme used for recalibration. In
 Sec.~\ref{sec:result}, we give the optimization result by comparing mismatches
 of optimized waveforms with original waveforms. We also show how the
 optimization result differs with waveforms of different intrinsic parameters. In
@@ -143,34 +142,41 @@ parameterization affects the accuracy of the model.
 
 \subsection{Waveform Model} \label{subsec:waveform_model}
 
-IMRPhenomD is a frequency-domain phenomenological model for modeling
-spin-aligned BBH coalescence events. It was developed as an overhaul of previous
-Phenom models, such as  IMRPhenomB/C
-\citep{santamaria2010matching,ajith2011inspiral}, to give higher accuracy for GW
-data analyses. 
-% Using {\ripple} \citep{ripple} and {\jax} \citep{jax2018github}, we are able to easily recalibrate the model. 
-IMRPhenomD is constructed in separate segments, i.e. inspiral, intermediate, and merger-ringdown. 
+In order to recalibrate the model, we have to understand what parameters the model has.
+Here we give a succinct summary of the IMRPhenomD model and the relevant parameters.
+For interested readers, please refer to \cite{khan2016frequency} for more details on construction of the model.
+
+
+The IMRPhenomD model is constructed by combining three individually fitted parts
+into one coherent waveform model, which consists of the inspiral, intermediate, and merger-ringdown part, 
+\kw{Check if the following equation is correct. I think it is off by some smoothing factors.}
 \begin{align}
-	h(f,\theta)&=h_{\mathrm{ins}}(f,\theta) + h_{\mathrm{int}}(f,\theta) + h_{\mathrm{me-rd}}(f,\theta)
+	h(f,\theta)&=h_{\mathrm{ins}}(f,\theta) + h_{\mathrm{int}}(f,\theta) + h_{\mathrm{me-rd}}(f,\theta).
 \end{align}
-In each segment, the amplitude and phase are made using simple functions of
-frequency such as polynomials or lorentzians. These simple analytic functions
-consists of parameters $\Lambda^i$, which are defined as follows.
+
+Instead of fitting the strain, which is a highly oscillatory function that is
+difficult to fit, the amplitude and phase are fitted since they are smoother
+functions. In each part, the amplitude and phase are made using simple functions
+of frequency such as polynomials or lorentzians. These simple analytic functions
+consists of parameters $\Lambda^i$, which are defined as follows. \kw{Can you
+change equation one such that it consists of $\Lambda$? Also be explicit about
+the form of the function used for the fitting. Like write down the polynomials
+and lorentizans for the specific parts.}
 \begin{align} \label{eq:Lambda}
 	\Lambda^i&=\lambda_{00}^i+\lambda_{10}^i\eta \nonumber \\
 	&+(\chi_{\mathrm{PN}}-1)(\lambda_{01}^i+\lambda_{11}^i\eta+\lambda_{21}^i\eta^2) \nonumber \\ 
 	&+(\chi_{\mathrm{PN}}-1)^2(\lambda_{02}^i+\lambda_{12}^i\eta+\lambda_{22}^i\eta^2) \nonumber \\
-	&+(\chi_{\mathrm{PN}}-1)^3(\lambda_{03}^i+\lambda_{13}^i\eta+\lambda_{23}^i\eta^2)
+	&+(\chi_{\mathrm{PN}}-1)^3(\lambda_{03}^i+\lambda_{13}^i\eta+\lambda_{23}^i\eta^2),
 \end{align}
-$\Lambda^i$ depends on waveform coefficients $\lambda$ and intrinsic parameters
-including symmetric mass ratio $\eta$ and post-newtonian spin parameter
-$\chi_{\mathrm{PN}}$, 
+where $\lambda$ are fitting coefficients obtained during calibration, $\eta$ is
+the symmetric mass ratio, and $\chi_{\mathrm{PN}}$ is the post-Newtonian spin
+parameter, which is defined as 
 \begin{align}
 	\chi_{\mathrm{PN}}=\frac{m_1\chi_1+m_2\chi_2}{m_1+m_2}-\frac{38\eta}{113}(\chi_1+\chi_2).
 \end{align}
-Here, $m_{1,2}$ and $\chi_{1,2}$ are the mass and spin of larger and smaller
-black hole respectively. Finally, the individual segments are connected in a way
-that the final waveform is continuous in its first derivative.
+Here, $m_{1,2}$ and $\chi_{1,2}$ are the primary and secondary mass and spin,
+respectively. Finally, the individual segments are connected in a way that the
+final waveform is continuous in its first derivative \kw{expand a bit}.
 
 From Eq. \ref{eq:Lambda}, we can see that the values of $\lambda$ are
 fundamental to waveform generation, which can significantly affect the shape of
