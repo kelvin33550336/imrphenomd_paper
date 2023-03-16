@@ -207,20 +207,24 @@ allowing the use of gradient-based algorithms for us to recalibrate the model.
 
 \subsection{Mismatch} \label{subsec:mismatch}
 
-To quantify the difference between waveforms, we use the standard
-\textit{mismatch} $\mathcal{M}$ as the metric \citep{husa2016frequency}. It is
-defined as 
+In order to recalibrate the model, we need to define an objective function that
+quantify the performance of the model. A common choice for such metric is the
+\textit{mismatch} function \citep{husa2016frequency}. It is defined as
 \begin{align} \label{eq:mismatch}
 	\mathcal{M}(h_1, h_2)=1-\max_{t_0, \phi_0}\langle \hat{h}_1, \hat{h}_2\rangle,
 \end{align}
-where $h_{1,2}$ represents GW strain in frequency domain, $t_0$ and $\phi_0$ are
-time shift and phase shift respectively. The inner product is defined as 
+where $h_{1,2}$ are the two GW waveform we are comparing, and $t_0$ and $\phi_0$
+are time shift and phase shift respectively. The $\langle h_1, h_2 \rangle$ is
+commonly referred as the inner product, which is defined as 
 \begin{align}\label{eq:inner_prod}
-	\langle h_1, h_2 \rangle=4\Re\int_{f_{\mathrm{min}}}^{f_{\mathrm{max}}}\frac{h_1(f)h_2^{\ast}(f)}{S_n(f)}\,df,
+	\langle h_1, h_2 \rangle = 4\Re\int_{f_{\mathrm{min}}}^{f_{\mathrm{max}}}\frac{h_1(f)h_2^{\ast}(f)}{S_n(f)}\,df,
 \end{align}
 where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain,
 $S_n(f)$ is the noise spectrum, $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are
-the maximum and minimum frequencies in GW frequency spectra. 
+the relevant maximum and minimum frequencies for the integration. The mismatch
+is a quantity that is closely related to the mean square error (MSE) between the
+two waveforms, as it is often considered a weighted version of the MSE.
+
 
 In the original calibration \citep{khan2016frequency,husa2016frequency},
 training waveforms are hybrid waveforms of NR simulations and SpinAlignedEOB
