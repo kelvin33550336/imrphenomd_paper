@@ -220,12 +220,12 @@ commonly referred as the inner product, which is defined as
 	\langle h_1, h_2 \rangle = 4\Re\int_{f_{\mathrm{min}}}^{f_{\mathrm{max}}}\frac{h_1(f)h_2^{\ast}(f)}{S_n(f)}\,df,
 \end{align}
 where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain,
-$S_n(f)$ is the noise spectrum, $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are
+$S_n(f)$ is the power spectral density(PSD) of noise from the instrument, $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are
 the relevant maximum and minimum frequencies for the integration. The mismatch
 is a quantity that is closely related to the mean square error (MSE) between the
 two waveforms, as it is often considered a weighted version of the MSE.
 
-
+\kw{Remind me why don't we use the hybrid waveforms again? Cause we couldn't do it?}
 In the original calibration \citep{khan2016frequency,husa2016frequency},
 training waveforms are hybrid waveforms of NR simulations and SpinAlignedEOB
 (SEOB) waveforms. The low frequency inspiral part is taken from the SEOB
@@ -241,16 +241,19 @@ than that in the original calibration due to NR length. When compared with
 IMRPhenomC, the frequency range is slightly extended to have a higher maximum
 frequency. 
 
-We choose to use two different noise spectra $S_n(f)$, namely the zero-detuned
-high-power (\zdethp) noise spectrum and a constant spectrum. Since in any data
-analysis tasks, model-generated waveforms will ultimately be used to compare
-with GW observations, they are subjected to the sensitivity of detectors. Hence,
-it is sensible to have waveforms calibrated with {\zdethp} spectrum rather than
-a non-weighted spectrum. However, with sensitivity curve involved, we have to
-choose a corresponding mass scale. Here, we simply choose $M=50M_{\odot}$ for
-all waveforms, since this mass scale is common in LIGO observations. On the
-other hand, we also recalibrated coefficients with the constant spectrum for a
-more general purpose. 
+To compute the integral shown in Eq. \ref{eq:inner_prod}, one need to choose a
+relevant noise PSD. Since a common goal for creating waveform approximent is to
+deploy the waveform model in downstream data analysis tasks, a reasonable choice
+for the noise PSD should be closely related to the instrument of interest. We
+choose the zero-detuned high-power (\zdethp) noise PSD \kw{add citation} as our
+first choice of noise PSD. Because the total mass of the system simple scales
+the frequency of the waveform, we need to choose a corresponding mass scale to
+match the frequency range of our noise PSD. Here, we choose $M=50M_{\odot}$ for
+all waveforms, since this mass scale is common in LIGO observations. In addition
+to a detector-dependent PSD, we are also interested in a more
+instrument-agnostic case such that we can evaluate the effectiveness of the
+recalibration without considering detector effect. In this case, we set the
+noise PSD to be a constant value. 
 
 % GW strain treatment from time-series to frequency domain
 In our work, mismatches are used as a measure of discrepancies between
