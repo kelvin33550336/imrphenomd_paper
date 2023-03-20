@@ -13,9 +13,10 @@
 \usepackage{float}
 \usepackage[italicdiff]{physics}
 
-%\definecolor{rb4}{HTML}{27408B}
+\definecolor{rr}{RGB}{173, 37, 37}
 %\newcommand{\kw}[1]{{\color{rb4}[KW: #1 ]}}
 %\newcommand{\kl}[1]{\color{cyan}[KL: #1 ]}
+\newcommand{\te}[1]{{\color{rr}[TE: #1 ]}}
 \newcommand{\ripple}{\texttt{ripple}}
 \newcommand{\python}{\texttt{python}}
 \newcommand{\jax}{\texttt{jax}}
@@ -47,6 +48,7 @@
 
 % Main body with filler text
 \section{Introduction} \label{sec:intro}
+\te{General points:}
 
 In the future, the Laser Interferometer Gravitational-wave Observatory (LIGO) will finish its maintenance and start observing new gravitational wave (GW) results. This new O4 run is expected to double the rate of current binary black hole (BBH) observations \citep{abbott2020prospects}. Additionally, the sensitivity of interferometers will be increased to capture more details of GW. Having instruments with higher sensitivity, GW models of equal or higher accuracy than observations should be used to extract GW information. Otherwise, the extracted information would be affected more by GW models instead of interferometer sensitivity, resulting in a bottleneck in GW analyses. Although GW models are accurate enough for current analyses, the accuracy of current models will no longer suffice for future data analyses \citep{purrer2020gravitational}. Hence, it is necessary for us to develop and improve GW models. 
 
@@ -102,8 +104,9 @@ where $h_{1,2}$ represents GW strain in frequency domain, $t_0$ and $\phi_0$ are
 \end{align}
 where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain, $S_n(f)$ is the noise spectrum, $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are the maximum and minimum frequencies in GW frequency spectra. 
 
-In the original calibration \citep{khan2016frequency,husa2016frequency}, training waveforms are hybrid waveforms of NR simulations and SpinAlignedEOB (SEOB) waveforms. The low frequency inspiral part is taken from the SEOB waveforms while the rest of the waveforms are taken from NR simulations. Instead, we solely use NR waveforms for comparison, since most NR waveforms used have long enough time series data, i.e.~$>15$ orbits \citep{boyle2019sxs}, in which they are long enough to contain part of the inspiral segment and all merger and ringdown frequency information. We take the frequency limits as $f_{\mathrm{min}}=0.1f_{\mathrm{RD}}$ and $f_{\mathrm{max}}=1.2f_{\mathrm{RD}}$, where $f_{\mathrm{RD}}$ is the frequency at ringdown. This range covers most of the IMRPhenomD's frequency range, except the minimum frequency is set higher than that in the original calibration due to NR length. When compared with IMRPhenomC, the frequency range is slightly extended to have a higher maximum frequency. 
+In the original calibration \citep{khan2016frequency,husa2016frequency}, training waveforms are hybrid waveforms of NR simulations and SpinAlignedEOB (SEOB) waveforms. The low frequency inspiral part is taken from the SEOB waveforms while the rest of the waveforms are taken from NR simulations. Instead, we solely use NR waveforms for comparison, since most NR waveforms used have long enough time series data, i.e.~$>15$ orbits \citep{boyle2019sxs}, in which they are long enough to contain part of the inspiral segment and all merger and ringdown frequency information. We take the frequency limits as $f_{\mathrm{min}}=0.1f_{\mathrm{RD}}$ and $f_{\mathrm{max}}=1.2f_{\mathrm{RD}}$, where $f_{\mathrm{RD}}$ is the frequency at ringdown. This range covers most of the IMRPhenomD's frequency range, except the minimum frequency is set higher than that in the original calibration due to NR length. When compared with IMRPhenomC, the frequency range is slightly extended to have a higher maximum frequency. \te{What is the frequency spacing?}
 
+\te{I think this discussion needs to be much more precise. Having a waveform model calibrated to particular noise curve could make sense, but its inherently different to just fitting the phase and the amplitude separately like they do in the original paper. So I would recommend that our default is to use a flat PSD and then in addition discuss the one with the PSD. This way, I think we demonstrate more clearly that its the high dimensional fitting that helps, not the just changing the metric used when fitting.}
 We choose to use two different noise spectra $S_n(f)$, namely the zero-detuned high-power (\zdethp) noise spectrum and a constant spectrum. Since in any data analysis tasks, model-generated waveforms will ultimately be used to compare with GW observations, they are subjected to the sensitivity of detectors. Hence, it is sensible to have waveforms calibrated with {\zdethp} spectrum rather than a non-weighted spectrum. However, with sensitivity curve involved, we have to choose a corresponding mass scale. Here, we simply choose $M=50M_{\odot}$ for all waveforms, since this mass scale is common in LIGO observations. On the other hand, we also recalibrated coefficients with the constant spectrum for a more general purpose. 
 
 % GW strain treatment from time-series to frequency domain
@@ -132,6 +135,8 @@ To recalibrate the model, we need to define a loss function that quantifies the 
 $\mathcal{M}_i$ represents the mismatch of an individual training waveform, $\mathcal{M}_{i,\mathrm{ini}}$ represents the initial mismatch of the individual training waveform, and $N$ is the total number of individual training waveforms. For the first choice, it takes the mean of the mismatches, which serves as a basic loss function. However, it is prone to be dominated by a single waveform with a large mismatch. Other waveforms with smaller mismatches would be insignificant comparatively, and might not be able to improve under such optimization. Alternatively, the second choice, the mean of normalized mismatches, eliminates the aforementioned issue. Nevertheless, it excludes the information on initial mismatches. $\mathcal{L}_{\mathrm{fl}}$ restricts every training waveform to decrease at similar rates, hence it is hard to obtain optimized waveforms with mismatches in the same order of magnitude. Instead, their ratios in mismatches would remain approximately the same. Conversely, $\mathcal{L}_{\mathrm{mean}}$ allows the loss function to automatically adjust and final individual mismatches would be in a similar order of magnitude. In this paper, we display the results of using both loss functions and examine the difference between them. 
 
 We have chosen 11-16 NR waveforms from the set of waveforms used in the original calibration process. Originally, 19 waveforms are taken from NR simulations for calibrating IMRPhenomD \citep{khan2016frequency,husa2016frequency}, which they are waveforms from the SXS catalog or BAM simulation. As BAM waveforms are not publicly available, we cannot take the identical training set as them. Instead, we take the available waveforms from the SXS catalog to construct our loss function. They are listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Notice the maximum mass ratio in our training set is lower than that in \citep{khan2016frequency}. Instead of having $q\leq18$, the maximum mass ratio is set as 8. This is because SXS catalog does not have NR waveforms with extremely high mass ratio. In fact, the SXS catalog only has NR waveforms with $q\leq10$. Nevertheless, we are interested in the behavior of IMRPhenomD model with small $q$, as most BBH events observed have $q\leq8$. Hence, we set the maximum mass ratio to 8. 
+
+\te{I think we need a bit more discussion about the stopping criterion here. What is N, and why did we choose it to be this number? Ideally we would actually have a plot of the loss function during training. I don't have a good intuition for if its noisy. Does it plateau? If we wanted to ensure that people don't complain about overfitting we could also plot the loss of the validation set to show its not going up.}
 
 With both mismatches, we apply gradient descent to optimize the tunable coefficients as follows: 
 \begin{algorithm}
@@ -198,7 +203,7 @@ Here, $\lambda_i$ are the original coefficients given in \citep{khan2016frequenc
 	\script{0154.py}
 	\centering
 	\includegraphics[width=\textwidth]{figures/0154.pdf}
-	\caption{Comparison between original and optimized IMRPhenomD waveforms. Here shows the SXS:BBH:0154 NR waveform, which has mass ratio $q=1$ and $\chi_1=\chi_2=-0.8$. The original mismatch is around $2.8\times10^{-4}$ and the optimized mismatch is around $5.3\times10^{-5}$. Top: It shows the amplitude and phase of NR, original IMRPhenomD and optimized IMRPhenomD waveform. Bottom: It shows the relative error of amplitudes between NR and IMRPhenomD waveforms, and the absolute error of phases between NR and IMRPhenomD waveforms}
+	\caption{Comparison between original and optimized IMRPhenomD waveforms. Here shows the SXS:BBH:0154 NR waveform, which has mass ratio $q=1$ and $\chi_1=\chi_2=-0.8$. The original mismatch is around $2.8\times10^{-4}$ and the optimized mismatch is around $5.3\times10^{-5}$. Top: It shows the amplitude and phase of NR, original IMRPhenomD and optimized IMRPhenomD waveform. Bottom: It shows the relative error of amplitudes between NR and IMRPhenomD waveforms, and the absolute error of phases between NR and IMRPhenomD waveforms \te{I realize that this is also an error in the ripple paper, but the bottom panels should have abs round the whole y axis, otherwise why are they strictly positive? I actually think just plotting the error itself i.e. allowing for positive and negative values would potentially look better. Its also useful to add the vertical lines corresponding the different waveform regions. Otherwise one might think that the oscillations will line up with this and its some weird artifact of the splitting. The top and bottom panels should probably share x axes, or at least have the same scales so that they can be compared easily. }}
 	\label{fig:0154}
 \end{figure*}
 
@@ -238,7 +243,7 @@ Given the ansatz used in the waveform model is unlikely to be fully compatible w
 
 Since we know intrinsic parameters play an important role in the ansatz, we would like to investigate how intrinsic parameters affect the recalibration process. First, we plot the parameter space of $q$ vs. $\chi_{\mathrm{PN}}$ in Fig. \ref{fig:ps_q148_qchi}. In the low mass ratio region, waveforms with both positive and negative log differences are mixed up. On the other hand, along the horizontal line $\chi_{\mathrm{PN}}=0$, waveform mismatches consistently improve under recalibration. 
 
-Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e. $\chi_1\approx\chi_2$, show good mismatch improvements. We expect to see this feature since the original coefficients were fitted using NR waveforms with equal or similar spin, hence the model prefers waveforms with similar spin. One interesting feature is how the second and fourth quadrants respond to optimization. In the second quadrant ($\chi_1<0$ and $\chi_2>0$), waveforms generally improve with along optimization. However, mismatches in the fourth quadrant ($\chi_1>0$ and $\chi_2<0$) do not improve after optimization. Most waveforms even turned worse after optimization. These waveforms correspond to the waveforms in the high mismatch tail in Fig.~\ref{fig:q148}. 
+Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e. $\chi_1\approx\chi_2$, show good mismatch improvements. We expect to see this feature since the original coefficients were fitted using NR waveforms with equal or similar spin, hence the model prefers waveforms with similar spin. One interesting feature is how the second and fourth quadrants respond to optimization. In the second quadrant ($\chi_1<0$ and $\chi_2>0$), waveforms generally improve with along optimization. However, mismatches in the fourth quadrant ($\chi_1>0$ and $\chi_2<0$) do not improve after optimization. Most waveforms even turned worse after optimization. These waveforms correspond to the waveforms in the high mismatch tail in Fig.~\ref{fig:q148}. \te{I think this kind of behaviour needs to be matched with the discussion about our stopping criteria. If it gets worse, why aren't we stopping earlier?}
 
 % Waveform mismatches in the fourth quadrant, i.e. $\chi_1>0$ and $\chi_2<0$, performed worse after optimized. IMRPhenomD is constructed using single spin parameter, where there are degeneracy between $\chi_1$ and $\chi_2$. In regions with opposite extreme spin components, degeneracy significantly alters intrinsic parameters passed into waveform generation, hence the fourth quadrant shows such feature. 
 
@@ -246,7 +251,7 @@ Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in Fig.~\ref{f
 	\script{ps_q148_qchi.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_qchi.pdf}
-	\caption{Parameter space of testing waveforms of $q$~vs.~$\chi_{\mathrm{PN}}$. We use the recalibrated result from $\mathcal{L}_{\mathrm{mean}}$ with the constant noise spectrum and training waveforms in Tab.~\ref{tab:q148}. Here, the colorbar represents the $\log_{10}$ difference between optimized and original unweighted mismatches.}
+	\caption{Parameter space of testing waveforms of $q$~vs.~$\chi_{\mathrm{PN}}$. We use the recalibrated result from $\mathcal{L}_{\mathrm{mean}}$ with the constant noise spectrum and training waveforms in Tab.~\ref{tab:q148}. Here, the colorbar represents the $\log_{10}$ difference between optimized and original unweighted mismatches. \te{I find this plot a little odd. The bounding of between -1 and 1 gives the impression that the colourbar has strict limits between these regions. Are we truncating the colors?And if so, why?}}
 	\label{fig:ps_q148_qchi}
 \end{figure}
 \begin{figure}[t]
@@ -304,7 +309,7 @@ As we see in Fig.~\ref{fig:ps_q148} that the recalibration procedure is signific
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
-	\caption{Distributions of mismatches after optimizing in separate quadrants. We use a constant noise spectrum to calculate mismatch and $\mathcal{L}_{\mathrm{mean}}$ for the loss function. Generally, most waveforms with mismatch $>10^{-2}$ lies in the fourth quadrant. }
+	\caption{Distributions of mismatches after optimizing in separate quadrants. We use a constant noise spectrum to calculate mismatch and $\mathcal{L}_{\mathrm{mean}}$ for the loss function. Generally, most waveforms with mismatch $>10^{-2}$ lies in the fourth quadrant. \te{It would be nice to have four histograms for the four quadrants here. Ideally for both the original and optimized waveform but this might get a little cluttered. Maybe just plot the best and worst quadrant?}\te{This figure also doesn't appear to be referenced in the text?}}
 	\label{fig:all_quadrants}
 \end{figure}
 
