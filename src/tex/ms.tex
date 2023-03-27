@@ -9,7 +9,7 @@
 \SetKwInput{Parameters}{Parameters}
 \SetKwInput{Variables}{Variables}
 
-\usepackage{tabularx,booktabs,multirow}
+\usepackage{tabularx,booktabs,multirow,amsmath}
 \usepackage{float}
 \usepackage[italicdiff]{physics}
 
@@ -22,6 +22,8 @@
 \newcommand{\zdethp}{\texttt{zdethp}}
 \definecolor{rb4}{HTML}{27408B}
 \newcommand{\kw}[1]{{\color{rb4}[KW: #1 ]}}
+\definecolor{cyan}{HTML}{0097A7}
+\newcommand{\kl}[1]{{\color{cyan}[KL: #1 ]}}
 
 \newcommand{\cuhk}{\affiliation{Department of Physics, The Chinese University of Hong Kong, Shatin, N.T., Hong Kong}}
 \newcommand{\flatiron}{\affiliation{Center for Computational Astrophysics, Flatiron Institute, New York, NY 10010, USA}}
@@ -79,9 +81,9 @@ improve GW models.
 
 % Waveform families and slight motivation of why we take Phenom model
 Currently, three families of GW models are commonly used. They are the
-effective-one-body (EOB) \citep{taracchini2014effective}, Numerical Relativity
-(NR) surrogate \citep{varma2019surrogate} and phenomenological (Phenom) models
-\citep{husa2016frequency,khan2016frequency} \kw{Add more citations related to
+effective-one-body (EOB) \citep{ossokine2020multipolar, cotesta2020frequency, taracchini2014effective}, Numerical Relativity
+(NR) surrogate \citep{islam2022surrogate, varma2019surrogate, varma2019surrogate2} and phenomenological (Phenom) models
+\citep{husa2016frequency, khan2016frequency, garcia2020multimode, pratten2021computationally} \kw{Add more citations related to
 the newest models}. EOB models are constructed by mapping two masses onto an
 effective body under an effective metric; NR surrogate models construct
 waveforms using combinations of NR waveforms; Phenom models are formulated using
@@ -146,21 +148,31 @@ parameterization affects the accuracy of the model.
 
 In order to recalibrate the model, we have to understand what parameters the model has.
 Here we give a succinct summary of the IMRPhenomD model and the relevant parameters.
-For interested readers, please refer to \cite{khan2016frequency} for more details on construction of the model.
+For interested readers, please refer to \citep{khan2016frequency} for more details on construction of the model.
 
 
 The IMRPhenomD model is constructed by combining three individually fitted parts
 into one coherent waveform model, which consists of the inspiral, intermediate, and merger-ringdown part, 
-\kw{Check if the following equation is correct. I think it is off by some smoothing factors.}
-\begin{align}
-	h(f,\theta)&=h_{\mathrm{ins}}(f,\theta) + h_{\mathrm{int}}(f,\theta) + h_{\mathrm{me-rd}}(f,\theta).
+\kw{Check if the following equation is correct. I think it is off by some smoothing factors.} 
+\kl{I don't remember there is any smoothing factors. They are just connected using step functions, then the entire waveform is made to have continuous first derivative by fixing some of the coefficients for the two connections.}
+\begin{align}\label{eq:joint_waveform}
+	h(f,\theta,\Lambda^i)=h_{\mathrm{ins}}(f,\theta,\Lambda^i) + h_{\mathrm{int}}(f,\theta,\Lambda^i) + h_{\mathrm{rd}}(f,\theta,\Lambda^i).
 \end{align}
 
 Instead of fitting the strain, which is a highly oscillatory function that is
 difficult to fit, the amplitude and phase are fitted since they are smoother
 functions. In each part, the amplitude and phase are made using simple functions
-of frequency such as polynomials or lorentzians. These simple analytic functions
-consists of parameters $\Lambda^i$, which are defined as follows. \kw{Can you
+of frequency such as polynomials or lorentzians. Specifically, the merger-ringdown amplitude is fitted by a lorentzian and the other parts are fitted using polynomials. 
+\begin{equation}\label{eq:amplitude}
+\begin{aligned}
+	A_0&\equiv\sqrt{\frac{2\eta}{3\pi^{1/3}}}f^{-7/6}\\
+	A_{\mathrm{ins}}(f;\theta)&=A_{\mathrm{PN}}(f;\theta)+A_0\sum_{i=1}^3\rho_if^{(6+i)/3} \\
+	A_{\mathrm{int}}(f;\theta)&=A_0(\delta_0+\delta_1f+\delta_2f^2+\delta_3f^3+\delta_4f^4) \\
+	A_{\mathrm{rd}}(f;\theta)&=A_0\left[\gamma_1\frac{\gamma_3f_{\mathrm{damp}}}{(f-f_{\mathrm{RD}})^2+(\gamma_3f_{\mathrm{damp}})^2}e^{-\frac{\gamma_2(f-f_{\mathrm{RD}})}{\gamma_3f_{\mathrm{damp}}}}\right],  
+\end{aligned}
+\end{equation}
+where $A_{\mathrm{PN}}$ is the post-newtonian expansion of the insprial amplitude up to order $A_0f^2$, $f_{\mathrm{damp}}$ is the damping frequency, and $f_{\mathrm{RD}}$ is the frequency at ringdown. The ansatzes for phase can be found in \citep{khan2016frequency}. These simple analytic functions
+consists of parameters $\Lambda^i=\{\rho_i,\delta_i,\gamma_i\}$, which are defined as follows. \kw{Can you
 change equation one such that it consists of $\Lambda$? Also be explicit about
 the form of the function used for the fitting. Like write down the polynomials
 and lorentizans for the specific parts.}
@@ -177,27 +189,32 @@ parameter, which is defined as
 	\chi_{\mathrm{PN}}=\frac{m_1\chi_1+m_2\chi_2}{m_1+m_2}-\frac{38\eta}{113}(\chi_1+\chi_2).
 \end{align}
 Here, $m_{1,2}$ and $\chi_{1,2}$ are the primary and secondary mass and spin,
-respectively. Finally, the individual segments are connected in a way that the
-final waveform is continuous in its first derivative \kw{expand a bit}.
+respectively. Finally, the individual segments are first connected directly using 
+step functions. Then, by fixing coefficients in the intermediate waveform, one can make 
+the final waveform is continuous in its first derivative \kw{expand a bit}.
 
 \kw{Need to work on this paragraph}
-From Eq. \ref{eq:Lambda}, we can see that the values of $\lambda$ are
-fundamental to waveform generation, which can significantly affect the shape of
-final waveforms. Thus, having a set of accurate waveform coefficients is
-important. Generally, waveform coefficients are obtained by calibrating with NR
-waveforms, which are waveforms computed using NR simulations. In the case of
-\citep{khan2016frequency}, $\lambda$ were obtained by fitting model-generated
-waveforms to NR waveforms. For each NR simulation, they can obtain one set of
-$\Lambda$'s through optimization. With many sets of $\Lambda$, $\lambda$ are
-subsequently found by fitting against Eq. \ref{eq:Lambda}. Since the fitting
-procedure is done in a piece-wise manner, the correlations between different
-segments are omitted, which could limit the accuracy of the model. Also,
-their calibration procedure does not guarantee to have the optimal set of
-$\lambda$, since the process of connecting segments alters the previously fitted
-waveform. The model-generated waveforms do not take this effect into account,
-and thus introduces additional inaccuracies. 
+Combining Eq.~\ref{eq:joint_waveform},~\ref{eq:amplitude}~and~\ref{eq:Lambda}, 
+we can see that the entire waveform is non-linear in $\lambda$. A slightly 
+inaccurate set of $\lambda$ can significantly affect the shape of the generated 
+waveforms. Thus, having a set of accurate waveform coefficients is important 
+and fundamental to having accurate GW models. Generally, waveform coefficients 
+are obtained by calibrating with NR waveforms, which are waveforms computed 
+using NR simulations. In the case of \citep{khan2016frequency}, they first 
+obtain a set of $\Lambda$ by fitting model generated waveforms to Eq.~\ref{eq:amplitude} 
+and the phase ansatzes. Repeating with different NR waveforms, they obtain multiple 
+sets of $\Lambda$, and $\lambda$ are subsequently found by fitting against 
+Eq. \ref{eq:Lambda}. Since the fitting procedure is done in a piece-wise manner, 
+the correlations between different segments are omitted, which could limit the 
+accuracy of the model. Also, since fitting was performed before connecting 
+individual segments, the final waveform does not guarantee to achieve the optimal 
+waveform. The connecting procedure can alter the previously fitted waveform. 
+Hence, the model generated waveforms contains additional inaccuracies. 
 
-% they did not use mismatch as the loss function
+%their calibration procedure does not guarantee to have the optimal set of
+%$\lambda$, since the process of connecting segments alters the previously fitted
+%waveform. The model-generated waveforms do not take this effect into account,
+%and thus introduces additional inaccuracies. 
 
 Instead, we recalibrate coefficients jointly, which we can remove inaccuracies
 and biases discussed above, and can improve model accuracy. In the past, due to
@@ -207,7 +224,7 @@ Hence, piece-wise optimization was done to obtain coefficients. However, with
 {\ripple} and AD from \jax, gradients of IMRPhenomD can be easily obtained, thus
 allowing the use of gradient-based algorithms for us to recalibrate the model.   
 
-\subsection{Mismatch} \label{subsec:mismatch}
+\subsection{Loss Function} \label{subsec:loss}
 
 In order to recalibrate the model, we need to define an objective function that
 quantify the performance of the model. A common choice for such metric is the
@@ -225,15 +242,64 @@ where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain,
 $S_n(f)$ is the power spectral density(PSD) of noise from the instrument, $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are
 the relevant maximum and minimum frequencies for the integration. The mismatch
 is a quantity that is closely related to the mean square error (MSE) between the
-two waveforms, as it is often considered a weighted version of the MSE.
+two waveforms, as it is often considered a weighted version of the MSE. 
+
+Since we wish to optimize the model over the whole parameter space, we need to compare multiple model generated waveforms with NR waveforms. However, mismatch only quantifies the difference between IMRPhenomD and NR waveform for one particular set of intrinsic parameters. To take into account of various different waveforms in the parameter space, we pick waveforms from the different parts of the parameter space. We define the loss function as an average of training waveforms in two ways, the simple average of mismatches and the normalize average of mismatches,  
+\begin{align}
+	\mathcal{L}_{\mathrm{mean}}&=\frac{1}{N}\sum_{i=1}^N\mathcal{M}_i \\
+	\mathcal{L}_{\mathrm{fl}}&=\frac{1}{N}\sum_{i=1}^N\frac{\mathcal{M}_i}{\mathcal{M}_{i,\mathrm{ini}}},
+\end{align}	
+where $\mathcal{M}_i$ represents the mismatch of an individual training waveform,
+$\mathcal{M}_{i,\mathrm{ini}}$ represents the initial mismatch of the individual
+training waveform, and $N$ is the total number of individual training waveforms.
+Note that we choose to use two different averages, since they have different 
+preferences in optimization base on waveform mismatches. For the first choice, simple average serves as the simplest choice of loss function, but is prone to be dominated by a single waveform with a large mismatch. Other waveforms with smaller mismatches would be
+insignificant comparatively, and might not be able to improve under such
+optimization. Alternatively, the second choice, normalized average eliminates the aforementioned issue. Nevertheless, it excludes the
+information on initial mismatches. $\mathcal{L}_{\mathrm{fl}}$ restricts every
+training waveform to decrease at similar rates, hence it is hard to obtain
+optimized waveforms with mismatches in the same order of magnitude. Instead,
+their ratios in mismatches would remain approximately the same. Conversely,
+$\mathcal{L}_{\mathrm{mean}}$ allows the loss function to automatically adjust
+and individual mismatches would be in a similar order of magnitude after 
+optimization. In this paper, we showcase the results of using both loss functions 
+and examine the differences between them. 
+
+\subsection{Optimization Scheme} \label{subsec:optimization}
+
+To compute the loss functions, we have to take NR waveforms for calculating the mismatch. We choose 11-16 NR waveforms from the set of waveforms used in the original
+calibration process as training waveforms. Originally, 19 waveforms are taken from 
+NR simulations for calibrating IMRPhenomD \citep{khan2016frequency}, 
+which are waveforms from the SXS catalog \citep{boyle2019sxs} or BAM simulation. 
+As BAM waveforms are not publicly available, we cannot take the identical training 
+set as them. Instead, we take the available waveforms from the SXS catalog to construct our loss function. Training waveforms used are listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. The training waveforms chosen has maximum mass ratio to be 8. This is because SXS catalog does not have NR waveforms with extremely high mass ratio. In fact, the SXS catalog only has NR waveforms with $q\leq10$. Nevertheless, we are interested in the behavior of IMRPhenomD model with small $q$, as most BBH events observed from LIGO have $q\leq8$. Hence, we calibrate IMRPhenomD with waveforms of $q\leq8$. 
+
+In the SXS catalog, NR waveforms are in the form of time-series strain. Since time-series data is oscillatory, performing optimization in the time-domain is not ideal. Hence, we transform NR waveforms to frequency-domain to compare with IMRPhenomD waveforms with the
+same intrinsic parameters. We taper the time-series using Tukey window.
+\footnote{ Specifically, we choose $\alpha=2t_{\mathrm{RD}}/T$, where
+	$t_{\mathrm{RD}}$ is the duration of ringdown and $T$ is the duration of the
+	entire GW strain. } 
+Then, the frequency spectra can be obtained by taking the Fourier transform of the time-series.
+
+Other than NR waveforms, one need to choose a relevant noise PSD for 
+mismatch. Since a common goal for creating waveform approximant is to
+deploy the waveform model in downstream data analysis tasks, a reasonable choice
+for the noise PSD should be closely related to the instrument of interest. We
+choose the zero-detuned high-power (\zdethp) noise PSD as our
+first choice of noise PSD \citep{aasi2015advanced}. Because the total mass of the system simple scales
+the frequency of the waveform, we need to choose a corresponding mass scale to
+match the frequency range of our noise PSD. Here, we choose $M=50M_{\odot}$ for
+all waveforms, since this mass scale is common in LIGO observations. In addition
+to a detector-dependent PSD, we are also interested in a more
+instrument-agnostic case such that we can evaluate the effectiveness of the
+recalibration without considering detector effect. In this case, we set the
+noise PSD to be a constant value. 
 
 \kw{Remind me why don't we use the hybrid waveforms again? Cause we couldn't do it?}
-In the original calibration \citep{khan2016frequency,husa2016frequency},
-training waveforms are hybrid waveforms of NR simulations and SpinAlignedEOB
+We shall notify readers that our treatment to NR waveforms is different from that of \citep{husa2016frequency, khan2016frequency}. In the original calibration process, training waveforms are hybrid waveforms of NR and SpinAlignedEOB
 (SEOB) waveforms. The low frequency inspiral part is taken from the SEOB
 waveforms while the rest of the waveforms are taken from NR simulations.
-Instead, we solely use NR waveforms for comparison, since most NR waveforms used
-have long enough time series data, i.e.~$>15$ orbits \citep{boyle2019sxs}, in
+Instead, we solely use NR waveforms for comparison, since we only exploring the possibility of optimizing waveform models. Thus, for simplicity sake, we ignore this procedure. On the other hand, most NR waveforms used (for both training and testing) have long enough time series data, i.e.~$>15$ orbits \citep{boyle2019sxs}, in
 which they are long enough to contain part of the inspiral segment and all
 merger and ringdown frequency information. We take the frequency limits as
 $f_{\mathrm{min}}=0.1f_{\mathrm{RD}}$ and $f_{\mathrm{max}}=1.2f_{\mathrm{RD}}$,
@@ -243,128 +309,23 @@ than that in the original calibration due to NR length. When compared with
 IMRPhenomC, the frequency range is slightly extended to have a higher maximum
 frequency. 
 
-To compute the integral shown in Eq. \ref{eq:inner_prod}, one need to choose a
-relevant noise PSD. Since a common goal for creating waveform approximent is to
-deploy the waveform model in downstream data analysis tasks, a reasonable choice
-for the noise PSD should be closely related to the instrument of interest. We
-choose the zero-detuned high-power (\zdethp) noise PSD \kw{add citation} as our
-first choice of noise PSD. Because the total mass of the system simple scales
-the frequency of the waveform, we need to choose a corresponding mass scale to
-match the frequency range of our noise PSD. Here, we choose $M=50M_{\odot}$ for
-all waveforms, since this mass scale is common in LIGO observations. In addition
-to a detector-dependent PSD, we are also interested in a more
-instrument-agnostic case such that we can evaluate the effectiveness of the
-recalibration without considering detector effect. In this case, we set the
-noise PSD to be a constant value. 
+With the loss function evaluated, we apply gradient descent to optimize the tunable
+coefficients as shown in Algorithm~\ref{alg:gradient}. We take $\lambda_i$ to be the original coefficients given in \citep{khan2016frequency}. We take them as the initial waveform coefficients because they lie in the neighborhood of the minimum that we wish to find. With
+such an optimization procedure, we can systematically obtain the optimized coefficients. 
 
-% GW strain treatment from time-series to frequency domain
-In our work, mismatches are used as a measure of discrepancies between
-IMRPhenomD waveforms and NR waveforms. To compute such mismatches, NR waveforms
-from the SXS catalog are taken \citep{boyle2019sxs}. These NR waveforms are
-calculated using the \texttt{SpEC} code. Initially, NR waveforms are in the form
-of time-series data. Since time-series data is oscillatory, performing
-optimization in the time-domain is not ideal. Hence, we had chosen to transform
-NR waveforms to frequency-domain to compare with IMRPhenomD waveforms with the
-same intrinsic parameters. We taper the time-series using Tukey window.
-\footnote{ Specifically, we choose $\alpha=2t_{\mathrm{RD}}/T$, where
-$t_{\mathrm{RD}}$ is the duration of ringdown and $T$ is the duration of the
-entire BBH event. } Then, the frequency spectra can be obtained by taking the
-Fourier transform of the time-series. Then, mismatches can be calculated through
-Eq.~\ref{eq:mismatch}~and~\ref{eq:inner_prod}. 
-
-\subsection{Optimization Scheme} \label{subsec:optimization}
-
-Using \ripple, we can make use of {\jax} to evaluate gradients accurately. Thus,
-we can utilize simple gradient descent to recalibrate the model. 
-
-% \kw{Mention the main advantage in this study is we can optimize everything at
-% once.}
-
-% To recalibrate the model, we have to define loss functions that quantify the
-% difference between the model-generated waveforms and NR waveforms. In the
-% original calibration, they took the mean square error as the loss function for
-% optimization. Instead, we directly use mismatch as our metric for loss
-% functions. However, the mismatch of individual waveforms is not useful in
-% optimization, since it does not represent all waveforms with various intrinsic
-% parameters. We ought to calibrate coefficients that suit waveforms with
-% different intrinsic parameters simultaneously, hence waveforms in different
-% regions of parameter space should be used in the optimization scheme. Here, we
-% chose two different loss functions to examine their ability to optimize the
-% model, e.g. mean of individual mismatches $\mathcal{L}_{\mathrm{mean}}$ and
-% fractional loss $\mathcal{L}_{\mathrm{fl}}$. 
-
-% Do something much more direct:
-To recalibrate the model, we need to define a loss function that quantifies the
-difference between the model-generated waveforms and NR waveforms. We use
-mismatch over the set of all training waveforms as the loss function. While in
-\citep{khan2016frequency}, they chose to use the mean square error as the loss
-function, we choose mismatch as the loss function because it is closely related
-to downstream objectives such as the likelihood in parameter estimation. The
-mismatch is averaged over the training dataset in two ways to cover the
-parameter space of interest. One of which takes a simple average and the other
-takes a normalized average based on initial mismatch.
-
-% To recalibrate the model, we need to define a loss function that quantify ...
-% We use mismatch over the set of all training waveforms as the loss function.
-% We choose mismatch as the loss function because it is closely related to
-% downstream objectives such as the likelihood in parameter estimation. The
-% mismatch is averaged over the training dataset to cover the parameter space of
-% interest. (used)
-\begin{align}
-	\mathcal{L}_{\mathrm{mean}}&=\frac{1}{N}\sum_{i=1}^N\mathcal{M}_i \\
-	\mathcal{L}_{\mathrm{fl}}&=\frac{1}{N}\sum_{i=1}^N\frac{\mathcal{M}_i}{\mathcal{M}_{i,\mathrm{ini}}},
-\end{align}	
-$\mathcal{M}_i$ represents the mismatch of an individual training waveform,
-$\mathcal{M}_{i,\mathrm{ini}}$ represents the initial mismatch of the individual
-training waveform, and $N$ is the total number of individual training waveforms.
-For the first choice, it takes the mean of the mismatches, which serves as a
-basic loss function. However, it is prone to be dominated by a single waveform
-with a large mismatch. Other waveforms with smaller mismatches would be
-insignificant comparatively, and might not be able to improve under such
-optimization. Alternatively, the second choice, the mean of normalized
-mismatches, eliminates the aforementioned issue. Nevertheless, it excludes the
-information on initial mismatches. $\mathcal{L}_{\mathrm{fl}}$ restricts every
-training waveform to decrease at similar rates, hence it is hard to obtain
-optimized waveforms with mismatches in the same order of magnitude. Instead,
-their ratios in mismatches would remain approximately the same. Conversely,
-$\mathcal{L}_{\mathrm{mean}}$ allows the loss function to automatically adjust
-and final individual mismatches would be in a similar order of magnitude. In
-this paper, we display the results of using both loss functions and examine the
-difference between them. 
-
-We have chosen 11-16 NR waveforms from the set of waveforms used in the original
-calibration process. Originally, 19 waveforms are taken from NR simulations for
-calibrating IMRPhenomD \citep{khan2016frequency,husa2016frequency}, which they
-are waveforms from the SXS catalog or BAM simulation. As BAM waveforms are not
-publicly available, we cannot take the identical training set as them. Instead,
-we take the available waveforms from the SXS catalog to construct our loss
-function. They are listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Notice the
-maximum mass ratio in our training set is lower than that in
-\citep{khan2016frequency}. Instead of having $q\leq18$, the maximum mass ratio
-is set as 8. This is because SXS catalog does not have NR waveforms with
-extremely high mass ratio. In fact, the SXS catalog only has NR waveforms with
-$q\leq10$. Nevertheless, we are interested in the behavior of IMRPhenomD model
-with small $q$, as most BBH events observed have $q\leq8$. Hence, we set the
-maximum mass ratio to 8. 
-
-With both mismatches, we apply gradient descent to optimize the tunable
-coefficients as follows: 
-\begin{algorithm}
+\begin{algorithm}[t]
 	\caption{Gradient descent pseudocode}
+	\label{alg:gradient}
 	\KwIn{initial coefficients $\lambda_i$} \Parameters{number of iterations
-	$N$, learning rate $\alpha$} \Variables{current coefficients $\lambda$,
-	mismatch gradient $\nabla\mathcal{L}$} \KwResult{output coefficients
-	$\lambda$} $\lambda\leftarrow\lambda_i$\\
+		$N$, learning rate $\alpha$} \Variables{current coefficients $\lambda$,
+		mismatch gradient $\nabla\mathcal{L}$} \KwResult{output coefficients
+		$\lambda$} $\lambda\leftarrow\lambda_i$\\
 	\tcc{Gradient Descent}
 	\For{$i<N$}{ $\mathcal{L}\leftarrow Mismatch(\lambda)$ \\
 		$\nabla\mathcal{L}\leftarrow AutoDiff(\mathcal{L})$\\
 		$\lambda\leftarrow\lambda-\alpha\nabla\mathcal{L}$\\
 	} \Return{$\lambda$}
 \end{algorithm}
-Here, $\lambda_i$ are the original coefficients given in
-\citep{khan2016frequency}. We take them as the initial waveform coefficients
-because they lie in the neighborhood of the minimum that we wish to find. With
-such an optimization procedure, we obtain the optimized coefficients. 
 
 \begin{figure}[t]
 	\script{intrin_space.py}
