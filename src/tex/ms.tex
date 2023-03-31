@@ -428,33 +428,34 @@ such an optimization procedure, we obtain the optimized coefficients.
 
 \section{Result and Comparison with Original Model} \label{sec:result}
 
-First, to judge the performance of the optimization scheme, we take $\sim530$ NR
-waveforms from the SXS catalog. We choose testing waveforms with negligible
-eccentricity (${e<2\times10^{-3}}$) and precession
-(${\chi_{x,y}<5\times10^{-3}}$) to fit with the limitation of the model. We see
-that in Fig.~\ref{fig:intrin_space}, testing waveforms have intrinsic parameters
-that are within the parameter space spanned by training waveforms. Hence, we can
-take these testing waveforms to compare with the original model. 
+To evaluate the effectiveness of our optimization approach, we analyze
+approximately 530 NR waveforms from the SXS catalog in this study. We
+specifically select waveforms with negligible eccentricity
+(${e<2\times10^{-3}}$) and precession (${ \chi_{x,y}<5\times10^{-3}}$) that are
+consistent with the constraints of the waveform model. As shown in
+Fig.~\ref{fig:intrin_space}, the intrinsic parameters of the chosen test
+waveforms fall within the parameter space defined by the training waveforms.
+This suggests that these test waveforms can be used for direct comparison with
+the original model.
 
-We first examine the effect of joint optimization on a single waveform. In
-Fig.~\ref{fig:0154}, we can see that the optimized waveform has better accuracy
-than the original waveform, especially in the inspiral region, where the
-amplitude has a $50\%$ decrease in error. We have chosen one of the testing
-waveforms listed in \citep{khan2016frequency} for a fair comparison. 
+We begin by investigating the impact of joint optimization on an individual
+waveform. Fig. \ref{fig:0154} illustrates that the optimized waveform
+outperforms the original waveform, particularly in the inspiral region, where
+the amplitude displays a $50\%$ reduction in error. To ensure fairness, we
+selected one of the testing waveforms from the catalog presented in
+\citep{khan2016frequency}.
 % In general, most waveforms within the neighborhood of the training waveforms
 % show improvement in mismatches. 
 
-Using a constant noise spectrum with $\mathcal{L}_{\mathrm{mean}}$, we compute
-the mismatch for all testing waveforms and plot the distribution of the mismatch
-in Fig. \ref{fig:q148}. We find the distribution's peak has shifted to the end
-with a lower mismatch. Quantitatively, the peak has lowered by almost an
-order-of-magnitude and the median of distribution has a $\sim50.0\%$ decrease.
-Using $\mathcal{L}_{\mathrm{fl}}$, the mismatch distribution also has a similar
-improvement. We see that the median of distribution has a $22.9\%$ decrease.
-However, the distribution does not have a clear peak as Fig.~\ref{fig:q148}.
-This is due to the problem mentioned in section \ref{subsec:optimization}.
-Nevertheless, both distributions show improvement and the potential problem did
-not affect the optimization scheme significantly.  
+We use a constant noise spectrum, $\mathcal{L}{\mathrm{mean}}$, to evaluate the
+mismatch of all testing waveforms, and present the resulting distribution in
+Fig. \ref{fig:q148}. The peak of the distribution has shifted towards a lower
+mismatch, with a decrease of almost one order of magnitude and a 50\% reduction
+in the median. When using $\mathcal{L}{\mathrm{fl}}$, we observe a similar
+improvement with a 22.9\% decrease in the median. However, the distribution lacks
+a clear peak due to the problem discussed in Section \ref{subsec:optimization}.
+Despite this, both distributions exhibit significant improvement, and the
+optimization scheme remains unaffected.
 
 % \kw{We then compute the mismatch for all testing waveforms and plot the
 % distribution of the mismatch in figure X. We find the distribution...}
