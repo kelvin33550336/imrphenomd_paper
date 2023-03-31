@@ -486,23 +486,25 @@ optimization scheme remains unaffected.
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
-Similarly, using the same procedures, distributions of mismatches calculated
-using {\zdethp} noise spectrum show better improvement than the weighted
-mismatch. The shape of the distribution is similar to Fig.~\ref{fig:q148}. This
-effect is expected since the IMRPhenomD model was originally constructed and
-fitted using the {\zdethp} weighted mismatch. Thus, it should be a model that
-fits closely to the NR waveforms with the influence of {\zdethp} noise spectrum
-instead of the constant spectrum. 
+Applying the same methods, we observe that the distributions of mismatches
+calculated using the {\zdethp} noise spectrum exhibit superior improvement
+compared to the weighted mismatch. The shape of the distribution is similar to
+that shown in Fig. \ref{fig:q148}. This result is expected, as the IMRPhenomD
+model was initially constructed and fitted using the {\zdethp} weighted
+mismatch. Consequently, the model is anticipated to closely fit the NR waveforms
+while incorporating the influence of the {\zdethp} noise spectrum, rather than a
+constant spectrum.
 
-With the success of improving waveforms, we increase the number of training
-waveforms for optimization. Taking additional waveforms listed in
-Tab.~\ref{tab:q1248}, we obtain a new set of coefficients. We see in Fig.
-\ref{fig:q148_q1248_compare}, new waveforms produced only have a very small
-improvement. The high mismatch tail of the optimized distribution remains
-similar in length and endpoint as the original distribution, meaning that they
-cannot be improved using our procedure. Likewise, using additional waveforms to
-optimize loss function with {\zdethp} spectrum shows the same result, where the
-new distribution barely shows any improvement. 
+Motivated by the successful improvement of the waveforms, we expand the training
+dataset to optimize additional waveforms listed in Tab. \ref{tab:q1248}. The new
+set of coefficients generated from this optimization process yields only
+marginal improvements in the newly produced waveforms, as seen in Fig.
+\ref{fig:q148_q1248_compare}. The high mismatch tail of the optimized
+distribution remains comparable in length and endpoint to the original
+distribution, indicating that our procedure is incapable of improving these
+waveforms. Similarly, utilizing the {\zdethp} spectrum to optimize the loss
+function with additional waveforms leads to minimal improvement in the resulting
+distribution.
 
 % We believe that either the ansatz does not suit waveforms within certain
 % regions of parameter space or the set of optimized coefficients falls to a
@@ -513,17 +515,16 @@ new distribution barely shows any improvement.
 % the set of coefficients does not fit, then dividing the parameter space into
 % regions and fitting separate sets of coefficients should give better results.
 
-Given the ansatz used in the waveform model is unlikely to be fully compatible
-with NR, and the optimization procedure is done over a distribution of waveforms
-with different source parameters, it is conceivable that there are some
-trade-off in accuracy of the waveform models between different part of the
-parameter space. If this is the reason why the high mismatch tail is not
-improving during the joint-optimization, separating the parameter space into
-smaller subspace should help alleviate this issue. On the other hand, if the
-ansatz does not have the right parameterized form to capture the behavior of the
-NR waveforms as a function of the intrinsic parameters, the result should be
-always biased, and we should not expect any improvement even if we separate the
-parameter space into smaller space during training.
+Given that the waveform model's ansatz may not be entirely compatible with NR,
+and the optimization procedure is carried out over a distribution of waveforms
+with varying source parameters, it is conceivable that some trade-offs in
+accuracy exist between different parts of the parameter space. If this is the
+cause of the high mismatch tail's failure to improve during joint-optimization,
+segmenting the parameter space into smaller subspaces should alleviate this
+problem. On the other hand, if the ansatz lacks the correct parameterized form
+to capture the NR waveforms' behavior as a function of the intrinsic parameters,
+the results will always be biased, and we should not expect any improvement,
+even if we segment the parameter space during training.
 
 Since we know intrinsic parameters play an important role in the ansatz, we
 would like to investigate how intrinsic parameters affect the recalibration
