@@ -24,6 +24,8 @@
 \newcommand{\kw}[1]{{\color{rb4}[KW: #1 ]}}
 \definecolor{cyan}{HTML}{0097A7}
 \newcommand{\kl}[1]{{\color{cyan}[KL: #1 ]}}
+\definecolor{rr}{RGB}{173, 37, 37}
+\newcommand{\te}[1]{{\color{rr}[TE: #1 ]}}
 
 \newcommand{\cuhk}{\affiliation{Department of Physics, The Chinese University of Hong Kong, Shatin, N.T., Hong Kong}}
 \newcommand{\flatiron}{\affiliation{Center for Computational Astrophysics, Flatiron Institute, New York, NY 10010, USA}}
@@ -83,8 +85,8 @@ improve GW models.
 Currently, three families of GW models are commonly used. They are the
 effective-one-body (EOB) \citep{ossokine2020multipolar, cotesta2020frequency, taracchini2014effective}, Numerical Relativity
 (NR) surrogate \citep{islam2022surrogate, varma2019surrogate, varma2019surrogate2} and phenomenological (Phenom) models
-\citep{husa2016frequency, khan2016frequency, garcia2020multimode, pratten2021computationally} \kw{Add more citations related to
-the newest models}. EOB models are constructed by mapping two masses onto an
+\citep{husa2016frequency, khan2016frequency, garcia2020multimode, pratten2021computationally}. 
+EOB models are constructed by mapping two masses onto an
 effective body under an effective metric; NR surrogate models construct
 waveforms using combinations of NR waveforms; Phenom models are formulated using
 specific ansatz and inspiral approximations. While EOB and NR surrogate models
@@ -111,9 +113,9 @@ with the application of the chain rule in each step to evaluate its derivative.
 Analytic derivatives of such operations are applied in each step and the desired
 derivative can then be obtained by composing back the original function
 according to the original structure. {\ripple} \citep{ripple} was a new
-implementation of IMRPhenomD, one of the Phenom models. It was first implemented
+implementation of IMRPhenomD, one of the models within the Phenom family. It was first implemented
 in \texttt{lalsuite} using \texttt{C}. In order to make use of AD, it was
-rewritten using \jax, another {\python} package that supports AD. Using
+rewritten using \jax, a {\python} package that supports AD. Using
 {\ripple}, one can apply AD to GW models to obtain precise derivatives, thus
 allowing one to freely use derivative-based algorithms to perform data analyses. 
 % Need to cite references for AD
@@ -172,10 +174,7 @@ of frequency such as polynomials or lorentzians. Specifically, the merger-ringdo
 \end{aligned}
 \end{equation}
 where $A_{\mathrm{PN}}$ is the post-newtonian expansion of the insprial amplitude up to order $A_0f^2$, $f_{\mathrm{damp}}$ is the damping frequency, and $f_{\mathrm{RD}}$ is the frequency at ringdown. The ansatzes for phase can be found in \citep{khan2016frequency}. These simple analytic functions
-consists of parameters $\Lambda^i=\{\rho_i,\delta_i,\gamma_i\}$, which are defined as follows. \kw{Can you
-change equation one such that it consists of $\Lambda$? Also be explicit about
-the form of the function used for the fitting. Like write down the polynomials
-and lorentizans for the specific parts.}
+consists of parameters $\Lambda^i=\{\rho_i,\delta_i,\gamma_i\}$, which are defined as follows. 
 \begin{align} \label{eq:Lambda}
 	\Lambda^i&=\lambda_{00}^i+\lambda_{10}^i\eta \nonumber \\
 	&+(\chi_{\mathrm{PN}}-1)(\lambda_{01}^i+\lambda_{11}^i\eta+\lambda_{21}^i\eta^2) \nonumber \\ 
@@ -190,10 +189,10 @@ parameter, which is defined as
 \end{align}
 Here, $m_{1,2}$ and $\chi_{1,2}$ are the primary and secondary mass and spin,
 respectively. Finally, the individual segments are first connected directly using 
-step functions. Then, by fixing coefficients in the intermediate waveform, one can make 
-the final waveform is continuous in its first derivative \kw{expand a bit}.
+step functions. Then, by fixing coefficients in the intermediate segment, one can make 
+the final waveform is continuous in its first derivative.
 
-\kw{Need to work on this paragraph}
+%\kw{Need to work on this paragraph}
 Combining Eq.~\ref{eq:joint_waveform},~\ref{eq:amplitude}~and~\ref{eq:Lambda}, 
 we can see that the entire waveform is non-linear in $\lambda$. A slightly 
 inaccurate set of $\lambda$ can significantly affect the shape of the generated 
@@ -208,13 +207,8 @@ Eq. \ref{eq:Lambda}. Since the fitting procedure is done in a piece-wise manner,
 the correlations between different segments are omitted, which could limit the 
 accuracy of the model. Also, since fitting was performed before connecting 
 individual segments, the final waveform does not guarantee to achieve the optimal 
-waveform. The connecting procedure can alter the previously fitted waveform. 
+waveform. The connecting procedure alters the previously fitted waveform. 
 Hence, the model generated waveforms contains additional inaccuracies. 
-
-%their calibration procedure does not guarantee to have the optimal set of
-%$\lambda$, since the process of connecting segments alters the previously fitted
-%waveform. The model-generated waveforms do not take this effect into account,
-%and thus introduces additional inaccuracies. 
 
 Instead, we recalibrate coefficients jointly, which we can remove inaccuracies
 and biases discussed above, and can improve model accuracy. In the past, due to
@@ -243,6 +237,12 @@ $S_n(f)$ is the power spectral density(PSD) of noise from the instrument, $f_{\m
 the relevant maximum and minimum frequencies for the integration. The mismatch
 is a quantity that is closely related to the mean square error (MSE) between the
 two waveforms, as it is often considered a weighted version of the MSE. 
+
+\kl{The maximum is calculated by comparing the phase of IMRPhenomD and NR waveforms. We know that they are off by a linear relation of $f$, 
+\begin{align*}
+	\phi_{NR}-\phi_{IMR}=(2\pi t_0)f+\phi_0.
+\end{align*}
+Since I have $\phi_{NR}$, $\phi_{IMR}$ and the frequency array, I did a linear regression to get $2\pi t_0$ and $\phi_0$.}
 
 Since we wish to optimize the model over the whole parameter space, we need to compare multiple model generated waveforms with NR waveforms. However, mismatch only quantifies the difference between IMRPhenomD and NR waveform for one particular set of intrinsic parameters. To take into account of various different waveforms in the parameter space, we pick waveforms from the different parts of the parameter space. We define the loss function as an average of training waveforms in two ways, the simple average of mismatches and the normalize average of mismatches,  
 \begin{align}
@@ -281,37 +281,56 @@ same intrinsic parameters. We taper the time-series using Tukey window.
 	entire GW strain. } 
 Then, the frequency spectra can be obtained by taking the Fourier transform of the time-series.
 
-Other than NR waveforms, one need to choose a relevant noise PSD for 
-mismatch. Since a common goal for creating waveform approximant is to
-deploy the waveform model in downstream data analysis tasks, a reasonable choice
-for the noise PSD should be closely related to the instrument of interest. We
-choose the zero-detuned high-power (\zdethp) noise PSD as our
-first choice of noise PSD \citep{aasi2015advanced}. Because the total mass of the system simple scales
-the frequency of the waveform, we need to choose a corresponding mass scale to
-match the frequency range of our noise PSD. Here, we choose $M=50M_{\odot}$ for
-all waveforms, since this mass scale is common in LIGO observations. In addition
-to a detector-dependent PSD, we are also interested in a more
-instrument-agnostic case such that we can evaluate the effectiveness of the
-recalibration without considering detector effect. In this case, we set the
-noise PSD to be a constant value. 
+\te{I think this discussion needs to be much more precise. Having a waveform model calibrated to particular noise curve could make sense, but its inherently different to just fitting the phase and the amplitude separately like they do in the original paper. So I would recommend that our default is to use a flat PSD and then in addition discuss the one with the PSD. This way, I think we demonstrate more clearly that its the high dimensional fitting that helps, not the just changing the metric used when fitting.}
+\te{This choice seems pretty arbitrary. Looking at Fig 8 of 2111.03606, they seem to cluster closer to 60-70. This choice is important and should be more informed.}
 
-\kw{Remind me why don't we use the hybrid waveforms again? Cause we couldn't do it?}
-We shall notify readers that our treatment to NR waveforms is different from that of \citep{husa2016frequency, khan2016frequency}. In the original calibration process, training waveforms are hybrid waveforms of NR and SpinAlignedEOB
+% Need to change the focus to flat PSD instead of ALIGO PSD
+Other than NR waveforms, one need to choose a relevant noise PSD for 
+mismatch. We have opted to use a flat PSD for this purpose, as it provides results that are independent of the detector sensitivity and mass scale. The use of a flat PSD ensures that the improvement in accuracy is due solely to the difference in high-dimensional fitting and piece-wise fitting. Furthermore, we are interested in examining the effect of introducing a detector PSD on the optimization process. For this, we have chosen the zero-detuned high-power (\zdethp) noise PSD \citep{aasi2015advanced}. Since the total mass of the system scales with the frequency of the waveform, we must choose a corresponding mass scale to match the frequency range of our noise PSD. Therefore, we have selected a mass scale of $M=50M_{\odot}$ for all waveforms, as this is a commonly observed mass scale in LIGO observations. We will then examine the differences in optimization.
+
+%Other than NR waveforms, one need to choose a relevant noise PSD for 
+%mismatch. Since a common goal for creating waveform approximant is to
+%deploy the waveform model in downstream data analysis tasks, a reasonable choice
+%for the noise PSD should be closely related to the instrument of interest. We
+%choose the zero-detuned high-power (\zdethp) noise PSD as our
+%first choice of noise PSD \citep{aasi2015advanced}. Because the total mass of the system simple scales
+%the frequency of the waveform, we need to choose a corresponding mass scale to
+%match the frequency range of our noise PSD. Here, we choose $M=50M_{\odot}$ for
+%all waveforms, since this mass scale is common in LIGO observations. In addition
+%to a detector-dependent PSD, we are also interested in a more
+%instrument-agnostic case such that we can evaluate the effectiveness of the
+%recalibration without considering detector effect. In this case, we set the
+%noise PSD to be a constant value. 
+
+We point out that our treatment to NR waveforms is different from that of \citep{husa2016frequency, khan2016frequency}. In the original calibration process, training waveforms are hybrid waveforms of NR and SpinAlignedEOB
 (SEOB) waveforms. The low frequency inspiral part is taken from the SEOB
 waveforms while the rest of the waveforms are taken from NR simulations.
-Instead, we solely use NR waveforms for comparison, since we only exploring the possibility of optimizing waveform models. Thus, for simplicity sake, we ignore this procedure. On the other hand, most NR waveforms used (for both training and testing) have long enough time series data, i.e.~$>15$ orbits \citep{boyle2019sxs}, in
+Instead, we solely use NR waveforms for comparison, since we are only exploring the possibility of optimizing waveform models. Thus, for simplicity sake, we ignore this procedure. On the other hand, most NR waveforms used (for both training and testing) have long enough time series data, i.e.~$>15$ orbits \citep{boyle2019sxs}, in
 which they are long enough to contain part of the inspiral segment and all
 merger and ringdown frequency information. We take the frequency limits as
-$f_{\mathrm{min}}=0.1f_{\mathrm{RD}}$ and $f_{\mathrm{max}}=1.2f_{\mathrm{RD}}$,
+$f_{\mathrm{min}}=0.1f_{\mathrm{RD}}$ and $f_{\mathrm{max}}=1.2f_{\mathrm{RD}}$,	% 0.001 Hz?
 where $f_{\mathrm{RD}}$ is the frequency at ringdown. This range covers most of
 the IMRPhenomD's frequency range, except the minimum frequency is set higher
 than that in the original calibration due to NR length. When compared with
 IMRPhenomC, the frequency range is slightly extended to have a higher maximum
-frequency. 
+frequency. We have the dimensionless frequency spacing $M\Delta f=2.5\times10^{-6}$, 
+which is sufficient to capture all features of GW strain. 
 
 With the loss function evaluated, we apply gradient descent to optimize the tunable
-coefficients as shown in Algorithm~\ref{alg:gradient}. We take $\lambda_i$ to be the original coefficients given in \citep{khan2016frequency}. We take them as the initial waveform coefficients because they lie in the neighborhood of the minimum that we wish to find. With
-such an optimization procedure, we can systematically obtain the optimized coefficients. 
+coefficients as shown in Algorithm~\ref{alg:gradient}. We take $\lambda_i$ to be the 
+original coefficients given in \citep{khan2016frequency}. We take them as the initial 
+waveform coefficients because they lie in the neighborhood of the minimum that we wish 
+to find. Then, by taking $\alpha=10^{-6}$ and $N=30000$, we can optimize the 
+coefficients systematically. 
+\te{I think we need a bit more discussion about the stopping criterion here. What is N, and why did we choose it to be this number? Ideally we would actually have a plot of the loss function during training. I don't have a good intuition for if its noisy. Does it plateau? If we wanted to ensure that people don't complain about overfitting we could also plot the loss of the validation set to show its not going up.}
+
+\begin{figure}
+	\script{loss.py}
+	\centering
+	\includegraphics[width=\columnwidth]{figures/loss.pdf}
+%	\caption{Parameter space with mass ratio against normalized reduced spin. Orange: Training waveforms; Blue: Testing waveforms}
+	\label{fig:loss}
+\end{figure}
 
 \begin{algorithm}[t]
 	\caption{Gradient descent pseudocode}
