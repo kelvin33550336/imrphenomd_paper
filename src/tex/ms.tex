@@ -285,12 +285,8 @@ same intrinsic parameters. We taper the time-series using Tukey window.
 	entire GW strain. } 
 Then, the frequency spectra can be obtained by taking the Fourier transform of the time-series.
 
-\te{I think this discussion needs to be much more precise. Having a waveform model calibrated to particular noise curve could make sense, but its inherently different to just fitting the phase and the amplitude separately like they do in the original paper. So I would recommend that our default is to use a flat PSD and then in addition discuss the one with the PSD. This way, I think we demonstrate more clearly that its the high dimensional fitting that helps, not the just changing the metric used when fitting.}
-\te{This choice seems pretty arbitrary. Looking at Fig 8 of 2111.03606, they seem to cluster closer to 60-70. This choice is important and should be more informed.}
-
-% Need to change the focus to flat PSD instead of ALIGO PSD
-Other than NR waveforms, one need to choose a relevant noise PSD for 
-mismatch. We have opted to use a flat PSD for this purpose, as it provides results that are independent of the detector sensitivity and mass scale. The use of a flat PSD ensures that the improvement in accuracy is due solely to the difference in high-dimensional fitting and piece-wise fitting. Furthermore, we are interested in examining the effect of introducing a detector PSD on the optimization process. For this, we have chosen the zero-detuned high-power (\zdethp) noise PSD \citep{aasi2015advanced}. Since the total mass of the system scales with the frequency of the waveform, we must choose a corresponding mass scale to match the frequency range of our noise PSD. We selected a mass scale of $M=50M_{\odot}$ for all waveforms, as this is a commonly observed mass scale in LIGO observations. We will then examine the differences in optimization.
+\te{I think this discussion needs to be much more precise. Having a waveform model calibrated to particular noise curve could make sense, but its inherently different to just fitting the phase and the amplitude separately like they do in the original paper. So I would recommend that our default is to use a flat PSD and then in addition discuss the one with the PSD. This way, I think we demonstrate more clearly that its the high dimensional fitting that helps, not the just changing the metric used when fitting.}Other than NR waveforms, one need to choose a relevant noise PSD for 
+mismatch. We have opted to use a flat PSD for this purpose, as it provides results that are independent of the detector sensitivity and mass scale. The use of a flat PSD ensures that the improvement in accuracy is due solely to the difference in high-dimensional fitting and piece-wise fitting. Furthermore, we are interested in examining the effect of introducing a detector PSD on the optimization process. For this, we have chosen the zero-detuned high-power (\zdethp) noise PSD \citep{aasi2015advanced}. Since the total mass of the system scales with the frequency of the waveform, we must choose a corresponding mass scale to match the frequency range of our noise PSD. We selected a mass scale of $M=50M_{\odot}$ for all waveforms, as this is a commonly observed mass scale in LIGO observations. \te{This choice seems pretty arbitrary. Looking at Fig 8 of 2111.03606, they seem to cluster closer to 60-70. This choice is important and should be more informed.}We will then examine the differences in optimization.
 
 %Other than NR waveforms, one need to choose a relevant noise PSD for 
 %mismatch. Since a common goal for creating waveform approximant is to
@@ -608,10 +604,9 @@ improve the results.
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
-	\caption{Distributions of mismatches after optimizing in separate regions.
+	\caption{Distributions of mismatches in the top-left and bottom-right regions.
 	We use a constant noise spectrum to calculate mismatch and
-	$\mathcal{L}_{\mathrm{mean}}$ for the loss function. Generally, most
-	waveforms with mismatch $>10^{-2}$ lies in the bottom-right region. }
+	$\mathcal{L}_{\mathrm{mean}}$ for the loss function. We see waveforms in the top-left region generally improves while waveforms in the bottom-right region worsened. \kl{I tried to overlap these two histograms together but it makes them very hard to read. }}
 	\label{fig:all_quadrants}
 \end{figure}
 
