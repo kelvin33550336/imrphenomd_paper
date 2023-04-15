@@ -120,6 +120,8 @@ rewritten using \jax, a {\python} package that supports AD. Using
 allowing one to freely use derivative-based algorithms to perform data analyses. 
 % Need to cite references for AD
 
+% Put more focus on the joint optimization instead of having a set of more accurate 
+% coefficients, since the method is the main point
 In this paper, we investigate the possibility of further improving the accuracy
 of IMRPhenomD by jointly optimizing all the fitting coefficients given NR
 waveforms, and what constraints one may face when trying to further improve. We
@@ -131,7 +133,6 @@ parameters. Specifically, IMRPhenomD favors certain parts of the parameter
 space. This means IMRPhenomD introduces systematic bias to other GW analysis
 tasks. This showcases the flaws of the ansatz and allows us to have a deeper
 understanding of Phenom models.  
-% \kw{Briefly describe the high level finding in this paper}
 
 The rest of the paper is structured as follows: In Sec.~\ref{sec:method}, we
 review the parameterization of the IMRPhenomD model and the mismatch function
@@ -152,7 +153,6 @@ In order to recalibrate the model, we have to understand what parameters the mod
 Here we give a succinct summary of the IMRPhenomD model and the relevant parameters.
 For interested readers, please refer to \citep{khan2016frequency} for more details on construction of the model.
 
-
 The IMRPhenomD model is constructed by combining three individually fitted parts
 into one coherent waveform model, which consists of the inspiral, intermediate, and merger-ringdown part, 
 \kw{Check if the following equation is correct. I think it is off by some smoothing factors.} 
@@ -164,7 +164,8 @@ into one coherent waveform model, which consists of the inspiral, intermediate, 
 Instead of fitting the strain, which is a highly oscillatory function that is
 difficult to fit, the amplitude and phase are fitted since they are smoother
 functions. In each part, the amplitude and phase are made using simple functions
-of frequency such as polynomials or lorentzians. Specifically, the merger-ringdown amplitude is fitted by a lorentzian and the other parts are fitted using polynomials. 
+of frequency such as polynomials or lorentzians. Specifically, the merger-ringdown 
+amplitude is fitted by a lorentzian and the other parts are fitted using polynomials. 
 \begin{equation}\label{eq:amplitude}
 \begin{aligned}
 	A_0&\equiv\sqrt{\frac{2\eta}{3\pi^{1/3}}}f^{-7/6}\\
@@ -253,9 +254,12 @@ where $\mathcal{M}_i$ represents the mismatch of an individual training waveform
 $\mathcal{M}_{i,\mathrm{ini}}$ represents the initial mismatch of the individual
 training waveform, and $N$ is the total number of individual training waveforms.
 Note that we choose to use two different averages, since they have different 
-preferences in optimization base on waveform mismatches. For the first choice, simple average serves as the simplest choice of loss function, but is prone to be dominated by a single waveform with a large mismatch. Other waveforms with smaller mismatches would be
-insignificant comparatively, and might not be able to improve under such
-optimization. Alternatively, the second choice, normalized average eliminates the aforementioned issue. Nevertheless, it excludes the
+preferences in optimization base on waveform mismatches. For the first choice, 
+simple average serves as the simplest choice of loss function, but is prone to 
+be dominated by a single waveform with a large mismatch. Other waveforms with 
+smaller mismatches would be insignificant comparatively, and might not be able 
+to improve under such optimization. Alternatively, the second choice, normalized 
+average eliminates the aforementioned issue. Nevertheless, it excludes the
 information on initial mismatches. $\mathcal{L}_{\mathrm{fl}}$ restricts every
 training waveform to decrease at similar rates, hence it is hard to obtain
 optimized waveforms with mismatches in the same order of magnitude. Instead,
@@ -286,7 +290,7 @@ Then, the frequency spectra can be obtained by taking the Fourier transform of t
 
 % Need to change the focus to flat PSD instead of ALIGO PSD
 Other than NR waveforms, one need to choose a relevant noise PSD for 
-mismatch. We have opted to use a flat PSD for this purpose, as it provides results that are independent of the detector sensitivity and mass scale. The use of a flat PSD ensures that the improvement in accuracy is due solely to the difference in high-dimensional fitting and piece-wise fitting. Furthermore, we are interested in examining the effect of introducing a detector PSD on the optimization process. For this, we have chosen the zero-detuned high-power (\zdethp) noise PSD \citep{aasi2015advanced}. Since the total mass of the system scales with the frequency of the waveform, we must choose a corresponding mass scale to match the frequency range of our noise PSD. Therefore, we have selected a mass scale of $M=50M_{\odot}$ for all waveforms, as this is a commonly observed mass scale in LIGO observations. We will then examine the differences in optimization.
+mismatch. We have opted to use a flat PSD for this purpose, as it provides results that are independent of the detector sensitivity and mass scale. The use of a flat PSD ensures that the improvement in accuracy is due solely to the difference in high-dimensional fitting and piece-wise fitting. Furthermore, we are interested in examining the effect of introducing a detector PSD on the optimization process. For this, we have chosen the zero-detuned high-power (\zdethp) noise PSD \citep{aasi2015advanced}. Since the total mass of the system scales with the frequency of the waveform, we must choose a corresponding mass scale to match the frequency range of our noise PSD. We selected a mass scale of $M=50M_{\odot}$ for all waveforms, as this is a commonly observed mass scale in LIGO observations. We will then examine the differences in optimization.
 
 %Other than NR waveforms, one need to choose a relevant noise PSD for 
 %mismatch. Since a common goal for creating waveform approximant is to
@@ -328,7 +332,7 @@ coefficients systematically.
 	\script{loss.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/loss.pdf}
-%	\caption{Parameter space with mass ratio against normalized reduced spin. Orange: Training waveforms; Blue: Testing waveforms}
+	\caption{The value of loss function against number of iterations. The code is terminated after 30000 steps }
 	\label{fig:loss}
 \end{figure}
 
@@ -511,17 +515,17 @@ would like to investigate how intrinsic parameters affect the recalibration
 process. First, we plot the parameter space of $q$ vs. $\chi_{\mathrm{PN}}$ in
 Fig. \ref{fig:ps_q148_qchi}. We can see near non-spinning waveforms demonstrate
 more consistent improvement, whereas spinning waveforms can either improve or
-worsen in terms of mismatch. \kw{What does this means?}
+worsen in terms of mismatch base on their intrinsic parameters. 
+%\kw{What does this means?}
 
 Furthermore, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in
 Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e.
 $\chi_1\approx\chi_2$, show good mismatch improvements. We expect to see this
 feature since the original coefficients were fitted using NR waveforms with
 equal or similar spin, hence the model prefers waveforms with similar spin. One
-interesting feature is how the second and fourth quadrants respond to
-optimization. \kw{How did you count quadrant?} In the second quadrant ($\chi_1<0$ and $\chi_2>0$), waveforms
-generally improve with along optimization. However, mismatches in the fourth
-quadrant ($\chi_1>0$ and $\chi_2<0$) do not improve after optimization. Most
+interesting feature is how the top-left ($\chi_1<0$ and $\chi_2>0$) and bottom-right ($\chi_1>0$ and $\chi_2<0$) regions respond to
+optimization. In the top-left region, waveforms
+generally improve with along optimization. However, mismatches in the bottom-right region do not improve after optimization. Most
 waveforms even turned worse after optimization. These waveforms correspond to
 the waveforms in the high mismatch tail in Fig.~\ref{fig:q148}. \kw{Give justification.}
 
@@ -583,21 +587,20 @@ the waveforms in the high mismatch tail in Fig.~\ref{fig:q148}. \kw{Give justifi
 		SXS:BBH:0045 & 3.0 & 0.50     & -0.50    \\
 		SXS:BBH:0292 & 3.0 & 0.73     & -0.85    \\ \midrule\bottomrule
 	\end{tabularx}
-	\caption{List of waveforms used in recalibrating coefficients in 4 quadrants. From top to down are the first, second, third and fourth quadrants. Note that for the first and third quadrants, waveforms are chosen to have equal or similar spins, while the training waveforms for the second and fourth quadrants are chosen to have opposite spins.}
+	\caption{List of waveforms used in recalibrating coefficients in 4 regions. From top to down are the top-right ($\chi_1,\chi_2>0$), top-left ($\chi_1<0<\chi_2$), bottom-left ($\chi_1,\chi_2<0$) and bottom-right ($\chi_1>0>\chi_2$) regions. Note that for the top-right and bottom-left regions, waveforms are chosen to have equal or similar spins, while the training waveforms for the other two regions are chosen to have opposite spins.}
 	\label{tab:quadrants}
 \end{table}
 
-We divided the parameter space into four quadrants to analyze the effect of the
+We divided the parameter space into four regions to analyze the effect of the
 recalibration procedure on each region separately (Fig.\ref{fig:ps_q148}). The
 training waveforms used for fitting are listed in Table \ref{tab:quadrants}. The
-second and fourth quadrants have limited data for $q>4$, hence the results are
+top-left and bottom-right regions have limited data for $q>4$, hence the results are
 only valid up to $q\leq4$. From Fig.\ref{fig:ps_q148_quadrant}, we observe
-improvements in waveform mismatch for all waveforms, except those in the fourth
-quadrant. For equal-spin waveforms lying in the proximity of the diagonal axis,
+improvements in waveform mismatch for all waveforms, except those in the bottom-right region. For equal-spin waveforms lying in the proximity of the diagonal axis,
 the mismatch improves significantly due to most training waveforms being
-equal-spin. In the second quadrant, the improvement is noticeable, except for a
+equal-spin. In the top-left region, the improvement is noticeable, except for a
 few defects caused by some testing waveforms having $q>4$. The optimized
-waveforms in the fourth quadrant have a higher mismatch than the original ones,
+waveforms in the bottom-right region have a higher mismatch than the original ones,
 indicating poor fitting. Further optimization in a smaller subspace does not
 improve the results.
 
@@ -605,10 +608,10 @@ improve the results.
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
-	\caption{Distributions of mismatches after optimizing in separate quadrants.
+	\caption{Distributions of mismatches after optimizing in separate regions.
 	We use a constant noise spectrum to calculate mismatch and
 	$\mathcal{L}_{\mathrm{mean}}$ for the loss function. Generally, most
-	waveforms with mismatch $>10^{-2}$ lies in the fourth quadrant. }
+	waveforms with mismatch $>10^{-2}$ lies in the bottom-right region. }
 	\label{fig:all_quadrants}
 \end{figure}
 
@@ -617,7 +620,7 @@ improve the results.
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
 	\caption{\kw{The color scheme makes the plot a bit hard to read.}Parameter
-	space of testing waveforms. Each quadrant is fitted independently. Colorbar
+	space of testing waveforms. Each region is fitted independently. Colorbar
 	represents log difference of mismatches before and after optimization.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
@@ -670,15 +673,15 @@ unequal spin events. This degeneracy produces straight lines in the parameter
 space with negative slopes that depend on the mass ratio, as shown in
 Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top left
 region than the bottom right along a degeneracy line. In an attempt to address
-this issue, we partitioned the parameter space into four quadrants, as described
+this issue, we partitioned the parameter space into four regions, as described
 in Sec. \ref{sec:result}. However, even with separate optimizations for each
-quadrant, Fig.\ref{fig:ps_q148_quadrant} indicates that the fourth quadrant
-exhibits similar mismatches as before, while the second quadrant's performance
+regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the bottom-right region
+exhibits similar mismatches as before, while the top-left region's performance
 has improved. This observation suggests that the ansatz is specific to certain
 regions of the parameter space, with a preference for BBH events featuring
 $\chi_1<0$ and $\chi_2>0$.
 
-The division of the parameter space into four quadrants was a simple approach
+The division of the parameter space into four regions was a simple approach
 taken for practical reasons. A more systematic approach would involve the use of
 level set estimation algorithms to identify regions of interest within the
 parameter space. Such an algorithm can reveal additional degeneracies or issues
@@ -726,17 +729,16 @@ Fig.~\ref{fig:q148_q1248_compare}.
 
 Furthermore, we investigated how the intrinsic parameters affect the
 improvement. Fig.~\ref{fig:ps_q148} shows that the optimization procedure has a
-certain preference for waveforms lying in the second quadrant while the fourth
+certain preference for waveforms lying in the top-left region while the fourth
 quadrant cannot be improved. To further test this result, we recalibrate
 waveforms in separate regions in parameter space. As shown in
 Fig.~\ref{fig:ps_q148_quadrant}, this recalibration process gives further
-improvement to the second quadrant while the fourth quadrant shows similar
-result. This indicates that the model's ansatz does not fit waveforms in the
-fourth quadrant. This phenomenon is due to the reduced spin approximation used
+improvement to the top-left region while the bottom-right region shows similar
+result. This indicates that the model's ansatz does not fit waveforms in this region. This phenomenon is due to the reduced spin approximation used
 in parameterizing the ansatz, where degeneracies between $\chi_1$ and $\chi_2$
 are introduced. 
 
-While we naively separate the optimization process into 4 quadrants, one can
+While we naively separate the optimization process into 4 regions, one can
 perform systematic region-selection. In principle, we can apply this general
 method to other newer and more accurate models such as IMRPhenomX or IMRPhenomP
 models. Then, we can perform all the above analyses to understand how to
