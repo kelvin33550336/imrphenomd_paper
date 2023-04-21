@@ -7,10 +7,10 @@ params = {
     "font.size": 18,
     "legend.fontsize": 12,
     "legend.frameon": True,
-    "axes.labelsize": 16,
-    "axes.titlesize": 16,
-    "xtick.labelsize": 14,
-    "ytick.labelsize": 14,
+    "axes.labelsize": 18,
+    "axes.titlesize": 18,
+    "xtick.labelsize": 18,
+    "ytick.labelsize": 18,
     "axes.unicode_minus": False,
     "figure.figsize": (7, 5),
     "xtick.top": True,
@@ -38,18 +38,22 @@ q148 = np.loadtxt(paths.data / "all_quadrants.dat")
 data2 = np.array([i for i in q148 if (i[2] < 0 and i[3] > 0)])
 data4 = np.array([i for i in q148 if (i[2] > 0 and i[3] < 0)])
 
-bins = np.arange(-5, -1, 0.25)
+bins = np.arange(-5, -1, 0.2)
 
 fig, ax = plt.subplots(2, figsize=(6, 10))
 
-ax[0].hist(np.log10(data2[:,4]), bins=bins, label="top-left original", histtype="step", color="C0", linewidth=1.3, alpha=0.8)
-ax[0].hist(np.log10(data2[:,5]), bins=bins, label="top-left optimized", histtype="step", color="C1", linewidth=1.3, alpha=0.8)
+ax[0].hist(np.log10(data2[:,4]), bins=bins, alpha=0.3, color="C0")
+ax[0].hist(np.log10(data2[:,4]), bins=bins, label="top-left original", histtype="step", color="C0", linewidth=1.3)
+ax[0].hist(np.log10(data2[:,5]), bins=bins, alpha=0.3, color="C1")
+ax[0].hist(np.log10(data2[:,5]), bins=bins, label="top-left optimized", histtype="step", color="C1", linewidth=1.3)
 ax[0].set_ylabel('Count')
 ax[0].legend(loc='upper left')
 
+ax[1].hist(np.log10(data4[:,4]), bins=bins, alpha=0.3, color="C0")
 ax[1].hist(np.log10(data4[:,4]), bins=bins, label="bottom-right original", histtype="step", color="C0", linewidth=1.3, alpha=0.8)
+ax[1].hist(np.log10(data2[:,5]), bins=bins, alpha=0.3, color="C1")
 ax[1].hist(np.log10(data4[:,5]), bins=bins, label="bottom-right optimized", histtype="step", color="C1", linewidth=1.3, alpha=0.8)
-ax[1].set_xlabel('log(mismatch)')
+ax[1].set_xlabel('log(\mathcal{M})')
 ax[1].set_ylabel('Count')
 ax[1].legend(loc='upper left')
 
