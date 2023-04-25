@@ -40,12 +40,13 @@ bins = np.arange(-5, -1, 0.2)
 
 plt.hist(np.log10(q148[:,4]), bins=bins, alpha=0.3, color="C0")
 plt.hist(np.log10(q148[:,4]), bins=bins, label="Original", histtype="step", color="C0", linewidth=1.3)
+plt.axvline(x=np.log10(np.median(q148[:,4])), color="C0", ls="--")
 
 plt.hist(np.log10(q148[:,5]), bins=bins, alpha=0.05, color="C1")
 plt.hist(np.log10(q148[:,5]), bins=bins, label="$\mathcal{L}_{\mathrm{mean}}$", histtype="step", color="C1", linewidth=1.3)
 plt.axvline(x=np.log10(np.median(q148[:,5])), color="C1", ls="--")
 
-plt.hist(np.log10(q148_fl[:,5]), bins=bins, alpha=0.05, color="C3")
+plt.hist(np.log10(q148_fl[:,5]), bins=bins, alpha=0.05, color="C2")
 plt.hist(np.log10(q148_fl[:,5]), bins=bins, label="$\mathcal{L}_{\mathrm{fl}}$", histtype="step", color="C3", linewidth=1.3)
 plt.axvline(x=np.log10(np.median(q148_fl[:,5])), color="C2", ls="--")
 

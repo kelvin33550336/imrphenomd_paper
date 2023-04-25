@@ -46,7 +46,6 @@
 \author{Thomas D.~P.~Edwards}
 \JHU
 
-% Abstract with filler text
 \begin{abstract}
     We present a simple and general method of recalibrating gravitational wave
     (GW) phenomenological waveform models jointly. By using {\jax} and
@@ -64,7 +63,6 @@
     develop newer phenomenological models. 
 \end{abstract}
 
-% Main body with filler text
 \section{Introduction} \label{sec:intro}
 
 In the future, the Laser Interferometer Gravitational-wave Observatory (LIGO)
@@ -445,7 +443,7 @@ optimization scheme remains unaffected.
 	$\mathcal{L}_{\mathrm{mean}}$ and $\mathcal{L}_{\mathrm{fl}}$. We use 
 	training waveforms listed in Tab.~\ref{tab:q148} and
 	mismatches are weighted with the constant PSD. For the
-	$\mathcal{L}_{\mathrm{mean}}$ distributions, the median decreased by 50.0\%
+	$\mathcal{L}_{\mathrm{mean}}$ distributions, the median (dashed lines) decreased by 50.0\%
 	while the median of $\mathcal{L}_{\mathrm{fl}}$ distribution decreased by
 	22.9\%.}
 	\label{fig:q148}
@@ -604,7 +602,7 @@ further optimization in a smaller subspace does not improve the results.
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
 	\caption{Distributions of mismatches in the top-left and bottom-right regions.
 	We use a constant noise spectrum to calculate mismatch and
-	$\mathcal{L}_{\mathrm{mean}}$ for the loss function. We see waveforms in the top-left region generally improves while waveforms in the bottom-right region worsened. \kl{I tried to overlap these two histograms together but it makes them very hard to read. }}
+	$\mathcal{L}_{\mathrm{mean}}$ for the loss function. Waveforms in the top-left region generally improves while waveforms in the bottom-right region worsened, as indicated by the median (dashed lines). \kl{I tried to overlap these two histograms together but it makes them very hard to read. }}
 	\label{fig:all_quadrants}
 \end{figure}
 
@@ -612,8 +610,7 @@ further optimization in a smaller subspace does not improve the results.
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{\kw{The color scheme makes the plot a bit hard to read.}Parameter
-	space of testing waveforms. Each region is fitted independently. Colorbar
+	\caption{Parameter space of testing waveforms. Each region is fitted independently. Colorbar
 	represents log difference of mismatches before and after optimization.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}

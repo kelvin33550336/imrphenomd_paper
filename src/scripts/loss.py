@@ -37,6 +37,6 @@ mpl.rcParams.update(params)
 data = np.loadtxt(paths.data / "q148_loss.dat")
 
 plt.plot(data[:,0], data[:,1])
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
+plt.ylabel('$\mathcal{L}_{\mathrm{mean}}$')
+plt.xlabel('N')
 plt.savefig(paths.figures / "loss.pdf", bbox_inches="tight")
