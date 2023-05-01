@@ -430,6 +430,7 @@ mismatch of all testing waveforms, and present the resulting distribution in
 Fig. \ref{fig:q148}. The peak of the distribution has shifted towards a lower
 mismatch, with a decrease of almost one order of magnitude and a 50\% reduction
 in the median. When using $\mathcal{L}_{\mathrm{fl}}$, we observe a similar
+
 improvement with a 22.9\% decrease in the median. However, the distribution lacks
 a clear peak due to the problem discussed in Section \ref{subsec:optimization}.
 Despite this, both distributions exhibit significant improvement, and the
@@ -492,6 +493,7 @@ distribution.
 Given that the waveform model's ansatz may not be entirely compatible with NR,
 and the optimization procedure is carried out over a distribution of waveforms
 with varying intrinsic parameters, it is conceivable that some trade-offs in
+
 accuracy exist between different parts of the parameter space. If this is the
 cause of the high mismatch tail's failure to improve during joint-optimization,
 segmenting the parameter space into smaller subspaces should alleviate this
@@ -504,6 +506,7 @@ Since we know intrinsic parameters play an important role in the ansatz, we
 would like to investigate how intrinsic parameters affect the recalibration
 process. First, we plot the parameter space of $q$ vs. $\chi_{\mathrm{PN}}$ in
 Fig. \ref{fig:ps_q148_qchi}. We can see near non-spinning waveforms demonstrate
+
 more consistent improvement, since the ansatz are developed base on non-spinning 
 waveforms. Also, the original coefficients were fitted using NR waveforms with
 equal or similar spin, hence the model prefers waveforms with similar spin. On 
@@ -611,6 +614,7 @@ further optimization in a smaller subspace does not improve the results.
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
 	\caption{Parameter space of testing waveforms. Each region is fitted independently. Colorbar
+
 	represents log difference of mismatches before and after optimization.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
@@ -663,15 +667,19 @@ unequal spin events. This degeneracy produces straight lines in the parameter
 space with negative slopes that depend on the mass ratio, as shown in
 Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top left
 region than the bottom right along a degeneracy line. In an attempt to address
+
 this issue, we partitioned the parameter space into four regions, as described
 in Sec. \ref{sec:result}. However, even with separate optimizations for each
 regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the bottom-right region
 exhibits similar mismatches as before, while the top-left region's performance
+
 has improved. This observation suggests that the ansatz is specific to certain
 regions of the parameter space, with a preference for BBH events featuring
 $\chi_1<0$ and $\chi_2>0$.
 
+
 The division of the parameter space into four regions was a simple approach
+
 taken for practical reasons. A more systematic approach would involve the use of
 level set estimation algorithms to identify regions of interest within the
 parameter space. Such an algorithm can reveal additional degeneracies or issues
@@ -691,6 +699,7 @@ it is expected that both models can be enhanced since they share similar
 construction principles to the IMRPhenomD model. For instance, they also use PN
 approximants as part of the ansatz in the inspiral segment. It will be interesting 
 to recalibratethe IMRPhenomX model \citep{pratten2020setting}. Because it is
+
 parameterized by an additional anti-symmetric spin parameter, it is expected not
 to exhibit the degeneracy previously described. A more detailed investigation
 may provide valuable insights into the systematics of the Phenom models.
