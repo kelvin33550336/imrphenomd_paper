@@ -40,7 +40,9 @@ logdiff = np.log10(data[:,5] / data[:,4])
 cm = plt.cm.get_cmap('RdYlBu')
 colors = logdiff
 sc = plt.scatter(data[:,2], data[:,3], c=colors, vmin=-1, vmax=1, s=30, cmap=cm, alpha=0.8)
-plt.colorbar(sc).ax.set_ylabel('$\log(MM_{\mathrm{opt}}/MM_{\mathrm{ori}})$', rotation=270, labelpad=20)
+cbar = plt.colorbar(sc)
+cbar.ax.set_ylabel('$\log(\mathcal{M}/\mathcal{M}_i)$', rotation=270, labelpad=20)
+cbar.ax.set_yticklabels(['$< -1$', '$-0.75$', '$-0.5$', '$-0.25$', '$0$', '$0.25$', '$0.5$', '$0.75$', '$> 1$'])
 plt.xlabel('$\chi_1$')
 plt.ylabel('$\chi_2$')
 

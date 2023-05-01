@@ -5,12 +5,12 @@ import paths
 
 params = {
     "font.size": 18,
-    "legend.fontsize": 15,
+    "legend.fontsize": 12,
     "legend.frameon": True,
-    "axes.labelsize": 18,
-    "axes.titlesize": 18,
-    "xtick.labelsize": 18,
-    "ytick.labelsize": 18,
+    "axes.labelsize": 15,
+    "axes.titlesize": 15,
+    "xtick.labelsize": 15,
+    "ytick.labelsize": 15,
     "axes.unicode_minus": False,
     "figure.figsize": (7, 5),
     "xtick.top": True,
@@ -31,7 +31,6 @@ params = {
     "mathtext.fontset": "cm",
     "axes.formatter.use_mathtext": True,  # needed when using cm=cmr10 for normal text
 }
-
 
 mpl.rcParams.update(params)
 

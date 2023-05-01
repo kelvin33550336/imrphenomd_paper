@@ -7,10 +7,10 @@ params = {
     "font.size": 18,
     "legend.fontsize": 12,
     "legend.frameon": True,
-    "axes.labelsize": 15,
-    "axes.titlesize": 15,
-    "xtick.labelsize": 15,
-    "ytick.labelsize": 15,
+    "axes.labelsize": 16,
+    "axes.titlesize": 16,
+    "xtick.labelsize": 14,
+    "ytick.labelsize": 14,
     "axes.unicode_minus": False,
     "figure.figsize": (7, 5),
     "xtick.top": True,
@@ -34,16 +34,9 @@ params = {
 
 mpl.rcParams.update(params)
 
-data = np.loadtxt(paths.data / "q148_quadrants.dat")
+data = np.loadtxt(paths.data / "q148_loss.dat")
 
-logdiff = np.log10(data[:,5] / data[:,4])
-cm = plt.cm.get_cmap('RdYlBu')
-colors = logdiff
-sc = plt.scatter(data[:,2], data[:,3], c=colors, vmin=-1, vmax=1, s=30, cmap=cm, alpha=0.8)
-cbar = plt.colorbar(sc)
-cbar.ax.set_ylabel('$\log(\mathcal{M}/\mathcal{M}_i)$', rotation=270, labelpad=20)
-cbar.ax.set_yticklabels(['$< -1$', '$-0.75$', '$-0.5$', '$-0.25$', '$0$', '$0.25$', '$0.5$', '$0.75$', '$> 1$'])
-plt.xlabel('$\chi_1$')
-plt.ylabel('$\chi_2$')
-
-plt.savefig(paths.figures / "ps_q148_quadrants.pdf", bbox_inches="tight")
+plt.plot(data[:,0], data[:,1])
+plt.ylabel('$\mathcal{L}_{\mathrm{mean}}$')
+plt.xlabel('N')
+plt.savefig(paths.figures / "loss.pdf", bbox_inches="tight")

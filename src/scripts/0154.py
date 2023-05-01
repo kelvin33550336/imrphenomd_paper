@@ -32,6 +32,13 @@ params = {
     "axes.formatter.use_mathtext": True,  # needed when using cm=cmr10 for normal text
 }
 
+MSUN = 1.988409902147041637325262574352366540e30  # kg
+G = 6.67430e-11  # m^3 / kg / s^2
+C = 299792458.0  # m / s
+gt = G * MSUN / (C ** 3.0)
+
+f_ins = 0.018
+f_rd =  149.1018563859192 * (25. + 25.) * gt
 
 mpl.rcParams.update(params)
 
@@ -50,25 +57,33 @@ fig, ax = plt.subplots(2, 2, figsize=(15, 10))
 ax[0, 0].loglog(f_uniform, NR_amp, label='NR')
 ax[0, 0].loglog(f_uniform, IMR_amp, label='IMR original')
 ax[0, 0].loglog(f_uniform, IMR_opt_amp, label='IMR optimized')
+ax[0, 0].axvline(x=f_ins, color="k", alpha=0.5, ls="--")
+ax[0, 0].axvline(x=f_rd, color="k", alpha=0.4, ls="--")
 ax[0, 0].set_xlabel(r'$Mf$')
 ax[0, 0].set_ylabel(r'$|\tilde{h}(f)|$')
 ax[0, 0].legend()
 
-ax[0, 1].plot(f_uniform, NR_angle, label='NR')
-ax[0, 1].plot(f_uniform, IMR_angle, label='IMR original')
-ax[0, 1].plot(f_uniform, IMR_opt_angle, label='IMR optimized')
+ax[0, 1].semilogx(f_uniform, NR_angle, label='NR')
+ax[0, 1].semilogx(f_uniform, IMR_angle, label='IMR original')
+ax[0, 1].semilogx(f_uniform, IMR_opt_angle, label='IMR optimized')
+ax[0, 1].axvline(x=f_ins, color="k", alpha=0.5, ls="--")
+ax[0, 1].axvline(x=f_rd, color="k", alpha=0.4, ls="--")
 ax[0, 1].set_xlabel(r'$Mf$')
 ax[0, 1].set_ylabel(r'$\phi$')
 ax[0, 1].legend()
 
-ax[1, 0].plot(f_uniform, np.abs(NR_amp - IMR_amp) / NR_amp, label='IMR original')
-ax[1, 0].plot(f_uniform, np.abs(NR_amp - IMR_opt_amp) / NR_amp, label='IMR optimized')
+ax[1, 0].semilogx(f_uniform, (NR_amp - IMR_amp) / NR_amp, label='IMR original')
+ax[1, 0].semilogx(f_uniform, (NR_amp - IMR_opt_amp) / NR_amp, label='IMR optimized')
+ax[1, 0].axvline(x=f_ins, color="k", alpha=0.5, ls="--")
+ax[1, 0].axvline(x=f_rd, color="k", alpha=0.4, ls="--")
 ax[1, 0].set_xlabel(r'$Mf$')
-ax[1, 0].set_ylabel(r'$\Delta|\tilde{h}(f)|$')
+ax[1, 0].set_ylabel(r'$\Delta\tilde{h}(f)$')
 ax[1, 0].legend()
 
-ax[1, 1].plot(f_uniform, np.abs(NR_angle - IMR_angle), label='IMR original')
-ax[1, 1].plot(f_uniform, np.abs(NR_angle - IMR_opt_angle), label='IMR optimized')
+ax[1, 1].semilogx(f_uniform, (NR_angle - IMR_angle), label='IMR original')
+ax[1, 1].semilogx(f_uniform, (NR_angle - IMR_opt_angle), label='IMR optimized')
+ax[1, 1].axvline(x=f_ins, color="k", alpha=0.5, ls="--")
+ax[1, 1].axvline(x=f_rd, color="k", alpha=0.4, ls="--")
 ax[1, 1].set_xlabel(r'$Mf$')
 ax[1, 1].set_ylabel(r'$\Delta\phi$')
 ax[1, 1].legend()
