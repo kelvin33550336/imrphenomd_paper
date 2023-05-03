@@ -491,12 +491,13 @@ distribution.
 % would surf around the loss manifold with random fluctuations in mismatches. If
 % the set of coefficients does not fit, then dividing the parameter space into
 % regions and fitting separate sets of coefficients should give better results.
-
-Given that the waveform model's ansatz may not be entirely compatible with NR,
-and the optimization procedure is carried out over a distribution of waveforms
-with varying intrinsic parameters, it is conceivable that some trade-offs in
-accuracy exist between different parts of the parameter space. If this is the
-cause of the high mismatch tail's failure to improve during joint-optimization,
+Although most of the waveforms show improvement in figure \ref{fig:q148}, the
+high mismatch tail of the distribution remains unaffected. Given that the
+waveform model's ansatz may not be entirely compatible with NR, and the
+optimization procedure is carried out over a distribution of waveforms with
+varying intrinsic parameters, it is conceivable that some trade-offs in accuracy
+exist between different parts of the parameter space. If this is the cause of
+the lack of improvement in the high mismatch tail of the distribution,
 segmenting the parameter space into smaller subspaces should alleviate this
 problem. On the other hand, if the ansatz lacks the correct parameterized form
 to capture the NR waveforms' behavior as a function of the intrinsic parameters,
