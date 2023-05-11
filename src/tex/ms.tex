@@ -153,12 +153,9 @@ For interested readers, please refer to \citep{khan2016frequency} for more detai
 
 The IMRPhenomD model is constructed by combining three individually fitted parts
 into one coherent waveform model, which consists of the inspiral, intermediate, and merger-ringdown part, 
-\kw{Check if the following equation is correct. I think it is off by some smoothing factors.} 
-\kl{I don't remember there is any smoothing factors. They are just connected using step functions, then the entire waveform is made to have continuous first derivative by fixing some of the coefficients for the two connections.}
 \begin{align}\label{eq:joint_waveform}
 	h(f,\theta,\Lambda^i)=h_{\mathrm{ins}}(f,\theta,\Lambda^i) + h_{\mathrm{int}}(f,\theta,\Lambda^i) + h_{\mathrm{rd}}(f,\theta,\Lambda^i).
 \end{align}
-
 Instead of fitting the strain, which is a highly oscillatory function that is
 difficult to fit, the amplitude and phase are fitted since they are smoother
 functions. In each part, the amplitude and phase are made using simple functions
@@ -233,15 +230,9 @@ commonly referred as the inner product, which is defined as
 \end{align}
 where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain,
 $S_n(f)$ is the power spectral density(PSD) of noise from the instrument, $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are
-the relevant maximum and minimum frequencies for the integration. The mismatch
+the relevant maximum and minimum frequencies for the integration. $t_0$ and $\phi_0$ are maximized by performing regression between $h_1$ and $h_2$. The mismatch
 is a quantity that is closely related to the mean square error (MSE) between the
-two waveforms, as it is often considered a weighted version of the MSE. 
-
-\kl{The maximum is calculated by comparing the phase of IMRPhenomD and NR waveforms. We know that they are off by a linear relation of $f$, 
-\begin{align*}
-	\phi_{NR}-\phi_{IMR}=(2\pi t_0)f+\phi_0.
-\end{align*}
-Since I have $\phi_{NR}$, $\phi_{IMR}$ and the frequency array, I did a linear regression to get $2\pi t_0$ and $\phi_0$.}
+two waveforms, as it is often considered a weighted version of the MSE.
 
 Since we wish to optimize the model over the whole parameter space, we need to compare multiple model generated waveforms with NR waveforms. However, mismatch only quantifies the difference between IMRPhenomD and NR waveform for one particular set of intrinsic parameters. To take into account of various different waveforms in the parameter space, we pick waveforms from the different parts of the parameter space. We define the loss function as an average of training waveforms in two ways, the simple average of mismatches and the normalize average of mismatches,  
 \begin{align}

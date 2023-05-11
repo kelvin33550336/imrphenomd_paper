@@ -34,9 +34,17 @@ params = {
 
 mpl.rcParams.update(params)
 
-data = np.loadtxt(paths.data / "q148_loss.dat")
+train_data = np.loadtxt(paths.data / "train_waveform_loss.txt")
+validation_data = np.loadtxt(paths.data / "validation_waveform_loss.txt")
 
-plt.plot(data[:,0], data[:,1])
-plt.ylabel('$\mathcal{L}_{\mathrm{mean}}$')
-plt.xlabel('N')
+fig, ax1 = plt.subplots()
+
+ax2 = ax1.twinx()
+ax1.plot(validation_data[:,0], validation_data[:,1], color="C1", linewidth=2, label='validation')
+ax2.plot(train_data[:,0], train_data[:,1], color="C0", linewidth=2, label='train')
+
+ax1.set_xlabel('N')
+ax1.set_ylabel('validation loss (dashed)')
+ax2.set_ylabel('test loss')
+
 plt.savefig(paths.figures / "loss.pdf", bbox_inches="tight")

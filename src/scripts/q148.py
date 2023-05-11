@@ -35,20 +35,13 @@ params = {
 mpl.rcParams.update(params)
 
 q148 = np.loadtxt(paths.data / "q148.dat")
-q148_fl = np.loadtxt(paths.data / "q148_fl.dat")
-bins = np.arange(-5, -1, 0.2)
+bins = np.linspace(-5, -1, 15)
 
-plt.hist(np.log10(q148[:,4]), bins=bins, alpha=0.1, color="C0")
-plt.hist(np.log10(q148[:,4]), bins=bins, label="Original", histtype="step", color="C0", linewidth=1.3)
-plt.axvline(x=np.log10(np.median(q148[:,4])), color="C0", ls="--")
+plt.hist(np.log10(q148[:,4]), bins=bins, alpha=0.2, color="C0", label="Original")
+plt.axvline(x=np.log10(np.median(q148[:,4])), color="C0", zorder=-20, alpha=0.4, ls=":")
 
-plt.hist(np.log10(q148[:,5]), bins=bins, alpha=0.05, color="C1")
 plt.hist(np.log10(q148[:,5]), bins=bins, label="$\mathcal{L}_{\mathrm{mean}}$", histtype="step", color="C1", linewidth=3)
-plt.axvline(x=np.log10(np.median(q148[:,5])), color="C1", ls="--")
-
-plt.hist(np.log10(q148_fl[:,5]), bins=bins, alpha=0.05, color="C2")
-plt.hist(np.log10(q148_fl[:,5]), bins=bins, label="$\mathcal{L}_{\mathrm{fl}}$", histtype="step", color="C2", linewidth=3)
-plt.axvline(x=np.log10(np.median(q148_fl[:,5])), color="C2", ls="--")
+plt.axvline(x=np.log10(np.median(q148[:,5])), color="C1", zorder=-20, alpha=0.4, ls=":")
 
 plt.legend()
 plt.ylabel('Count')

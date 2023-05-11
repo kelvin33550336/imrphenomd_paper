@@ -42,9 +42,7 @@ q148_logdiff = np.log10(q148_data[:,5]/q148_data[:,4])
 q1248_logdiff = np.log10(q1248_data[:,5]/q1248_data[:,4])
 
 plt.hist(q148_logdiff, bins=bins, alpha=0.3, color="C0")
-plt.hist(q148_logdiff, bins=bins, label="q148", histtype="step", color="C0", linewidth=1.3)
-plt.hist(q1248_logdiff, bins=bins, alpha=0.3, color="C1")
-plt.hist(q1248_logdiff, bins=bins, label="q1248", histtype="step", color="C1", linewidth=1.3)
+plt.hist(q1248_logdiff, bins=bins, label="q1248", histtype="step", color="C1", linewidth=3)
 
 plt.legend()
 plt.ylabel('Count')
