@@ -408,9 +408,9 @@ around $N=30000$, hence we end the optimization here.
 
 \section{Result and Comparison with Original Model} \label{sec:result}
 
-To evaluate the effectiveness of our optimization approach, we analyze
-approximately 530 NR waveforms from the SXS catalog in this study. We
-specifically select waveforms with negligible eccentricity
+To evaluate the effectiveness of the optimization, we analyze approximately 530
+NR waveforms \kw{Just say how many you have} from the SXS catalog in this study.
+We specifically select waveforms with negligible eccentricity
 (${e<2\times10^{-3}}$) and precession (${ \chi_{x,y}<5\times10^{-3}}$) that are
 consistent with the constraints of the waveform model. As shown in
 Fig.~\ref{fig:intrin_space}, the intrinsic parameters of the chosen test
@@ -418,23 +418,24 @@ waveforms fall within the parameter space defined by the training waveforms.
 This suggests that these test waveforms can be used for direct comparison with
 the original model.
 
-We begin by investigating the impact of joint optimization on an individual
-waveform. Fig. \ref{fig:0154} illustrates that the optimized waveform
-outperforms the original waveform, particularly in the inspiral region, where
-the amplitude displays a $50\%$ reduction in error. To ensure fairness, we
-selected one of the testing waveforms from the catalog presented in
-\citep{khan2016frequency}.
+To illustrate the improvement on an individual waveform level, we compare a
+particular waveform before and after optimization in Fig. \ref{fig:0154}.
+Compared to the original IMRPhenomD waveform, we can see the optimized waveform
+has smaller residual from NR waveform both in amplitude and phase, particularly
+in the inspiral region, where the amplitude displays a $50\%$ reduction in
+error. For a fair comparison, we selected one of the testing waveforms from the
+catalog presented in \citep{khan2016frequency}.
 
-We use the constant PSD weighted loss function, $\mathcal{L}_{\mathrm{mean}}$, to evaluate the
-mismatch of all testing waveforms, and present the resulting distribution in
-Fig. \ref{fig:q148}. The peak of the distribution has shifted towards a lower
+To quantify the effect of optimization over the entire dataset, We evaluate the
+mismatch of all testing waveforms using a constant PSD weighted loss function,
+$\mathcal{L}_{\mathrm{mean}}$. We present the resulting distribution in Fig.
+\ref{fig:q148}. The peak of the distribution has shifted towards a lower
 mismatch, with a decrease of almost one order of magnitude and a 50\% reduction
 in the median. When using $\mathcal{L}_{\mathrm{fl}}$, we observe a similar
-
-improvement with a 22.9\% decrease in the median. However, the distribution lacks
-a clear peak due to the problem discussed in Section \ref{subsec:optimization}.
-Despite this, both distributions exhibit significant improvement, and the
-optimization scheme remains unaffected.
+improvement with a 22.9\% decrease in the median. Even though the distribution
+lacks a clear peak due to the problem discussed in Section
+\ref{subsec:optimization}, both distributions show observable improvement, and
+the optimization scheme remains unaffected \kw{What about the optimization scheme?}.
 
 \begin{figure}[t]
 	\script{q148.py}
@@ -461,24 +462,25 @@ optimization scheme remains unaffected.
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
+\kw{Which plot is this paragraph referring to?}
 Applying the same methods, we observe that the distributions of mismatches
-calculated using the {\zdethp} PSD exhibit superior improvement
-compared to the weighted mismatch. The shape of the distribution is similar to
-that shown in Fig. \ref{fig:q148}. This result is expected, as the IMRPhenomD
-model was initially constructed and fitted using the {\zdethp} weighted
-mismatch. Consequently, the model is anticipated to closely fit the NR waveforms
-while incorporating the influence of the {\zdethp} PSD, rather than a
-constant PSD.
+calculated using the {\zdethp} PSD exhibit superior improvement compared to the
+weighted mismatch \kw{What do you mean by weighted mismatch? Like flat PSD?}.
+The shape of the distribution is similar to that shown in Fig. \ref{fig:q148}.
+This result is expected, as the IMRPhenomD model was initially constructed and
+fitted using the {\zdethp} weighted mismatch. Consequently, the model is
+anticipated to closely fit the NR waveforms while incorporating the influence of
+the {\zdethp} PSD, rather than a constant PSD.
 
 Motivated by the successful improvement of the waveforms, we expand the training
-dataset to optimize additional waveforms listed in Tab. \ref{tab:q1248}. The new
-set of coefficients generated from this optimization process yields only
-marginal improvements in the newly produced waveforms, as seen in Fig.
-\ref{fig:q148_q1248_compare}. The high mismatch tail of the optimized
-distribution remains comparable in length and endpoint to the original
-distribution, indicating that our procedure is incapable of improving these
-waveforms. Similarly, utilizing the {\zdethp} PSD to optimize the loss
-function with additional waveforms leads to minimal improvement in the resulting
+dataset to optimize additional waveforms listed in Tab. \ref{tab:q1248} \kw{What
+special about the q=2 events?}. The new set of coefficients generated from this
+optimization process yields only marginal improvements in the newly produced
+waveforms, as seen in Fig. \ref{fig:q148_q1248_compare}. The high mismatch tail
+of the optimized distribution remains comparable in length and endpoint to the
+original distribution, indicating that our procedure is incapable of improving
+these waveforms. Similarly, utilizing the {\zdethp} PSD to optimize the loss
+function with additional waveforms leads to similar improvement in the resulting
 distribution.
 
 % We believe that either the ansatz does not suit waveforms within certain
@@ -489,13 +491,13 @@ distribution.
 % would surf around the loss manifold with random fluctuations in mismatches. If
 % the set of coefficients does not fit, then dividing the parameter space into
 % regions and fitting separate sets of coefficients should give better results.
-
-Given that the waveform model's ansatz may not be entirely compatible with NR,
-and the optimization procedure is carried out over a distribution of waveforms
-with varying intrinsic parameters, it is conceivable that some trade-offs in
-
-accuracy exist between different parts of the parameter space. If this is the
-cause of the high mismatch tail's failure to improve during joint-optimization,
+Although most of the waveforms show improvement in figure \ref{fig:q148}, the
+high mismatch tail of the distribution remains unaffected. Given that the
+waveform model's ansatz may not be entirely compatible with NR, and the
+optimization procedure is carried out over a distribution of waveforms with
+varying intrinsic parameters, it is conceivable that some trade-offs in accuracy
+exist between different parts of the parameter space. If this is the cause of
+the lack of improvement in the high mismatch tail of the distribution,
 segmenting the parameter space into smaller subspaces should alleviate this
 problem. On the other hand, if the ansatz lacks the correct parameterized form
 to capture the NR waveforms' behavior as a function of the intrinsic parameters,
@@ -506,7 +508,6 @@ Since we know intrinsic parameters play an important role in the ansatz, we
 would like to investigate how intrinsic parameters affect the recalibration
 process. First, we plot the parameter space of $q$ vs. $\chi_{\mathrm{PN}}$ in
 Fig. \ref{fig:ps_q148_qchi}. We can see near non-spinning waveforms demonstrate
-
 more consistent improvement, since the ansatz are developed base on non-spinning 
 waveforms. Also, the original coefficients were fitted using NR waveforms with
 equal or similar spin, hence the model prefers waveforms with similar spin. On 
@@ -597,7 +598,7 @@ Fig.~\ref{fig:all_quadrants}, which we see that the optimized histogram shifts d
 The optimized waveforms in the bottom-right region have a higher mismatch than the original ones,
 indicating poor fitting. These waveforms correspond to the waveforms in the high mismatch tail 
 in Fig.~\ref{fig:q148}, which we can see in Fig.~\ref{fig:all_quadrants}. Thus, we show that 
-further optimization in a smaller subspace does not improve the results.
+further optimization in a smaller subspace does not improve the results. \kw{I am a bit confused about why you can get worse result.}
 
 \begin{figure}[t]
 	\script{all_quadrants.py}
@@ -619,18 +620,6 @@ further optimization in a smaller subspace does not improve the results.
 \end{figure}
 
 \section{Discussion} \label{sec:discussion}
-
-%\begin{enumerate} \item Comparison with the original paper is not the same.
-%   (Different waveforms, different ways to modify the waveform, different range
-%   of frequencies) \item More waveforms are taken so it should be more robust,
-%   since the parameter space coverage is better. \item Problems with IMRPhenomD
-%   model, i.e. $\chi_{\mathrm{eff}}$ reduces the dimension of spin space
-%   $\chi_1, \chi_2$, so the model is flawed. Comparison issues. (Caveat) \item
-%   Can in principle split parameter space into regions that can be separately
-%   optimized. If not, then its must be the model's problem. Would the region
-%   classification be made automatic. Are there any algorithms to do so? \item
-%   Future work (Repeat on other GW models. Mapping between NR surrogate to see
-%   any systematics.) \end{enumerate}
 
 We have shown the result of recalibrating waveform coefficients. One thing to
 note is that our recalibration procedure is not exactly the same as the original
@@ -666,19 +655,16 @@ unequal spin events. This degeneracy produces straight lines in the parameter
 space with negative slopes that depend on the mass ratio, as shown in
 Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top left
 region than the bottom right along a degeneracy line. In an attempt to address
-
 this issue, we partitioned the parameter space into four regions, as described
 in Sec. \ref{sec:result}. However, even with separate optimizations for each
 regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the bottom-right region
 exhibits similar mismatches as before, while the top-left region's performance
-
 has improved. This observation suggests that the ansatz is specific to certain
 regions of the parameter space, with a preference for BBH events featuring
 $\chi_1<0$ and $\chi_2>0$.
 
 
 The division of the parameter space into four regions was a simple approach
-
 taken for practical reasons. A more systematic approach would involve the use of
 level set estimation algorithms to identify regions of interest within the
 parameter space. Such an algorithm can reveal additional degeneracies or issues
@@ -698,7 +684,6 @@ it is expected that both models can be enhanced since they share similar
 construction principles to the IMRPhenomD model. For instance, they also use PN
 approximants as part of the ansatz in the inspiral segment. It will be interesting 
 to recalibratethe IMRPhenomX model \citep{pratten2020setting}. Because it is
-
 parameterized by an additional anti-symmetric spin parameter, it is expected not
 to exhibit the degeneracy previously described. A more detailed investigation
 may provide valuable insights into the systematics of the Phenom models.
@@ -748,7 +733,10 @@ construct better GW Phenom models in the future.
 
 \section{ACKNOWLEDGMENTS}
 
-
+We thank Will M.~Farr, Max Isi, and Mark Hannam for helpful discussions; we also
+thank Carl-Johan Haster, Neil J.~Cornish and Thomas Dent for comments on the
+draft. The Flatiron Institute is a division of the Simons Foundation. T.E.\ is
+supported by the Horizon Postdoctoral Fellowship.
 \bibliography{bib}
 
 \end{document}
