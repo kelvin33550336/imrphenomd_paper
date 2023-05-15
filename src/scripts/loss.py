@@ -41,10 +41,11 @@ fig, ax1 = plt.subplots()
 
 ax2 = ax1.twinx()
 ax1.plot(validation_data[:,0], validation_data[:,1], color="C1", linewidth=2, label='validation')
-ax2.plot(train_data[:,0], train_data[:,1], color="C0", linewidth=2, label='train')
+ax2.plot(train_data[:,0], train_data[:,1], color="C0", linewidth=2, label='training')
 
-ax1.set_xlabel('N')
-ax1.set_ylabel('validation loss (dashed)')
-ax2.set_ylabel('test loss')
+ax1.set_xlabel('Iteration')
+ax1.set_ylabel('Validation Loss')
+ax2.set_ylabel('Training Loss')
+fig.legend(loc='upper right', bbox_to_anchor=(0.89, 0.875))
 
 plt.savefig(paths.figures / "loss.pdf", bbox_inches="tight")

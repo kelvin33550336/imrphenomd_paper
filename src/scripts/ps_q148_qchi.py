@@ -35,14 +35,17 @@ params = {
 mpl.rcParams.update(params)
 
 data = np.loadtxt(paths.data / "q148.dat")
+q = data[:,0]/data[:,1]
+eta = data[:,0]*data[:,1]/(data[:,0]+data[:,1])**2
+chi_PN = (data[:,0]*data[:,2]+data[:,1]*data[:,3])/(data[:,0]+data[:,1])-38*eta*(data[:,2]+data[:,3])/113
 
 logdiff = np.log10(data[:,5] / data[:,4])
 cm = plt.cm.get_cmap('RdYlBu')
 colors = logdiff
-sc = plt.scatter(data[:,0], data[:,1], c=colors, vmin=-1, vmax=1, s=30, cmap=cm, alpha=0.8)
-cbar = plt.colorbar(sc)
+sc = plt.scatter(q, chi_PN, c=colors, vmin=-1, vmax=1, s=30, cmap=cm, alpha=0.8)
+cbar = plt.colorbar(sc, ticks=[-1, -0.5, 0, 0.5, 1])
 cbar.ax.set_ylabel('$\log(\mathcal{M}/\mathcal{M}_i)$', rotation=270, labelpad=20)
-cbar.ax.set_yticklabels(['$< -1$', '$-0.75$', '$-0.5$', '$-0.25$', '$0$', '$0.25$', '$0.5$', '$0.75$', '$> 1$'])
+cbar.ax.set_yticklabels(['$<-1$', '$-0.5$', '$0$', '$0.5$', '$>1$'])
 plt.xlabel('$q$')
 plt.ylabel('$\chi_{\mathrm{PN}}$')
 

@@ -13,9 +13,6 @@
 \usepackage{float}
 \usepackage[italicdiff]{physics}
 
-%\definecolor{rb4}{HTML}{27408B}
-%\newcommand{\kw}[1]{{\color{rb4}[KW: #1 ]}}
-%\newcommand{\kl}[1]{\color{cyan}[KL: #1 ]}
 \newcommand{\ripple}{\texttt{ripple}}
 \newcommand{\python}{\texttt{python}}
 \newcommand{\jax}{\texttt{jax}}
@@ -319,7 +316,7 @@ around $N=30000$, hence we end the optimization here.
 	\script{loss.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/loss.pdf}
-	\caption{The value of loss function against number of iterations. The code is terminated after 30000 steps }
+	\caption{Loss functions against number of iterations. We take the set of coefficients at the minimum of the validation loss.}
 	\label{fig:loss}
 \end{figure}
 
@@ -341,7 +338,7 @@ around $N=30000$, hence we end the optimization here.
 	\script{intrin_space.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/intrin_space.pdf}
-	\caption{Parameter space with mass ratio against normalized reduced spin. Orange: Training waveforms; Blue: Testing waveforms}
+	\caption{Parameter space with mass ratio $q$ against post-newtonian spin parameter $\chi_{\mathrm{PN}}$. Orange: Training waveforms; Blue: Testing waveforms}
 	\label{fig:intrin_space}
 \end{figure}
 
@@ -425,20 +422,16 @@ mismatch, with a decrease of almost one order of magnitude and a 50\% reduction
 in the median. When using $\mathcal{L}_{\mathrm{fl}}$, we observe a similar
 improvement with a 22.9\% decrease in the median. Even though the distribution
 lacks a clear peak due to the problem discussed in Section
-\ref{subsec:optimization}, both distributions show observable improvement, and
-the optimization scheme remains unaffected \kw{What about the optimization scheme?}.
+\ref{subsec:optimization}, both distributions show observable improvement.
 
 \begin{figure}[t]
 	\script{q148.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/q148.pdf}
-	\caption{Distributions of waveform mismatches calculated using both
-	$\mathcal{L}_{\mathrm{mean}}$ and $\mathcal{L}_{\mathrm{fl}}$. We use 
-	training waveforms listed in Tab.~\ref{tab:q148} and
-	mismatches are weighted with the constant PSD. For the
-	$\mathcal{L}_{\mathrm{mean}}$ distributions, the median (dashed lines) decreased by 50.0\%
-	while the median of $\mathcal{L}_{\mathrm{fl}}$ distribution decreased by
-	22.9\%.}
+	\caption{Distributions of waveform mismatches calculated using 
+	$\mathcal{L}_{\mathrm{mean}}$. We use training waveforms listed in 
+	Tab.~\ref{tab:q148} and	mismatches are weighted with the constant PSD. 
+	Dashed lines represent the median of the distributions, which has decreased by 45.3\%.}
 	\label{fig:q148}
 \end{figure}
 \begin{figure}[t]
@@ -449,14 +442,15 @@ the optimization scheme remains unaffected \kw{What about the optimization schem
 	distribution labeled \texttt{q148} uses training waveforms listed in
 	Tab.~\ref{tab:q148} while the \texttt{q1248} distribution uses waveforms
 	listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Mismatches are calculated
-	using the constant PSD with the loss function $\mathcal{L}_{\mathrm{mean}}$.}
+	using the constant PSD with the loss function $\mathcal{L}_{\mathrm{mean}}$. 
+	Dashed lines represent the median of the distributions, which has decreased by 10.4\%.}
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
-\kw{Which plot is this paragraph referring to?}
-Applying the same methods, we observe that the distributions of mismatches
-calculated using the {\zdethp} PSD exhibit superior improvement compared to the
-weighted mismatch \kw{What do you mean by weighted mismatch? Like flat PSD?}.
+%\kw{Which plot is this paragraph referring to?}
+Applying the same methods, we will see that the distributions of mismatches
+calculated using the {\zdethp} PSD exhibit superior improvement compared to the 
+unweighted mismatch.
 The shape of the distribution is similar to that shown in Fig. \ref{fig:q148}.
 This result is expected, as the IMRPhenomD model was initially constructed and
 fitted using the {\zdethp} weighted mismatch. Consequently, the model is
@@ -464,8 +458,9 @@ anticipated to closely fit the NR waveforms while incorporating the influence of
 the {\zdethp} PSD, rather than a constant PSD.
 
 Motivated by the successful improvement of the waveforms, we expand the training
-dataset to optimize additional waveforms listed in Tab. \ref{tab:q1248} \kw{What
-special about the q=2 events?}. The new set of coefficients generated from this
+dataset to optimize additional waveforms listed in Tab. \ref{tab:q1248}. We 
+specifically choose to use $q=2$ events since we have abundant $q=2$ NR waveforms 
+to validate the final result. The new set of coefficients generated from this
 optimization process yields only marginal improvements in the newly produced
 waveforms, as seen in Fig. \ref{fig:q148_q1248_compare}. The high mismatch tail
 of the optimized distribution remains comparable in length and endpoint to the
@@ -507,31 +502,29 @@ mismatch base on their intrinsic parameters. To further discuss the behavior of
 non-spinning waveforms, we plot the parameter space of $\chi_1$ vs. $\chi_2$ in
 Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e. 
 $\chi_1\approx\chi_2$, show good mismatch improvements as discussed above. 
-Meanwhile, the top-left ($\chi_1<0$ and $\chi_2>0$) and bottom-right ($\chi_1>0$ 
-and $\chi_2<0$) regions respond to optimization differently. In the top-left region, waveforms
-generally improve with along optimization. However, mismatches in the bottom-right 
-region do not improve after optimization. Most waveforms even turned worse after 
-optimization. 
+Meanwhile, the top-left ($\chi_1<0<\chi_2$) and bottom-right ($\chi_1>0>\chi_2$) 
+regions respond to optimization differently. In the top-left 
+region, waveforms generally improve with along optimization. However, mismatches 
+in the bottom-right region do not improve after optimization. Most waveforms even 
+turned worse after optimization. 
 
 \begin{figure}[t]
 	\script{ps_q148_qchi.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_qchi.pdf}
-	\caption{Parameter space of testing waveforms of
-	$q$~vs.~$\chi_{\mathrm{PN}}$. We use the recalibrated result from
-	$\mathcal{L}_{\mathrm{mean}}$ with the constant noise spectrum and training
-	waveforms in Tab.~\ref{tab:q148}. Here, the colorbar represents the
-	$\log_{10}$ difference between optimized and original unweighted
-	mismatches.}
+	\caption{Parameter space of testing waveforms with $q$ against $\chi_{\mathrm{PN}}$. 
+	We show the result from optimizing $\mathcal{L}_{\mathrm{mean}}$ with constant PSD 
+	and training waveforms in Tab.~\ref{tab:q148}. Here, the colorbar represents the 
+	$\log_{10}$ difference between optimized and original mismatches.}
 	\label{fig:ps_q148_qchi}
 \end{figure}
 \begin{figure}[t]
 	\script{ps_q148_chi1chi2.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_chi1chi2.pdf}
-	\caption{Parameter space of testing waveforms of $\chi_1$~vs.~$\chi_2$. We
-	use the recalibrated result from $\mathcal{L}_{\mathrm{mean}}$ with the
-	constant noise spectrum and training waveforms in Tab.~\ref{tab:q148}.}
+	\caption{Parameter space of testing waveforms with $\chi_1$ against $\chi_2$. We
+	show the result from optimizing $\mathcal{L}_{\mathrm{mean}}$ with the
+	constant PSD and training waveforms listed in Tab.~\ref{tab:q148}.}
 	\label{fig:ps_q148}
 \end{figure}
 
@@ -545,8 +538,8 @@ optimization.
 		SXS:BBH:1417 & 4.0 & 0.40     & 0.50     \\
 		SXS:BBH:0167 & 4.0 & 0.00     & 0.00     \\
 		SXS:BBH:1426 & 8.0 & 0.48     & 0.75     \\
-		SXS:BBH:0167 & 8.0 & 0.00     & 0.00     \\ \midrule SXS:BBH:0370 & 1.0
-		& -0.20    & 0.40     \\
+		SXS:BBH:0167 & 8.0 & 0.00     & 0.00     \\ \midrule 
+		SXS:BBH:0370 & 1.0 & -0.20    & 0.40     \\
 		SXS:BBH:2092 & 1.0 & -0.50    & 0.50     \\
 		SXS:BBH:0330 & 1.0 & -0.80    & 0.80     \\
 		SXS:BBH:2116 & 2.0 & -0.30    & 0.30     \\
@@ -554,15 +547,15 @@ optimization.
 		SXS:BBH:0335 & 2.0 & -0.80    & 0.80     \\
 		SXS:BBH:0263 & 3.0 & -0.60    & 0.60     \\
 		SXS:BBH:2133 & 3.0 & -0.73    & 0.85     \\
-		SXS:BBH:0263 & 4.0 & -0.80    & 0.80     \\ \midrule SXS:BBH:0156 & 1.0
-		& -0.95    & -0.95    \\
+		SXS:BBH:0263 & 4.0 & -0.80    & 0.80     \\ \midrule 
+		SXS:BBH:0156 & 1.0 & -0.95    & -0.95    \\
 		SXS:BBH:0151 & 1.0 & -0.60    & -0.60    \\
 		SXS:BBH:0001 & 1.0 & 0.00     & 0.00     \\
 		SXS:BBH:1418 & 4.0 & -0.40    & -0.50    \\
 		SXS:BBH:0167 & 4.0 & 0.00     & 0.00     \\
 		SXS:BBH:1419 & 8.0 & -0.80    & -0.80    \\
-		SXS:BBH:0063 & 8.0 &  0.00    &  0.00    \\ \midrule SXS:BBH:0304 & 1.0
-		& 0.50     & -0.50    \\
+		SXS:BBH:0063 & 8.0 &  0.00    &  0.00    \\ \midrule 
+		SXS:BBH:0304 & 1.0 & 0.50     & -0.50    \\
 		SXS:BBH:0327 & 1.0 & 0.80     & -0.80    \\
 		SXS:BBH:2123 & 2.0 & 0.30     & -0.30    \\
 		SXS:BBH:2128 & 2.0 & 0.60     & -0.60    \\
@@ -571,7 +564,7 @@ optimization.
 		SXS:BBH:0045 & 3.0 & 0.50     & -0.50    \\
 		SXS:BBH:0292 & 3.0 & 0.73     & -0.85    \\ \midrule\bottomrule
 	\end{tabularx}
-	\caption{List of waveforms used in recalibrating coefficients in 4 regions. From top to down are the top-right ($\chi_1,\chi_2>0$), top-left ($\chi_1<0<\chi_2$), bottom-left ($\chi_1,\chi_2<0$) and bottom-right ($\chi_1>0>\chi_2$) regions. Note that for the top-right and bottom-left regions, waveforms are chosen to have equal or similar spins, while the training waveforms for the other two regions are chosen to have opposite spins.}
+	\caption{List of waveforms used in recalibrating coefficients in 4 regions. From top to down are the top-right ($\chi_1,\chi_2>0$), top-left ($\chi_1<0<\chi_2$), bottom-left ($\chi_1,\chi_2<0$) and bottom-right ($\chi_1>0>\chi_2$) regions. Note that for the top-right and bottom-left regions, waveforms are chosen to have $\chi_1\approx\chi_2$, while the training waveforms for the other two regions are chosen to have $\chi_1\approx-\chi_2$.}
 	\label{tab:quadrants}
 \end{table}
 
@@ -597,7 +590,7 @@ further optimization in a smaller subspace does not improve the results. \kw{I a
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
 	\caption{Distributions of mismatches in the top-left and bottom-right regions.
 	We use a constant noise spectrum to calculate mismatch and
-	$\mathcal{L}_{\mathrm{mean}}$ for the loss function. Waveforms in the top-left region generally improves while waveforms in the bottom-right region worsened, as indicated by the median (dashed lines). \kl{I tried to overlap these two histograms together but it makes them very hard to read. }}
+	$\mathcal{L}_{\mathrm{mean}}$ as the loss function. Waveforms in the top-left region generally improves while waveforms in the bottom-right region worsened, as indicated by the median (dashed lines).}
 	\label{fig:all_quadrants}
 \end{figure}
 
@@ -605,8 +598,7 @@ further optimization in a smaller subspace does not improve the results. \kw{I a
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{Parameter space of testing waveforms. Each region is fitted independently. Colorbar
-	represents log difference of mismatches before and after optimization.}
+	\caption{Parameter space of testing waveforms. Each region is fitted independently with waveforms listed in Tab.~\ref{tab:quadrants}. Colorbar represents the $\log_{10}$ difference of mismatches before and after optimization.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
@@ -695,7 +687,7 @@ improved by 50\%. Comparing {\zdethp} weighted and unweighted mismatch, weighted
 mismatches have a slightly better improvement. In contrast, different types of
 loss function result in significantly different final mismatch distributions. As 
 seen in Fig.~\ref{fig:q148}, $\mathcal{L}_{\mathrm{mean}}$ outperforms 
-$\mathcal{L}_{fl}$. By increasing the number of training waveforms, we see a 
+$\mathcal{L}_{\mathrm{fl}}$. By increasing the number of training waveforms, we see a 
 slight improvement increase in Fig.~\ref{fig:q148_q1248_compare}. 
 
 Furthermore, we investigated how the intrinsic parameters affect the
