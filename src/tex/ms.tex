@@ -504,8 +504,8 @@ Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e.
 $\chi_1\approx\chi_2$, show good mismatch improvements as discussed above. 
 Meanwhile, the top-left ($\chi_1<0<\chi_2$) and bottom-right ($\chi_1>0>\chi_2$) 
 regions respond to optimization differently. In the top-left 
-region, waveforms generally improve with along optimization. However, mismatches 
-in the bottom-right region do not improve after optimization. Most waveforms even 
+region, waveforms generally improve slightly with along optimization. However, waveforms 
+in the bottom-right region do not improve after optimization. Some waveforms even 
 turned worse after optimization. 
 
 \begin{figure}[t]
@@ -538,7 +538,7 @@ turned worse after optimization.
 		SXS:BBH:1417 & 4.0 & 0.40     & 0.50     \\
 		SXS:BBH:0167 & 4.0 & 0.00     & 0.00     \\
 		SXS:BBH:1426 & 8.0 & 0.48     & 0.75     \\
-		SXS:BBH:0167 & 8.0 & 0.00     & 0.00     \\ \midrule 
+		SXS:BBH:0063 & 8.0 & 0.00     & 0.00     \\ \midrule 
 		SXS:BBH:0370 & 1.0 & -0.20    & 0.40     \\
 		SXS:BBH:2092 & 1.0 & -0.50    & 0.50     \\
 		SXS:BBH:0330 & 1.0 & -0.80    & 0.80     \\
@@ -569,20 +569,22 @@ turned worse after optimization.
 \end{table}
 
 We divided the parameter space into four regions to analyze the effect of the
-recalibration procedure on each region separately (Fig.~\ref{fig:ps_q148}). The
+recalibration procedure on each region separately (Fig.~\ref{fig:ps_q148_quadrant}). The
 training waveforms used for fitting are listed in Table~\ref{tab:quadrants}. The
 top-left and bottom-right regions have limited data for $q>4$, hence the results are
-only valid up to $q\leq4$. From Fig.~\ref{fig:ps_q148_quadrant}, we observe
-improvements in waveform mismatch for all waveforms, except those in the bottom-right 
-region. For equal-spin waveforms lying in the proximity of the diagonal axis,
-the mismatch has additional improvement due to most training waveforms being
-equal-spin. In the top-left region, the improvement is significant, except for a
+only valid up to $q\lesssim4$. From Fig.~\ref{fig:ps_q148_quadrant}, we observe that 
+waveforms lying in the lower diagonal have mismatches worsened while other waveforms 
+generally improve. For the top-right and bottom-left regions, we see that the optimization prefers waveforms with $\chi_1<\chi_2$. This further  In the top-left region, the improvement is significant, except for a
 few defects caused by some testing waveforms having $q>4$. This can be seen clearer in 
-Fig.~\ref{fig:all_quadrants}, which we see that the optimized histogram shifts downward uniformly. 
-The optimized waveforms in the bottom-right region have a higher mismatch than the original ones,
-indicating poor fitting. These waveforms correspond to the waveforms in the high mismatch tail 
-in Fig.~\ref{fig:q148}, which we can see in Fig.~\ref{fig:all_quadrants}. Thus, we show that 
-further optimization in a smaller subspace does not improve the results. \kw{I am a bit confused about why you can get worse result.}
+Fig.~\ref{fig:all_quadrants}, which we see that the optimized histogram shifts downward 
+rather uniformly. The optimized waveforms in the bottom-right region have two distinct 
+features. Within this region, waveforms in the bottom-right corner improves significantly 
+while others worsened. This phenomenon can also be seen in Fig.~\ref{fig:all_quadrants}, 
+where the mismatch distribution shifted upward. Hence, we can deduce that the loss function 
+descended into a different minimum compared to Fig.~\ref{fig:ps_q148}, making the optimized 
+coefficients not useful in GW analysis. THus, further optimizing in a smaller region does 
+not generally improve the results.
+%\kw{I am a bit confused about why you can get worse result.}
 
 \begin{figure}[t]
 	\script{all_quadrants.py}
@@ -609,7 +611,7 @@ note is that our recalibration procedure is not exactly the same as the original
 calibration. For instance, we use a different set of NR waveforms, frequency
 range, etc. Nonetheless, as the decrease in mismatch is rather significant, this
 optimization procedure should be able to improve the accuracy of IMRPhenomD on a
-similar scale regardless of the differences. Here, this result serves as a
+similar scale regardless of the differences. Here, the result serves as a
 demonstration of the general method used.  
 % In Fig.~\ref{fig:0154}, the error in the inspiral region is around halved for
 % both amplitude and phase. Similarly, for the merger-ringdown region, the
@@ -636,15 +638,17 @@ different spins may generate the same waveform due to identical values of
 $\chi_{\mathrm{PN}}$, leading to erroneous results, particularly for highly
 unequal spin events. This degeneracy produces straight lines in the parameter
 space with negative slopes that depend on the mass ratio, as shown in
-Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top left
-region than the bottom right along a degeneracy line. In an attempt to address
+Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top-left
+region than the bottom-right region. In an attempt to address
 this issue, we partitioned the parameter space into four regions, as described
-in Sec. \ref{sec:result}. However, even with separate optimizations for each
-regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the bottom-right region
-exhibits similar mismatches as before, while the top-left region's performance
-has improved. This observation suggests that the ansatz is specific to certain
-regions of the parameter space, with a preference for BBH events featuring
-$\chi_1<0$ and $\chi_2>0$.
+in Sec. \ref{sec:result}. With separate optimizations for each
+regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the top-left region's 
+performance has improved, while the bottom-right region exhibits two distinct 
+features. This is because the loss function has descended into a different 
+minimum which highly favors events with $\chi_1\approx1$ and $\chi_2\approx-1$. 
+This observation suggests the ansatz is specific to certain regions of the 
+parameter space, with a preference for BBH events lying in the upper diagonal 
+region, and it hardly fits with waveforms lying in the lower diagonal region. 
 
 
 The division of the parameter space into four regions was a simple approach
@@ -661,17 +665,18 @@ regions more systematically.
 
 Although our study primarily focused on the IMRPhenomD model, this simple yet
 versatile approach can be applied to other differentiable GW models, such as the
-IMRPhenomP \citep{hannam2014simple} or IMRPhenomX \citep{pratten2020setting} 
+IMRPhenomP \citep{hannam2014simple, khan2019phenomenological} or IMRPhenomX \citep{pratten2020setting,pratten2021computationally} 
 models within the same family. By jointly optimizing a new set of coefficients,
 it is expected that both models can be enhanced since they share similar
 construction principles to the IMRPhenomD model. For instance, they also use PN
 approximants as part of the ansatz in the inspiral segment. It will be interesting 
-to recalibratethe IMRPhenomX model \citep{pratten2020setting}. Because it is
+to recalibratethe IMRPhenomXAS model \citep{pratten2020setting}. Because it is
 parameterized by an additional anti-symmetric spin parameter, it is expected not
-to exhibit the degeneracy previously described. A more detailed investigation
+to exhibit the degeneracy previously described. With the currently developing 
+{\jax} IMRPhenomXAS model in {\ripple}, A more detailed investigation
 may provide valuable insights into the systematics of the Phenom models.
 Furthermore, this approach is applicable to other GW model families, such as NR
-surrogate models or EOB models introduced previously. Such an approach could 
+surrogate models or EOB models introduced in Sec. \ref{sec:intro}. Such an approach could 
 simplify NR waveform calibration procedures and lead to the improvement of 
 existing models.
 
@@ -693,12 +698,13 @@ slight improvement increase in Fig.~\ref{fig:q148_q1248_compare}.
 Furthermore, we investigated how the intrinsic parameters affect the
 improvement. Fig.~\ref{fig:ps_q148} shows that the optimization procedure has a
 certain preference for waveforms lying in the top-left region while the bottom-right 
-region cannot be improved. To further test this result, we recalibrate
+region hardly improved. To further test this result, we recalibrate
 waveforms in separate regions in parameter space. From Fig.~\ref{fig:ps_q148_quadrant}, 
 we can see that this recalibration process gives further
-improvement to the top-left region while the bottom-right region shows similar
-result. This indicates that the ansatz does not fit waveforms in this region. 
-This phenomenon is due to the reduced spin approximation used in parameterizing the 
+improvement to the top-left region while the bottom-right region falls into a different 
+loss minimum. This indicates that the ansatz does not fit certain waveforms in this 
+region, hence introduces bias to downstream GW analysis. This phenomenon is mainly 
+due to the reduced spin approximation used in parameterizing the 
 ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
 
 While we naively separate the optimization process into 4 regions, one can

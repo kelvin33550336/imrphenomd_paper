@@ -37,9 +37,13 @@ mpl.rcParams.update(params)
 train_data = np.loadtxt(paths.data / "ps_train.dat")
 test_data = np.loadtxt(paths.data / "q148.dat")
 
+q = test_data[:,0]/test_data[:,1]
+eta = test_data[:,0]*test_data[:,1]/(test_data[:,0]+test_data[:,1])**2
+chi_PN = (test_data[:,0]*test_data[:,2]+test_data[:,1]*test_data[:,3])/(test_data[:,0]+test_data[:,1])-38*eta*(test_data[:,2]+test_data[:,3])/113
+
 # train_data = np.loadtxt('./plotting_data/ps_train.dat', delimiter=' ') # [q, chi_PN, chi1, chi2]
 # test_data = np.loadtxt('./plotting_data/q148.dat', delimiter=' ') # [q, chi_PN, chi1, chi2, ori_loss, opt_loss]
-plt.scatter(test_data[:,0], test_data[:,1], s=30, label='testing')
+plt.scatter(q, chi_PN, s=30, label='testing')
 plt.scatter(train_data[:,0], train_data[:,1], s=100, label='training')
 plt.legend()
 plt.xlabel('$q$')
