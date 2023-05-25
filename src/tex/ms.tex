@@ -569,22 +569,20 @@ turned worse after optimization.
 \end{table}
 
 We divided the parameter space into four regions to analyze the effect of the
-recalibration procedure on each region separately (Fig.~\ref{fig:ps_q148_quadrant}). The
-training waveforms used for fitting are listed in Table~\ref{tab:quadrants}. The
+recalibration procedure on each region separately (Fig.~\ref{fig:ps_q148_quadrant}). 
+The training waveforms used for fitting are listed in Tab.~\ref{tab:quadrants}. The
 top-left and bottom-right regions have limited data for $q>4$, hence the results are
 only valid up to $q\lesssim4$. From Fig.~\ref{fig:ps_q148_quadrant}, we observe that 
-waveforms lying in the lower diagonal have mismatches worsened while other waveforms 
-generally improve. For the top-right and bottom-left regions, we see that the optimization prefers waveforms with $\chi_1<\chi_2$. This further  In the top-left region, the improvement is significant, except for a
-few defects caused by some testing waveforms having $q>4$. This can be seen clearer in 
-Fig.~\ref{fig:all_quadrants}, which we see that the optimized histogram shifts downward 
-rather uniformly. The optimized waveforms in the bottom-right region have two distinct 
-features. Within this region, waveforms in the bottom-right corner improves significantly 
-while others worsened. This phenomenon can also be seen in Fig.~\ref{fig:all_quadrants}, 
-where the mismatch distribution shifted upward. Hence, we can deduce that the loss function 
-descended into a different minimum compared to Fig.~\ref{fig:ps_q148}, making the optimized 
-coefficients not useful in GW analysis. THus, further optimizing in a smaller region does 
-not generally improve the results.
-%\kw{I am a bit confused about why you can get worse result.}
+equal-spin waveforms lying on the diagonal has great improvement. Above the diagonal, 
+the improvement is significant, except for a few defects caused by some testing waveforms 
+having $q>4$. This can be seen clearer in Fig.~\ref{fig:all_quadrants}, which we see 
+that the optimized histogram shifts downward uniformly. Below the diagonal, waveforms 
+have negligible improvement (Fig.~\ref{fig:all_quadrants}~and~\ref{fig:ps_q148_quadrant}), 
+indicating the original set of coefficients is the optimal set of coefficients, and 
+cannot be further improved. Hence, we can deduce IMRPhenomD has better match with the 
+top-left region and does not fit well with waveforms lying in the bottom-right 
+region. Thus, the ansatz restricts additional improvements and further optimizing in a 
+smaller region does not generally improve the results.
 
 \begin{figure}[t]
 	\script{all_quadrants.py}
@@ -613,9 +611,6 @@ range, etc. Nonetheless, as the decrease in mismatch is rather significant, this
 optimization procedure should be able to improve the accuracy of IMRPhenomD on a
 similar scale regardless of the differences. Here, the result serves as a
 demonstration of the general method used.  
-% In Fig.~\ref{fig:0154}, the error in the inspiral region is around halved for
-% both amplitude and phase. Similarly, for the merger-ringdown region, the
-% optimized waveforms also show great improvement. 
 
 The results presented in Fig.~\ref{fig:q148_q1248_compare} demonstrate that
 increasing the number of training waveforms used in waveform optimization yields
@@ -637,19 +632,16 @@ degeneracy within the parameter space. Specifically, black hole events with
 different spins may generate the same waveform due to identical values of
 $\chi_{\mathrm{PN}}$, leading to erroneous results, particularly for highly
 unequal spin events. This degeneracy produces straight lines in the parameter
-space with negative slopes that depend on the mass ratio, as shown in
+space with negative slopes that depend on the mass ratio, which can be seen in 
 Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top-left
 region than the bottom-right region. In an attempt to address
 this issue, we partitioned the parameter space into four regions, as described
 in Sec. \ref{sec:result}. With separate optimizations for each
 regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the top-left region's 
-performance has improved, while the bottom-right region exhibits two distinct 
-features. This is because the loss function has descended into a different 
-minimum which highly favors events with $\chi_1\approx1$ and $\chi_2\approx-1$. 
+performance has improved, while the bottom-right region hardly improves. 
 This observation suggests the ansatz is specific to certain regions of the 
-parameter space, with a preference for BBH events lying in the upper diagonal 
-region, and it hardly fits with waveforms lying in the lower diagonal region. 
-
+parameter space, with a preference for BBH events lying above the diagonal, 
+and it has limited enhancement for events lying below the diagonal. 
 
 The division of the parameter space into four regions was a simple approach
 taken for practical reasons. A more systematic approach would involve the use of
@@ -661,7 +653,12 @@ approach is to select regions based on degeneracy lines. However, due to the
 limited number of NR waveforms available, we were unable to implement this
 approach. With more NR waveforms available in the future that cover the entire
 parameter space, we can perform optimization with fewer restrictions and select
-regions more systematically.
+regions more systematically. Other than how to divide regions of interest, the 
+choice of training waveforms also affects the final results greatly. Note that 
+the choice of training waveforms listed in Tab.~\ref{tab:quadrants} were taken 
+arbitrarily to test the effectiveness of separate fitting. Hence, if one takes 
+a different set of training waveforms over the parameter space, the result might 
+give additional features that can test and explain IMRPhenomD better. 
 
 Although our study primarily focused on the IMRPhenomD model, this simple yet
 versatile approach can be applied to other differentiable GW models, such as the
@@ -701,24 +698,17 @@ certain preference for waveforms lying in the top-left region while the bottom-r
 region hardly improved. To further test this result, we recalibrate
 waveforms in separate regions in parameter space. From Fig.~\ref{fig:ps_q148_quadrant}, 
 we can see that this recalibration process gives further
-improvement to the top-left region while the bottom-right region falls into a different 
-loss minimum. This indicates that the ansatz does not fit certain waveforms in this 
-region, hence introduces bias to downstream GW analysis. This phenomenon is mainly 
-due to the reduced spin approximation used in parameterizing the 
-ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
+improvement to the top-left region while the bottom-right region only have little 
+improvement. This indicates that the ansatz has limited match in this region and 
+does not fit most waveforms in this region, hence introduces bias to downstream GW 
+analysis. This phenomenon is mainly due to the reduced spin approximation used in 
+parameterizing the ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
 
 While we naively separate the optimization process into 4 regions, one can
 perform systematic region-selection. In principle, we can apply this general
 method to other newer and more accurate models such as IMRPhenomX or IMRPhenomP
 models. Then, we can perform all the above analyses to understand how to
 construct better GW Phenom models in the future.  
-
-% From analyzing mismatches in parameter space, we investigated the accuracy of
-% generated waveforms based on their mass ratio and spin. Similar studies can be
-% performed on other GW models to give better criteria to 
-
-% Improved the IMRPhenomD model. Found regions that can be improved. Checked
-% ansatz. 
 
 \section{ACKNOWLEDGMENTS}
 

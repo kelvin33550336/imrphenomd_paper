@@ -37,9 +37,8 @@ mpl.rcParams.update(params)
 c1 = "#102F68"
 c2 = "#B02423"
 
-q148 = np.loadtxt(paths.data / "all_quadrants.dat")
-data2 = np.array([i for i in q148 if (i[2] < 0 and i[3] > 0)])
-data4 = np.array([i for i in q148 if (i[2] > 0 and i[3] < 0)])
+data2 = np.loadtxt(paths.data / "1neg2pos_mismatch.dat")
+data4 = np.loadtxt(paths.data / "1pos2neg_mismatch.dat")
 
 bins = np.linspace(-5, -1, 15)
 
