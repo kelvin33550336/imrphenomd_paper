@@ -308,8 +308,8 @@ With the loss function evaluated, we apply gradient descent to optimize the tuna
 coefficients as shown in Algorithm~\ref{alg:gradient}. We take $\lambda_i$ to be the 
 original coefficients given in \citep{khan2016frequency}. We take them as the initial 
 waveform coefficients because they lie in the neighborhood of the minimum that we wish 
-to find. Then, by taking $\alpha=10^{-6}$, we see in Fig. \ref{fig:loss} plateau at 
-around $N=30000$, hence we end the optimization here.  
+to find. Then, by taking $\alpha=10^{-6}$, we see the validation loss in 
+Fig.~\ref{fig:loss} plateau at around $N=12000$, hence we end the optimization here.  
 %\te{I think we need a bit more discussion about the stopping criterion here. What is N, and why did we choose it to be this number? Ideally we would actually have a plot of the loss function during training. I don't have a good intuition for if its noisy. Does it plateau? If we wanted to ensure that people don't complain about overfitting we could also plot the loss of the validation set to show its not going up.}
 
 \begin{figure}
@@ -396,15 +396,14 @@ around $N=30000$, hence we end the optimization here.
 
 \section{Result and Comparison with Original Model} \label{sec:result}
 
-To evaluate the effectiveness of the optimization, we analyze approximately 530
-NR waveforms \kw{Just say how many you have} from the SXS catalog in this study.
-We specifically select waveforms with negligible eccentricity
-(${e<2\times10^{-3}}$) and precession (${ \chi_{x,y}<5\times10^{-3}}$) that are
-consistent with the constraints of the waveform model. As shown in
-Fig.~\ref{fig:intrin_space}, the intrinsic parameters of the chosen test
-waveforms fall within the parameter space defined by the training waveforms.
-This suggests that these test waveforms can be used for direct comparison with
-the original model.
+To evaluate the effectiveness of the optimization, we analyze 536 NR waveforms 
+from the SXS catalog in this study. We specifically select waveforms with 
+negligible eccentricity (${e<2\times10^{-3}}$) and precession 
+(${\chi_{x,y}<5\times10^{-3}}$) that are consistent with the constraints of 
+the waveform model. As shown in Fig.~\ref{fig:intrin_space}, the intrinsic 
+parameters of the chosen test waveforms fall within the parameter space defined 
+by the training waveforms. This suggests that these test waveforms can be used 
+for direct comparison with the original model.
 
 To illustrate the improvement on an individual waveform level, we compare a
 particular waveform before and after optimization in Fig. \ref{fig:0154}.
@@ -588,9 +587,9 @@ smaller region does not generally improve the results.
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
-	\caption{Distributions of mismatches in the top-left and bottom-right regions.
+	\caption{Distributions of mismatches in the top-left (Top) and bottom-right (Bottom) regions.
 	We use a constant noise spectrum to calculate mismatch and
-	$\mathcal{L}_{\mathrm{mean}}$ as the loss function. Waveforms in the top-left region generally improves while waveforms in the bottom-right region worsened, as indicated by the median (dashed lines).}
+	$\mathcal{L}_{\mathrm{mean}}$ as the loss function. Waveforms in the top-left region generally improves while waveforms in the bottom-right region has very little improvement, as indicated by the median (dashed lines).}
 	\label{fig:all_quadrants}
 \end{figure}
 
@@ -598,7 +597,7 @@ smaller region does not generally improve the results.
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{Parameter space of testing waveforms. Each region is fitted independently with waveforms listed in Tab.~\ref{tab:quadrants}. Colorbar represents the $\log_{10}$ difference of mismatches before and after optimization.}
+	\caption{Parameter space of testing waveforms. Each region is fitted independently with waveforms listed in Tab.~\ref{tab:quadrants}.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
@@ -619,25 +618,25 @@ improvement is a consequence of over-determination of the waveform coefficients.
 Consequently, increasing the number of calibration NR waveforms is unlikely to
 result in any significant improvement of the model's accuracy. These
 observations suggest that the parameterized ansatz employed in our study may not
-be suitable for certain regions in the parameter space, leading to mismatches
+be suitable for certain regions in the parameter space, leading to low mismatches
 for some waveforms while other waveforms remain at the high mismatch tail with
 negligible changes. This highlights the constraints of the model's flexibility
 that ultimately limit its performance.
 
 The reduced spin approximation is a major contributor to the inaccuracies
 observed in the ansatz. In IMRPhenomD, this approximation employs a single spin
-parameter, $\chi_{\mathrm{PN}}$, as described in Sec. \ref{sec:method}. The
+parameter, $\chi_{\mathrm{PN}}$, as described in Sec.~\ref{sec:method}. The
 parameterization of BBH mergers using a single spin parameter results in a
 degeneracy within the parameter space. Specifically, black hole events with
 different spins may generate the same waveform due to identical values of
 $\chi_{\mathrm{PN}}$, leading to erroneous results, particularly for highly
 unequal spin events. This degeneracy produces straight lines in the parameter
 space with negative slopes that depend on the mass ratio, which can be seen in 
-Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top-left
+Fig.~\ref{fig:ps_q148}. Notably, the ansatz performs better in the top-left
 region than the bottom-right region. In an attempt to address
 this issue, we partitioned the parameter space into four regions, as described
-in Sec. \ref{sec:result}. With separate optimizations for each
-regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the top-left region's 
+in Sec.~\ref{sec:result}. With separate optimizations for each
+regions, Fig.~\ref{fig:ps_q148_quadrant} indicates that the top-left region's 
 performance has improved, while the bottom-right region hardly improves. 
 This observation suggests the ansatz is specific to certain regions of the 
 parameter space, with a preference for BBH events lying above the diagonal, 
