@@ -140,76 +140,127 @@ Sec.~\ref{sec:discussion}, we address the difference between our calibrating
 procedure with \citep{khan2016frequency}. We also explain how reduced spin
 parameterization affects the accuracy of the model. 
 
-\section{Method} \label{sec:method}
+\section{Optimization Method} \label{sec:method}
+
+In this section, we first briefly review the contruction of the IMRPhenomD model and discuss
+how the calibration parameters enter the waveform.
+We then outline the mismatch and how it can be used as a loss fucntion. 
+Finally we discuss the gradient descent algorithm and our stopping criterion.
 
 \subsection{Waveform Model} \label{subsec:waveform_model}
 
-In order to recalibrate the model, we have to understand what parameters the model has.
-Here we give a succinct summary of the IMRPhenomD model and the relevant parameters.
-For interested readers, please refer to \citep{khan2016frequency} for more details on construction of the model.
+% Paragraphs we need:
+% 1. What is the model
+% 2. How do the parameters enter the model
+We start by giving a succinct summary of the IMRPhenomD model and the relevant parameters.
+Interested readers should refer to \citep{khan2016frequency} for more details on construction of the model.
 
-The IMRPhenomD model is constructed by combining three individually fitted parts
-into one coherent waveform model, which consists of the inspiral, intermediate, and merger-ringdown part, 
-\begin{align}\label{eq:joint_waveform}
-	h(f,\theta,\Lambda^i)=h_{\mathrm{ins}}(f,\theta,\Lambda^i) + h_{\mathrm{int}}(f,\theta,\Lambda^i) + h_{\mathrm{rd}}(f,\theta,\Lambda^i).
+Aligned-spin, frequency domain waveform models (such as IMRPhenomD) can be written as a
+combination of amplitude and phase functions ($A$ and $\phi$ respectively):
+\begin{align}\label{eq:}
+	h(f,\theta,\Lambda) = A(f,\theta,\Lambda)e^{-i\phi(f,\theta,\Lambda)}\,.
 \end{align}
-Instead of fitting the strain, which is a highly oscillatory function that is
-difficult to fit, the amplitude and phase are fitted since they are smoother
-functions. In each part, the amplitude and phase are made using simple functions
-of frequency such as polynomials or lorentzians. Specifically, the merger-ringdown 
-amplitude is fitted by a lorentzian and the other parts are fitted using polynomials. 
-\begin{equation}\label{eq:amplitude}
-\begin{aligned}
-	A_0&\equiv\sqrt{\frac{2\eta}{3\pi^{1/3}}}f^{-7/6}\\
-	A_{\mathrm{ins}}(f;\theta)&=A_{\mathrm{PN}}(f;\theta)+A_0\sum_{i=1}^3\rho_if^{(6+i)/3} \\
-	A_{\mathrm{int}}(f;\theta)&=A_0(\delta_0+\delta_1f+\delta_2f^2+\delta_3f^3+\delta_4f^4) \\
-	A_{\mathrm{rd}}(f;\theta)&=A_0\left[\gamma_1\frac{\gamma_3f_{\mathrm{damp}}}{(f-f_{\mathrm{RD}})^2+(\gamma_3f_{\mathrm{damp}})^2}e^{-\frac{\gamma_2(f-f_{\mathrm{RD}})}{\gamma_3f_{\mathrm{damp}}}}\right],  
-\end{aligned}
-\end{equation}
-where $A_{\mathrm{PN}}$ is the post-newtonian expansion of the insprial amplitude up to order $A_0f^2$, $f_{\mathrm{damp}}$ is the damping frequency, and $f_{\mathrm{RD}}$ is the frequency at ringdown. The ansatzes for phase can be found in \citep{khan2016frequency}. These simple analytic functions
-consists of parameters $\Lambda^i=\{\rho_i,\delta_i,\gamma_i\}$, which are defined as follows. 
+\te{Check minus sign}
+Here $f$ is the frequnecy, $\theta$ are of intrinsic parameters of the binary, and $\Lambda$ is a set of additional
+parameters which will be discussed below. 
+The phase and amplitude functions are then split into three sections which represent the
+inspiral, intermediate, and merger-ringdown (MR) parts of the waveform. 
+During inspiral, $A$ and $\phi$ are known analytically from post-Newtonian (PN) theory;
+PhenomD uses the TaylorF2 model \citep{boyle2007high} which is known up to 3.5PN order.
+To model the intermediate and MR regions, IMRPhenomD (and all waveforms in the IMRPhenom family)
+uses a series of parameterizations\footnote{
+	The parameterizations for both the ampltude and phase functions can be found in \citep{khan2016frequency}.
+} 
+which depend purely on $\Lambda$ and can be calibrated to numerical relativity (NR) simulations.
+The three sections are then \textit{stictched} together using step functions.
+Importantly, the parameterizations are chosen such that they can be made $\mathcal{C}^1$ continuous at the
+boundary between each section.
+
+In practice the $\Lambda$ parameters are fit for each section independently i.e., intermediate coefficients are fit whilst ignoring the MR region.
+Finally, to map the grid of tuned $\Lambda$ parameters back to the intrinsic parameter space, IMRhenomD uses the polynomial function:
 \begin{align} \label{eq:Lambda}
 	\Lambda^i&=\lambda_{00}^i+\lambda_{10}^i\eta \nonumber \\
 	&+(\chi_{\mathrm{PN}}-1)(\lambda_{01}^i+\lambda_{11}^i\eta+\lambda_{21}^i\eta^2) \nonumber \\ 
 	&+(\chi_{\mathrm{PN}}-1)^2(\lambda_{02}^i+\lambda_{12}^i\eta+\lambda_{22}^i\eta^2) \nonumber \\
-	&+(\chi_{\mathrm{PN}}-1)^3(\lambda_{03}^i+\lambda_{13}^i\eta+\lambda_{23}^i\eta^2),
+	&+(\chi_{\mathrm{PN}}-1)^3(\lambda_{03}^i+\lambda_{13}^i\eta+\lambda_{23}^i\eta^2)\,,
 \end{align}
-where $\lambda$ are fitting coefficients obtained during calibration, $\eta$ is
+where the $\lambda$'s are the fitting coefficients we are going to optimize below, $\eta$ is
 the symmetric mass ratio, and $\chi_{\mathrm{PN}}$ is the post-Newtonian spin
 parameter, which is defined as 
 \begin{align}
-	\chi_{\mathrm{PN}}=\frac{m_1\chi_1+m_2\chi_2}{m_1+m_2}-\frac{38\eta}{113}(\chi_1+\chi_2).
+	\chi_{\mathrm{PN}}=\frac{m_1\chi_1+m_2\chi_2}{m_1+m_2}-\frac{38\eta}{113}(\chi_1+\chi_2)\,.
 \end{align}
 Here, $m_{1,2}$ and $\chi_{1,2}$ are the primary and secondary mass and spin,
-respectively. Finally, the individual segments are first connected directly using 
-step functions. Then, by fixing coefficients in the intermediate segment, one can make 
-the final waveform is continuous in its first derivative.
+respectively. 
+
+% More precisely, $\Lambda$ by fitting model generated waveforms to Eq.~\ref{eq:amplitude} 
+% and the phase ansatzes. Repeating with different NR waveforms, they obtain multiple 
+% sets of $\Lambda$, and $\lambda$ are subsequently found by fitting against 
+% Eq. \ref{eq:Lambda}. Since the fitting procedure is done in a piece-wise manner, 
+% the correlations between different segments are omitted, which could limit the 
+% accuracy of the model. Also, since fitting was performed before connecting 
+% individual segments, the final waveform does not guarantee to achieve the optimal 
+% waveform.
+% Finally, the individual segments are first connected directly using 
+% step functions. Then, by fixing coefficients in the intermediate segment, one can make 
+% the final waveform is continuous in its first derivative.
+
+
+% In order to recalibrate the model, we have to understand what parameters the model has.
+% Here we give a succinct summary of the IMRPhenomD model and the relevant parameters.
+% For interested readers, please refer to \citep{khan2016frequency} for more details on construction of the model.
+
+% The IMRPhenomD model is constructed by combining three individually fitted parts
+% into one coherent waveform model, which consists of the inspiral, intermediate, and merger-ringdown part, 
+% \begin{align}\label{eq:joint_waveform}
+% 	h(f,\theta,\Lambda^i)=h_{\mathrm{ins}}(f,\theta,\Lambda^i) + h_{\mathrm{int}}(f,\theta,\Lambda^i) + h_{\mathrm{rd}}(f,\theta,\Lambda^i).
+% \end{align}
+% Instead of fitting the strain, which is a highly oscillatory function that is
+% difficult to fit, the amplitude and phase are fitted since they are smoother
+% functions. In each part, the amplitude and phase are made using simple functions
+% of frequency such as polynomials or lorentzians. Specifically, the merger-ringdown 
+% amplitude is fitted by a lorentzian and the other parts are fitted using polynomials. 
+% \begin{equation}\label{eq:amplitude}
+% \begin{aligned}
+% 	A_0&\equiv\sqrt{\frac{2\eta}{3\pi^{1/3}}}f^{-7/6}\\
+% 	A_{\mathrm{ins}}(f;\theta)&=A_{\mathrm{PN}}(f;\theta)+A_0\sum_{i=1}^3\rho_if^{(6+i)/3} \\
+% 	A_{\mathrm{int}}(f;\theta)&=A_0(\delta_0+\delta_1f+\delta_2f^2+\delta_3f^3+\delta_4f^4) \\
+% 	A_{\mathrm{rd}}(f;\theta)&=A_0\left[\gamma_1\frac{\gamma_3f_{\mathrm{damp}}}{(f-f_{\mathrm{RD}})^2+(\gamma_3f_{\mathrm{damp}})^2}e^{-\frac{\gamma_2(f-f_{\mathrm{RD}})}{\gamma_3f_{\mathrm{damp}}}}\right],  
+% \end{aligned}
+% \end{equation}
+% where $A_{\mathrm{PN}}$ is the post-newtonian expansion of the insprial amplitude up to order $A_0f^2$, $f_{\mathrm{damp}}$ is the damping frequency, and $f_{\mathrm{RD}}$ is the frequency at ringdown. 
+
 
 %\kw{Need to work on this paragraph}
-Combining Eq.~\ref{eq:joint_waveform},~\ref{eq:amplitude}~and~\ref{eq:Lambda}, 
-we can see that the entire waveform is non-linear in $\lambda$. A slightly 
-inaccurate set of $\lambda$ can significantly affect the shape of the generated 
-waveforms. Thus, having a set of accurate waveform coefficients is important 
-and fundamental to having accurate GW models. Generally, waveform coefficients 
-are obtained by calibrating with NR waveforms, which are waveforms computed 
-using NR simulations. In the case of \citep{khan2016frequency}, they first 
-obtain a set of $\Lambda$ by fitting model generated waveforms to Eq.~\ref{eq:amplitude} 
-and the phase ansatzes. Repeating with different NR waveforms, they obtain multiple 
-sets of $\Lambda$, and $\lambda$ are subsequently found by fitting against 
-Eq. \ref{eq:Lambda}. Since the fitting procedure is done in a piece-wise manner, 
-the correlations between different segments are omitted, which could limit the 
-accuracy of the model. Also, since fitting was performed before connecting 
-individual segments, the final waveform does not guarantee to achieve the optimal 
-waveform. The connecting procedure alters the previously fitted waveform. 
-Hence, the model generated waveforms contains additional inaccuracies. 
+Although initially independent, the stiching procedure means that each section
+of the waveform intrinsically depends on the full set of $\lambda$s. 
+A slightly inaccurate set of $\lambda$s can therefore lead to inaccuracies in
+the generated waveforms. 
+Thus, having a set of accurate waveform coefficients is crucial to the accuracy
+of the GW models. 
+Importantly, since the fitting was performed on the individual segments,
+the final waveform is not guarenteed to have $\lambda$s close to global minima.
 
-Instead, we recalibrate coefficients jointly, which we can remove inaccuracies
-and biases discussed above, and can improve model accuracy. In the past, due to
-the complex nature of GW strains and piece-wise formalism of IMRPhenomD,
-non-linear fitting was difficult to be performed in optimizing coefficients.
-Hence, piece-wise optimization was done to obtain coefficients. However, with
-{\ripple} and AD from \jax, gradients of IMRPhenomD can be easily obtained, thus
-allowing the use of gradient-based algorithms for us to recalibrate the model.   
+% Generally, waveform coefficients 
+% are obtained by calibrating with NR waveforms, which are waveforms computed 
+% using NR simulations. In the case of \citep{khan2016frequency}, they first 
+% obtain a set of $\Lambda$ by fitting model generated waveforms to Eq.~\ref{eq:amplitude} 
+% and the phase ansatzes. Repeating with different NR waveforms, they obtain multiple 
+% sets of $\Lambda$, and $\lambda$ are subsequently found by fitting against 
+% Eq. \ref{eq:Lambda}. Since the fitting procedure is done in a piece-wise manner, 
+% the correlations between different segments are omitted, which could limit the 
+% accuracy of the model. Also, since fitting was performed before connecting 
+% individual segments, the final waveform does not guarantee to achieve the optimal 
+% waveform. The connecting procedure alters the previously fitted waveform. 
+% Hence, the model generated waveforms contains additional inaccuracies. 
+
+At the time of construction this piece-wise fitting was necessary since
+$\lambda$ has 209 components making the optimization computationally prohibitive.
+Here, we recalibrate the $\lambda$ coefficients jointly. 
+This is made possible by the use of gradient-based optimization algorithms which are
+enabled by AD from \jax and {\ripple}.
+% , gradients of IMRPhenomD can be easily obtained, thus
+% allowing the use of gradient-based algorithms for us to recalibrate the model.   
 
 \subsection{Loss Function} \label{subsec:loss}
 
@@ -308,8 +359,8 @@ With the loss function evaluated, we apply gradient descent to optimize the tuna
 coefficients as shown in Algorithm~\ref{alg:gradient}. We take $\lambda_i$ to be the 
 original coefficients given in \citep{khan2016frequency}. We take them as the initial 
 waveform coefficients because they lie in the neighborhood of the minimum that we wish 
-to find. Then, by taking $\alpha=10^{-6}$, we see in Fig. \ref{fig:loss} plateau at 
-around $N=30000$, hence we end the optimization here.  
+to find. Then, by taking $\alpha=10^{-6}$, we see the validation loss in 
+Fig.~\ref{fig:loss} plateau at around $N=12000$, hence we end the optimization here.  
 %\te{I think we need a bit more discussion about the stopping criterion here. What is N, and why did we choose it to be this number? Ideally we would actually have a plot of the loss function during training. I don't have a good intuition for if its noisy. Does it plateau? If we wanted to ensure that people don't complain about overfitting we could also plot the loss of the validation set to show its not going up.}
 
 \begin{figure}
@@ -396,15 +447,14 @@ around $N=30000$, hence we end the optimization here.
 
 \section{Result and Comparison with Original Model} \label{sec:result}
 
-To evaluate the effectiveness of the optimization, we analyze approximately 530
-NR waveforms \kw{Just say how many you have} from the SXS catalog in this study.
-We specifically select waveforms with negligible eccentricity
-(${e<2\times10^{-3}}$) and precession (${ \chi_{x,y}<5\times10^{-3}}$) that are
-consistent with the constraints of the waveform model. As shown in
-Fig.~\ref{fig:intrin_space}, the intrinsic parameters of the chosen test
-waveforms fall within the parameter space defined by the training waveforms.
-This suggests that these test waveforms can be used for direct comparison with
-the original model.
+To evaluate the effectiveness of the optimization, we analyze 536 NR waveforms 
+from the SXS catalog in this study. We specifically select waveforms with 
+negligible eccentricity (${e<2\times10^{-3}}$) and precession 
+(${\chi_{x,y}<5\times10^{-3}}$) that are consistent with the constraints of 
+the waveform model. As shown in Fig.~\ref{fig:intrin_space}, the intrinsic 
+parameters of the chosen test waveforms fall within the parameter space defined 
+by the training waveforms. This suggests that these test waveforms can be used 
+for direct comparison with the original model.
 
 To illustrate the improvement on an individual waveform level, we compare a
 particular waveform before and after optimization in Fig. \ref{fig:0154}.
@@ -504,8 +554,8 @@ Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal axis, i.e.
 $\chi_1\approx\chi_2$, show good mismatch improvements as discussed above. 
 Meanwhile, the top-left ($\chi_1<0<\chi_2$) and bottom-right ($\chi_1>0>\chi_2$) 
 regions respond to optimization differently. In the top-left 
-region, waveforms generally improve with along optimization. However, mismatches 
-in the bottom-right region do not improve after optimization. Most waveforms even 
+region, waveforms generally improve slightly with along optimization. However, waveforms 
+in the bottom-right region do not improve after optimization. Some waveforms even 
 turned worse after optimization. 
 
 \begin{figure}[t]
@@ -538,7 +588,7 @@ turned worse after optimization.
 		SXS:BBH:1417 & 4.0 & 0.40     & 0.50     \\
 		SXS:BBH:0167 & 4.0 & 0.00     & 0.00     \\
 		SXS:BBH:1426 & 8.0 & 0.48     & 0.75     \\
-		SXS:BBH:0167 & 8.0 & 0.00     & 0.00     \\ \midrule 
+		SXS:BBH:0063 & 8.0 & 0.00     & 0.00     \\ \midrule 
 		SXS:BBH:0370 & 1.0 & -0.20    & 0.40     \\
 		SXS:BBH:2092 & 1.0 & -0.50    & 0.50     \\
 		SXS:BBH:0330 & 1.0 & -0.80    & 0.80     \\
@@ -569,28 +619,28 @@ turned worse after optimization.
 \end{table}
 
 We divided the parameter space into four regions to analyze the effect of the
-recalibration procedure on each region separately (Fig.~\ref{fig:ps_q148}). The
-training waveforms used for fitting are listed in Table~\ref{tab:quadrants}. The
+recalibration procedure on each region separately (Fig.~\ref{fig:ps_q148_quadrant}). 
+The training waveforms used for fitting are listed in Tab.~\ref{tab:quadrants}. The
 top-left and bottom-right regions have limited data for $q>4$, hence the results are
-only valid up to $q\leq4$. From Fig.~\ref{fig:ps_q148_quadrant}, we observe
-improvements in waveform mismatch for all waveforms, except those in the bottom-right 
-region. For equal-spin waveforms lying in the proximity of the diagonal axis,
-the mismatch has additional improvement due to most training waveforms being
-equal-spin. In the top-left region, the improvement is significant, except for a
-few defects caused by some testing waveforms having $q>4$. This can be seen clearer in 
-Fig.~\ref{fig:all_quadrants}, which we see that the optimized histogram shifts downward uniformly. 
-The optimized waveforms in the bottom-right region have a higher mismatch than the original ones,
-indicating poor fitting. These waveforms correspond to the waveforms in the high mismatch tail 
-in Fig.~\ref{fig:q148}, which we can see in Fig.~\ref{fig:all_quadrants}. Thus, we show that 
-further optimization in a smaller subspace does not improve the results. \kw{I am a bit confused about why you can get worse result.}
+only valid up to $q\lesssim4$. From Fig.~\ref{fig:ps_q148_quadrant}, we observe that 
+equal-spin waveforms lying on the diagonal has great improvement. Above the diagonal, 
+the improvement is significant, except for a few defects caused by some testing waveforms 
+having $q>4$. This can be seen clearer in Fig.~\ref{fig:all_quadrants}, which we see 
+that the optimized histogram shifts downward uniformly. Below the diagonal, waveforms 
+have negligible improvement (Fig.~\ref{fig:all_quadrants}~and~\ref{fig:ps_q148_quadrant}), 
+indicating the original set of coefficients is the optimal set of coefficients, and 
+cannot be further improved. Hence, we can deduce IMRPhenomD has better match with the 
+top-left region and does not fit well with waveforms lying in the bottom-right 
+region. Thus, the ansatz restricts additional improvements and further optimizing in a 
+smaller region does not generally improve the results.
 
 \begin{figure}[t]
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
-	\caption{Distributions of mismatches in the top-left and bottom-right regions.
+	\caption{Distributions of mismatches in the top-left (Top) and bottom-right (Bottom) regions.
 	We use a constant noise spectrum to calculate mismatch and
-	$\mathcal{L}_{\mathrm{mean}}$ as the loss function. Waveforms in the top-left region generally improves while waveforms in the bottom-right region worsened, as indicated by the median (dashed lines).}
+	$\mathcal{L}_{\mathrm{mean}}$ as the loss function. Waveforms in the top-left region generally improves while waveforms in the bottom-right region has very little improvement, as indicated by the median (dashed lines).}
 	\label{fig:all_quadrants}
 \end{figure}
 
@@ -598,7 +648,7 @@ further optimization in a smaller subspace does not improve the results. \kw{I a
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{Parameter space of testing waveforms. Each region is fitted independently with waveforms listed in Tab.~\ref{tab:quadrants}. Colorbar represents the $\log_{10}$ difference of mismatches before and after optimization.}
+	\caption{Parameter space of testing waveforms. Each region is fitted independently with waveforms listed in Tab.~\ref{tab:quadrants}.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
@@ -609,11 +659,8 @@ note is that our recalibration procedure is not exactly the same as the original
 calibration. For instance, we use a different set of NR waveforms, frequency
 range, etc. Nonetheless, as the decrease in mismatch is rather significant, this
 optimization procedure should be able to improve the accuracy of IMRPhenomD on a
-similar scale regardless of the differences. Here, this result serves as a
+similar scale regardless of the differences. Here, the result serves as a
 demonstration of the general method used.  
-% In Fig.~\ref{fig:0154}, the error in the inspiral region is around halved for
-% both amplitude and phase. Similarly, for the merger-ringdown region, the
-% optimized waveforms also show great improvement. 
 
 The results presented in Fig.~\ref{fig:q148_q1248_compare} demonstrate that
 increasing the number of training waveforms used in waveform optimization yields
@@ -622,30 +669,29 @@ improvement is a consequence of over-determination of the waveform coefficients.
 Consequently, increasing the number of calibration NR waveforms is unlikely to
 result in any significant improvement of the model's accuracy. These
 observations suggest that the parameterized ansatz employed in our study may not
-be suitable for certain regions in the parameter space, leading to mismatches
+be suitable for certain regions in the parameter space, leading to low mismatches
 for some waveforms while other waveforms remain at the high mismatch tail with
 negligible changes. This highlights the constraints of the model's flexibility
 that ultimately limit its performance.
 
 The reduced spin approximation is a major contributor to the inaccuracies
 observed in the ansatz. In IMRPhenomD, this approximation employs a single spin
-parameter, $\chi_{\mathrm{PN}}$, as described in Sec. \ref{sec:method}. The
+parameter, $\chi_{\mathrm{PN}}$, as described in Sec.~\ref{sec:method}. The
 parameterization of BBH mergers using a single spin parameter results in a
 degeneracy within the parameter space. Specifically, black hole events with
 different spins may generate the same waveform due to identical values of
 $\chi_{\mathrm{PN}}$, leading to erroneous results, particularly for highly
 unequal spin events. This degeneracy produces straight lines in the parameter
-space with negative slopes that depend on the mass ratio, as shown in
-Fig.\ref{fig:ps_q148}. Notably, the ansatz performs better in the top left
-region than the bottom right along a degeneracy line. In an attempt to address
+space with negative slopes that depend on the mass ratio, which can be seen in 
+Fig.~\ref{fig:ps_q148}. Notably, the ansatz performs better in the top-left
+region than the bottom-right region. In an attempt to address
 this issue, we partitioned the parameter space into four regions, as described
-in Sec. \ref{sec:result}. However, even with separate optimizations for each
-regions, Fig.\ref{fig:ps_q148_quadrant} indicates that the bottom-right region
-exhibits similar mismatches as before, while the top-left region's performance
-has improved. This observation suggests that the ansatz is specific to certain
-regions of the parameter space, with a preference for BBH events featuring
-$\chi_1<0$ and $\chi_2>0$.
-
+in Sec.~\ref{sec:result}. With separate optimizations for each
+regions, Fig.~\ref{fig:ps_q148_quadrant} indicates that the top-left region's 
+performance has improved, while the bottom-right region hardly improves. 
+This observation suggests the ansatz is specific to certain regions of the 
+parameter space, with a preference for BBH events lying above the diagonal, 
+and it has limited enhancement for events lying below the diagonal. 
 
 The division of the parameter space into four regions was a simple approach
 taken for practical reasons. A more systematic approach would involve the use of
@@ -657,21 +703,27 @@ approach is to select regions based on degeneracy lines. However, due to the
 limited number of NR waveforms available, we were unable to implement this
 approach. With more NR waveforms available in the future that cover the entire
 parameter space, we can perform optimization with fewer restrictions and select
-regions more systematically.
+regions more systematically. Other than how to divide regions of interest, the 
+choice of training waveforms also affects the final results greatly. Note that 
+the choice of training waveforms listed in Tab.~\ref{tab:quadrants} were taken 
+arbitrarily to test the effectiveness of separate fitting. Hence, if one takes 
+a different set of training waveforms over the parameter space, the result might 
+give additional features that can test and explain IMRPhenomD better. 
 
 Although our study primarily focused on the IMRPhenomD model, this simple yet
 versatile approach can be applied to other differentiable GW models, such as the
-IMRPhenomP \citep{hannam2014simple} or IMRPhenomX \citep{pratten2020setting} 
+IMRPhenomP \citep{hannam2014simple, khan2019phenomenological} or IMRPhenomX \citep{pratten2020setting,pratten2021computationally} 
 models within the same family. By jointly optimizing a new set of coefficients,
 it is expected that both models can be enhanced since they share similar
 construction principles to the IMRPhenomD model. For instance, they also use PN
 approximants as part of the ansatz in the inspiral segment. It will be interesting 
-to recalibratethe IMRPhenomX model \citep{pratten2020setting}. Because it is
+to recalibratethe IMRPhenomXAS model \citep{pratten2020setting}. Because it is
 parameterized by an additional anti-symmetric spin parameter, it is expected not
-to exhibit the degeneracy previously described. A more detailed investigation
+to exhibit the degeneracy previously described. With the currently developing 
+{\jax} IMRPhenomXAS model in {\ripple}, A more detailed investigation
 may provide valuable insights into the systematics of the Phenom models.
 Furthermore, this approach is applicable to other GW model families, such as NR
-surrogate models or EOB models introduced previously. Such an approach could 
+surrogate models or EOB models introduced in Sec. \ref{sec:intro}. Such an approach could 
 simplify NR waveform calibration procedures and lead to the improvement of 
 existing models.
 
@@ -693,26 +745,20 @@ slight improvement increase in Fig.~\ref{fig:q148_q1248_compare}.
 Furthermore, we investigated how the intrinsic parameters affect the
 improvement. Fig.~\ref{fig:ps_q148} shows that the optimization procedure has a
 certain preference for waveforms lying in the top-left region while the bottom-right 
-region cannot be improved. To further test this result, we recalibrate
+region hardly improved. To further test this result, we recalibrate
 waveforms in separate regions in parameter space. From Fig.~\ref{fig:ps_q148_quadrant}, 
 we can see that this recalibration process gives further
-improvement to the top-left region while the bottom-right region shows similar
-result. This indicates that the ansatz does not fit waveforms in this region. 
-This phenomenon is due to the reduced spin approximation used in parameterizing the 
-ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
+improvement to the top-left region while the bottom-right region only have little 
+improvement. This indicates that the ansatz has limited match in this region and 
+does not fit most waveforms in this region, hence introduces bias to downstream GW 
+analysis. This phenomenon is mainly due to the reduced spin approximation used in 
+parameterizing the ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
 
 While we naively separate the optimization process into 4 regions, one can
 perform systematic region-selection. In principle, we can apply this general
 method to other newer and more accurate models such as IMRPhenomX or IMRPhenomP
 models. Then, we can perform all the above analyses to understand how to
 construct better GW Phenom models in the future.  
-
-% From analyzing mismatches in parameter space, we investigated the accuracy of
-% generated waveforms based on their mass ratio and spin. Similar studies can be
-% performed on other GW models to give better criteria to 
-
-% Improved the IMRPhenomD model. Found regions that can be improved. Checked
-% ansatz. 
 
 \section{ACKNOWLEDGMENTS}
 
