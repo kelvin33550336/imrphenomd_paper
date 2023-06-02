@@ -155,18 +155,17 @@ Finally we discuss the gradient descent algorithm and our stopping criterion.
 We start by giving a succinct summary of the IMRPhenomD model and the relevant parameters.
 Interested readers should refer to \citep{khan2016frequency} for more details on construction of the model.
 
-Aligned-spin, frequency domain waveform models (such as IMRPhenomD) can be written as a
+Aligned-spin, frequency-domain waveform models (such as IMRPhenomD) can be written as a
 combination of amplitude and phase functions ($A$ and $\phi$ respectively):
 \begin{align}\label{eq:}
-	h(f,\theta,\Lambda) = A(f,\theta,\Lambda)e^{-i\phi(f,\theta,\Lambda)}\,.
+	h(f,\theta,\Lambda) = A(f,\theta,\Lambda)e^{-i\phi(f,\theta,\Lambda)}\,,
 \end{align}
-\te{Check minus sign}
-Here $f$ is the frequnecy, $\theta$ are of intrinsic parameters of the binary, and $\Lambda$ is a set of additional
+where $f$ is the frequnecy, $\theta$ are the intrinsic parameters of the binary, and $\Lambda$ is a set of additional
 parameters which will be discussed below. 
 The phase and amplitude functions are then split into three sections which represent the
 inspiral, intermediate, and merger-ringdown (MR) parts of the waveform. 
 During inspiral, $A$ and $\phi$ are known analytically from post-Newtonian (PN) theory;
-PhenomD uses the TaylorF2 model \citep{boyle2007high} which is known up to 3.5PN order.
+IMRPhenomD uses the TaylorF2 model \citep{Buonanno:2009zt, Arun:2004hn} which is known up to 3.5PN order.
 To model the intermediate and MR regions, IMRPhenomD (and all waveforms in the IMRPhenom family)
 uses a series of parameterizations\footnote{
 	The parameterizations for both the ampltude and phase functions can be found in \citep{khan2016frequency}.
@@ -254,11 +253,11 @@ the final waveform is not guarenteed to have $\lambda$s close to global minima.
 % waveform. The connecting procedure alters the previously fitted waveform. 
 % Hence, the model generated waveforms contains additional inaccuracies. 
 
-At the time of construction this piece-wise fitting was necessary since
-$\lambda$ has 209 components making the optimization computationally prohibitive.
-Here, we recalibrate the $\lambda$ coefficients jointly. 
-This is made possible by the use of gradient-based optimization algorithms which are
-enabled by AD from \jax and {\ripple}.
+At the time of construction this piece-wise approach was necessary since
+$\lambda$ has 209 components, making the fitting to NR simulations computationally prohibitive.
+Here, for the first time we recalibrate the $\lambda$ coefficients jointly. 
+This is made possible by the use of gradient-based optimization algorithms,
+enabled by AD from \jax and {\ripple}, which are significatnly moe efficient in high dimensions.
 % , gradients of IMRPhenomD can be easily obtained, thus
 % allowing the use of gradient-based algorithms for us to recalibrate the model.   
 
