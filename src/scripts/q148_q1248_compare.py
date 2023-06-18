@@ -4,15 +4,15 @@ import matplotlib as mpl
 import paths
 
 params = {
-    "font.size": 18,
+    "font.size": 15,
     "legend.fontsize": 12,
-    "legend.frameon": True,
-    "axes.labelsize": 18,
-    "axes.titlesize": 18,
-    "xtick.labelsize": 18,
-    "ytick.labelsize": 18,
+    "legend.frameon": False,
+    "axes.labelsize": 15,
+    "axes.titlesize": 15,
+    "xtick.labelsize": 15,
+    "ytick.labelsize": 15,
     "axes.unicode_minus": False,
-    "figure.figsize": (7, 5),
+    "figure.figsize": (6, 5),
     "xtick.top": True,
     "ytick.right": True,
     "xtick.bottom": True,
@@ -34,19 +34,55 @@ params = {
 
 mpl.rcParams.update(params)
 
+c1 = "#B02423"
+c2 = "#266D1F"
+# c2 = "#785EF0"
+
+
 q148_data = np.loadtxt(paths.data / "q148.dat")
 q1248_data = np.loadtxt(paths.data / "q1248.dat")
 
-bins = np.arange(-2, 2, 0.2)
-q148_logdiff = np.log10(q148_data[:,5]/q148_data[:,4])
-q1248_logdiff = np.log10(q1248_data[:,5]/q1248_data[:,4])
+# bins = np.arange(-2, 2, 0.2)
+bins = np.linspace(-2, 2, 15)
+q148_logdiff = np.log10(q148_data[:, 5] / q148_data[:, 4])
+q1248_logdiff = np.log10(q1248_data[:, 5] / q1248_data[:, 4])
 
-plt.hist(q148_logdiff, bins=bins, alpha=0.3, color="C0")
-plt.hist(q148_logdiff, bins=bins, label="q148", histtype="step", color="C0", linewidth=1.3)
-plt.hist(q1248_logdiff, bins=bins, alpha=0.3, color="C1")
-plt.hist(q1248_logdiff, bins=bins, label="q1248", histtype="step", color="C1", linewidth=1.3)
+plt.hist(q148_logdiff, bins=bins, alpha=0.2, color=c1)
+plt.hist(q148_logdiff, bins=bins, label="Optimized", color=c1, histtype="step", lw=2)
+plt.axvline(
+    x=np.median(q148_logdiff),
+    color=c1,
+    zorder=-20,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+plt.hist(
+    q1248_logdiff,
+    bins=bins,
+    alpha=0.2,
+    color=c2,
+)
+plt.hist(
+    q1248_logdiff,
+    bins=bins,
+    label=f"Add. NR data",
+    histtype="step",
+    color=c2,
+    linewidth=2,
+)
+plt.axvline(
+    x=np.median(q1248_logdiff),
+    color=c2,
+    zorder=-20,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+# plt.text(-1.6, 73, "(add. NR data)", fontsize=12)
 
+# plt.xlim(-2.5, 2)
 plt.legend()
-plt.ylabel('Count')
-plt.xlabel('$\log(\mathcal{M_f}/\mathcal{M_i})$')
+plt.ylabel("Count")
+plt.xlabel(r"$\log_{10}(\mathcal{M}_f/\mathcal{M}_i)$")
 plt.savefig(paths.figures / "q148_q1248_compare.pdf", bbox_inches="tight")

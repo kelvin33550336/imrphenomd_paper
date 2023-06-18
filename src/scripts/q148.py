@@ -4,15 +4,15 @@ import matplotlib as mpl
 import paths
 
 params = {
-    "font.size": 18,
+    "font.size": 15,
     "legend.fontsize": 12,
-    "legend.frameon": True,
-    "axes.labelsize": 18,
-    "axes.titlesize": 18,
-    "xtick.labelsize": 18,
-    "ytick.labelsize": 18,
+    "legend.frameon": False,
+    "axes.labelsize": 15,
+    "axes.titlesize": 15,
+    "xtick.labelsize": 15,
+    "ytick.labelsize": 15,
     "axes.unicode_minus": False,
-    "figure.figsize": (7, 5),
+    "figure.figsize": (6, 5),
     "xtick.top": True,
     "ytick.right": True,
     "xtick.bottom": True,
@@ -34,23 +34,60 @@ params = {
 
 mpl.rcParams.update(params)
 
+# c2 = "#4e7ab1"  # blue Nash
+
+# c2 = "#406a3d"
+# c1 = "#b14a49"
+# c1 = "#b0882f"  # yellow nash
+c1 = "#102F68"
+c2 = "#B02423"
+
+
 q148 = np.loadtxt(paths.data / "q148.dat")
-q148_fl = np.loadtxt(paths.data / "q148_fl.dat")
-bins = np.arange(-5, -1, 0.2)
+bins = np.linspace(-5, -1, 15)
 
-plt.hist(np.log10(q148[:,4]), bins=bins, alpha=0.3, color="C0")
-plt.hist(np.log10(q148[:,4]), bins=bins, label="Original", histtype="step", color="C0", linewidth=1.3)
-plt.axvline(x=np.log10(np.median(q148[:,4])), color="C0", ls="--")
+plt.hist(np.log10(q148[:, 4]), bins=bins, alpha=0.2, color=c1)
+plt.hist(
+    np.log10(q148[:, 4]),
+    bins=bins,
+    color=c1,
+    histtype="step",
+    linewidth=2,
+    label="Original",
+)
+plt.axvline(
+    x=np.log10(np.median(q148[:, 4])),
+    color=c1,
+    zorder=-20,
+    alpha=1.0,
+    lw=2,
+    linestyle=(0, (1, 1.3)),
+)
 
-plt.hist(np.log10(q148[:,5]), bins=bins, alpha=0.05, color="C1")
-plt.hist(np.log10(q148[:,5]), bins=bins, label="$\mathcal{L}_{\mathrm{mean}}$", histtype="step", color="C1", linewidth=1.3)
-plt.axvline(x=np.log10(np.median(q148[:,5])), color="C1", ls="--")
+plt.hist(
+    np.log10(q148[:, 5]),
+    bins=bins,
+    histtype="step",
+    label="Optimized $(\mathcal{L}_{\mathrm{mean}})$",
+    color=c2,
+    linewidth=2,
+)
+plt.hist(
+    np.log10(q148[:, 5]),
+    bins=bins,
+    color=c2,
+    alpha=0.2,
+)
+plt.axvline(
+    x=np.log10(np.median(q148[:, 5])),
+    color=c2,
+    # zorder=-20,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
 
-plt.hist(np.log10(q148_fl[:,5]), bins=bins, alpha=0.05, color="C2")
-plt.hist(np.log10(q148_fl[:,5]), bins=bins, label="$\mathcal{L}_{\mathrm{fl}}$", histtype="step", color="C3", linewidth=1.3)
-plt.axvline(x=np.log10(np.median(q148_fl[:,5])), color="C2", ls="--")
-
-plt.legend()
-plt.ylabel('Count')
-plt.xlabel('$\log(\mathcal{M})$')
+plt.legend(loc="upper left")
+plt.ylabel("Count")
+plt.xlabel("$\log_{10}(\mathcal{M})$")
 plt.savefig(paths.figures / "q148.pdf", bbox_inches="tight")

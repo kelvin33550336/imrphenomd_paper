@@ -4,15 +4,15 @@ import matplotlib as mpl
 import paths
 
 params = {
-    "font.size": 18,
+    "font.size": 15,
     "legend.fontsize": 12,
-    "legend.frameon": True,
-    "axes.labelsize": 18,
-    "axes.titlesize": 18,
-    "xtick.labelsize": 18,
-    "ytick.labelsize": 18,
+    "legend.frameon": False,
+    "axes.labelsize": 15,
+    "axes.titlesize": 15,
+    "xtick.labelsize": 15,
+    "ytick.labelsize": 15,
     "axes.unicode_minus": False,
-    "figure.figsize": (7, 5),
+    "figure.figsize": (11, 5),
     "xtick.top": True,
     "ytick.right": True,
     "xtick.bottom": True,
@@ -34,41 +34,73 @@ params = {
 
 mpl.rcParams.update(params)
 
-q148 = np.loadtxt(paths.data / "all_quadrants.dat")
-data2 = np.array([i for i in q148 if (i[2] < 0 and i[3] > 0)])
-data4 = np.array([i for i in q148 if (i[2] > 0 and i[3] < 0)])
+c1 = "#102F68"
+c2 = "#B02423"
 
-bins = np.arange(-5, -1, 0.2)
+data2 = np.loadtxt(paths.data / "1neg2pos_mismatch.dat")
+data4 = np.loadtxt(paths.data / "1pos2neg_mismatch.dat")
 
-fig, ax = plt.subplots(2, figsize=(6, 10))
+bins = np.linspace(-5, -1, 15)
 
-ax[0].hist(np.log10(data2[:,4]), bins=bins, alpha=0.3, color="C0")
-ax[0].hist(np.log10(data2[:,4]), bins=bins, label="top-left original", histtype="step", color="C0", linewidth=1.3)
-ax[0].axvline(x=np.log10(np.median(data2[:,4])), color="C0", ls="--")
-ax[0].hist(np.log10(data2[:,5]), bins=bins, alpha=0.3, color="C1")
-ax[0].hist(np.log10(data2[:,5]), bins=bins, label="top-left optimized", histtype="step", color="C1", linewidth=1.3)
-ax[0].axvline(x=np.log10(np.median(data2[:,5])), color="C1", ls="--")
-ax[0].set_ylabel('Count')
-ax[0].legend(loc='upper left')
+fig, ax = plt.subplots(2, figsize=(6, 10), sharex=True)
+plt.subplots_adjust(hspace=0.05)
 
-ax[1].hist(np.log10(data4[:,4]), bins=bins, alpha=0.3, color="C0")
-ax[1].hist(np.log10(data4[:,4]), bins=bins, label="bottom-right original", histtype="step", color="C0", linewidth=1.3, alpha=0.8)
-ax[1].axvline(x=np.log10(np.median(data4[:,4])), color="C0", ls="--")
-ax[1].hist(np.log10(data4[:,5]), bins=bins, alpha=0.3, color="C1")
-ax[1].hist(np.log10(data4[:,5]), bins=bins, label="bottom-right optimized", histtype="step", color="C1", linewidth=1.3, alpha=0.8)
-ax[1].axvline(x=np.log10(np.median(data4[:,5])), color="C1", ls="--")
-ax[1].set_xlabel('$\log(\mathcal{M})$')
-ax[1].set_ylabel('Count')
-ax[1].legend(loc='upper left')
+ax[0].hist(np.log10(data2[:, 4]), bins=bins, alpha=0.2, color=c1)
+ax[0].hist(
+    np.log10(data2[:, 4]), bins=bins, label="Original", color=c1, lw=2, histtype="step"
+)
+ax[0].axvline(
+    x=np.log10(np.median(data2[:, 4])),
+    color=c1,
+    zorder=-20,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+ax[0].hist(
+    np.log10(data2[:, 5]),
+    bins=bins,
+    label="Optimized",
+    histtype="step",
+    color=c2,
+    linewidth=2,
+)
+ax[0].hist(
+    np.log10(data2[:, 5]),
+    bins=bins,
+    color=c2,
+    alpha=0.2,
+)
+ax[0].axvline(
+    x=np.log10(np.median(data2[:, 5])),
+    color=c2,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+ax[0].set_ylabel("Count")
+ax[0].legend(loc="upper left")
 
-# plt.hist(np.log10(data2[:,4]), bins=bins, label="top-left original", histtype="step", color="C0", linewidth=1.3)
-# plt.hist(np.log10(data2[:,5]), bins=bins, label="top-left optimized", histtype="step", color="C0", linestyle=('dashed'), linewidth=1.3)
-
-# plt.hist(np.log10(data4[:,4]), bins=bins, label="bottom-right original", histtype="step", color="C1", linewidth=1.3)
-# plt.hist(np.log10(data4[:,5]), bins=bins, label="bottom-right optimized", histtype="step", color="C1", linestyle=('dashed'), linewidth=1.3)
-
-# plt.legend(loc='upper left')
-# plt.ylabel('Count')
-# plt.xlabel('$\log(\mathrm{mismatch})$')
+ax[1].hist(np.log10(data4[:, 4]), bins=bins, alpha=0.2, color=c1)
+ax[1].hist(np.log10(data4[:, 4]), bins=bins, histtype="step", color=c1, lw=2)
+ax[1].axvline(
+    x=np.log10(np.median(data4[:, 4])),
+    color=c1,
+    zorder=-20,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+ax[1].hist(np.log10(data4[:, 5]), bins=bins, histtype="step", color=c2, lw=2)
+ax[1].hist(np.log10(data4[:, 5]), bins=bins, color=c2, alpha=0.2)
+ax[1].axvline(
+    x=np.log10(np.median(data4[:, 5])),
+    color=c2,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+ax[1].set_xlabel("$\log_{10}(\mathcal{M})$")
+ax[1].set_ylabel("Count")
 
 plt.savefig(paths.figures / "all_quadrants.pdf", bbox_inches="tight")
