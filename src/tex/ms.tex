@@ -62,9 +62,29 @@
 
 \section{Introduction} \label{sec:intro}
 
-In the future, the Laser Interferometer Gravitational-wave Observatory (LIGO)
-will finish its maintenance and start observing new gravitational wave (GW)
-results. This new O4 run is expected to double the rate of current binary black
+% Brief intro of waveform models
+
+Many data analysis tasks in today's gravitational wave (GW) astrophysics, such
+as match filtering search and parameter estimation, rely on accurate waveform
+models. Because using numerical relativity (NR) waveforms in these tasks is
+prohibitively expensive, the community has constructed waveform approximants
+that can be evaluated much faster. There are three families of commonly used GW
+approximants, which are effective-one-body (EOB) \citep{ossokine2020multipolar,
+cotesta2020frequency, taracchini2014effective}, Numerical Relativity (NR)
+surrogate \citep{islam2022surrogate, varma2019surrogate, varma2019surrogate2}
+and phenomenological (Phenom) models \citep{husa2016frequency,
+khan2016frequency, garcia2020multimode, pratten2021computationally}. While the
+detail of construction of these models are different, they all have a set of
+internal parameters that can be calibrated to NR waveforms. The quality of a
+waveform model is determined by the ansatz used and the accuracy of the
+calibrated parameters.
+
+% Why there is a need
+
+The LIGO-VIRGO-KAGRA (LVK) collaboration
+(\citep{LIGOScientific:2014pky,LIGOScientific:2021usb,LIGOScientific:2021djp,
+VIRGO:2014yos,KAGRA:2020tym}.) has recently started their fourth observational
+run on May 26, 2023. This new run is expected to double the rate of current binary black
 hole (BBH) observations \citep{abbott2020prospects}. Additionally, the
 sensitivity of interferometers will be increased to capture more details of GW.
 Having instruments with higher sensitivity, GW models of equal or higher
@@ -76,22 +96,7 @@ models will no longer suffice for future data analyses
 \citep{purrer2020gravitational}. Hence, it is necessary for us to develop and
 improve GW models. 
 
-% Waveform families and slight motivation of why we take Phenom model
-Currently, three families of GW models are commonly used. They are the
-effective-one-body (EOB) \citep{ossokine2020multipolar, cotesta2020frequency, taracchini2014effective}, Numerical Relativity
-(NR) surrogate \citep{islam2022surrogate, varma2019surrogate, varma2019surrogate2} and phenomenological (Phenom) models
-\citep{husa2016frequency, khan2016frequency, garcia2020multimode, pratten2021computationally}. 
-EOB models are constructed by mapping two masses onto an
-effective body under an effective metric; NR surrogate models construct
-waveforms using combinations of NR waveforms; Phenom models are formulated using
-specific ansatz and inspiral approximations. While EOB and NR surrogate models
-give better waveform approximants, Phenom waveforms can be produced much faster,
-hence it is used mostly in data analysis tasks that requires many waveform
-generations. This advantage scales up in data analysis tasks such as matched
-filtering and parameter estimation, where many waveforms are required in each
-run. This motivates us to improve upon the current framework of Phenom models,
-thus can retain the advantage of fast waveform generation while improving the
-model's accuracy. 
+% AD waveforms 
 
 Automatic differentiation (AD) is a method to calculate derivatives of functions
 up to machine precision. In traditional numerical calculations, derivatives are
