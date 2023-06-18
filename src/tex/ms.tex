@@ -338,7 +338,9 @@ Fig.~\ref{fig:loss} plateau at around $N=12000$, hence we end the optimization h
 	\script{intrin_space.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/intrin_space.pdf}
-	\caption{Parameter space with mass ratio $q$ against post-newtonian spin parameter $\chi_{\mathrm{PN}}$. Orange: Training waveforms; Blue: Testing waveforms}
+	\caption{Distribution of training and testing waveforms in $q-\chi_{PN}$
+	space. The blue dots represent the waveforms used in training and the orange
+	stars represent the waveforms used in testing.\kw{Change the legend, and include the extra points. Change the training point to be star and testing point to be dot.}}
 	\label{fig:intrin_space}
 \end{figure}
 
@@ -396,32 +398,34 @@ Fig.~\ref{fig:loss} plateau at around $N=12000$, hence we end the optimization h
 
 \section{Result and Comparison with Original Model} \label{sec:result}
 
-To evaluate the effectiveness of the optimization, we analyze 536 NR waveforms 
-from the SXS catalog in this study. We specifically select waveforms with 
-negligible eccentricity (${e<2\times10^{-3}}$) and precession 
-(${\chi_{x,y}<5\times10^{-3}}$) that are consistent with the constraints of 
-the waveform model. As shown in Fig.~\ref{fig:intrin_space}, the intrinsic 
-parameters of the chosen test waveforms fall within the parameter space defined 
-by the training waveforms. This suggests that these test waveforms can be used 
-for direct comparison with the original model.
+To evaluate how well the optimization procedure generalize to waveforms that are
+not in the training set, we evaluate the mismatch between the fine-tuned model
+and the data provided in the SXS catalog for 536 NR waveforms. We select
+waveforms that share the same part of the parameter space with the training
+waveform, i.e. the waveforms with negligible eccentricity (${e<2\times10^{-3}}$)
+and precession (${\chi_{x,y}<5\times10^{-3}}$). Fig.~\ref{fig:intrin_space}
+shows how the training and testing waveforms are distributed in the
+$q-\chi_{PN}$ space.
 
-To illustrate the improvement on an individual waveform level, we compare a
-particular waveform before and after optimization in Fig. \ref{fig:0154}.
-Compared to the original IMRPhenomD waveform, we can see the optimized waveform
-has smaller residual from NR waveform both in amplitude and phase, particularly
-in the inspiral region, where the amplitude displays a $50\%$ reduction in
-error. For a fair comparison, we selected one of the testing waveforms from the
-catalog presented in \citep{khan2016frequency}.
+To illustrate the effect of optimiziation on an individual waveform level, we
+compare the mismatch of a particular waveform before and after optimization with
+respect to the NR waveform taken directly from the SXS catalog in Fig.
+\ref{fig:0154}. Compared to the original IMRPhenomD waveform, the
+optimized waveform has smaller residual from NR waveform both in amplitude and
+phase, particularly in the inspiral region, where the amplitude displays a
+$50\%$ reduction in error. For a fair comparison, we selected one of the testing
+waveforms from the catalog presented in \citep{khan2016frequency}.
 
-To quantify the effect of optimization over the entire dataset, We evaluate the
-mismatch of all testing waveforms using a constant PSD weighted loss function,
-$\mathcal{L}_{\mathrm{mean}}$. We present the resulting distribution in Fig.
-\ref{fig:q148}. The peak of the distribution has shifted towards a lower
-mismatch, with a decrease of almost one order of magnitude and a 50\% reduction
-in the median. When using $\mathcal{L}_{\mathrm{fl}}$, we observe a similar
-improvement with a 22.9\% decrease in the median. Even though the distribution
-lacks a clear peak due to the problem discussed in Section
-\ref{subsec:optimization}, both distributions show observable improvement.
+With the purpose of improving downstream tasks such as parameter estimation in
+mind, the more relevant metric of improvement is the distribution of improvement
+in mismatch over the entire training dataset. Fig. \ref{fig:q148} shows the
+distribution of log-mismatch for the testing waveforms before and after the
+optimization procedure. For generality, we use a constant PSD in our loss
+function. One can see the distribution have been skewed toward lower mismatch,
+where the peak of the distribution is shifted by approximately an order of
+magnitude, and a median mismatch is reduced by 50\%. When using
+$\mathcal{L}_{\mathrm{fl}}$, we observe a similar improvement with a 22.9\%
+decrease in the median. 
 
 \begin{figure}[t]
 	\script{q148.py}
@@ -446,15 +450,11 @@ lacks a clear peak due to the problem discussed in Section
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
-%\kw{Which plot is this paragraph referring to?}
-Applying the same methods, we will see that the distributions of mismatches
-calculated using the {\zdethp} PSD exhibit superior improvement compared to the 
-unweighted mismatch.
-The shape of the distribution is similar to that shown in Fig. \ref{fig:q148}.
-This result is expected, as the IMRPhenomD model was initially constructed and
-fitted using the {\zdethp} weighted mismatch. Consequently, the model is
-anticipated to closely fit the NR waveforms while incorporating the influence of
-the {\zdethp} PSD, rather than a constant PSD.
+Note that the IMRPhenomD model was initially constructed and fitted using the
+{\zdethp} weighted mismatch. To ensure a fair comparison, we apply the same
+methods using the {\zdethp} PSD exhibit superior improvement compared to the
+unweighted mismatch. We find no significant qualitative and quantitative
+difference between the two PSDs in the resulting distribution of mismatches.
 
 Motivated by the successful improvement of the waveforms, we expand the training
 dataset to optimize additional waveforms listed in Tab. \ref{tab:q1248}. We 
