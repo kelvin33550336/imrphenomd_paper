@@ -65,7 +65,7 @@
 % Brief intro of waveform models
 
 Many data analysis tasks in today's gravitational wave (GW) astrophysics, such
-as match filtering search and parameter estimation, rely on accurate waveform
+as match filtering search \citep{fill} and parameter estimation\citep{fill}, rely on accurate waveform
 models. Because using numerical relativity (NR) waveforms in these tasks is
 prohibitively expensive, the community has constructed waveform approximants
 that can be evaluated much faster. There are three families of commonly used GW
@@ -84,55 +84,39 @@ calibrated parameters.
 The LIGO-VIRGO-KAGRA (LVK) collaboration
 (\citep{LIGOScientific:2014pky,LIGOScientific:2021usb,LIGOScientific:2021djp,
 VIRGO:2014yos,KAGRA:2020tym}.) has recently started their fourth observational
-run on May 26, 2023. This new run is expected to double the rate of current binary black
-hole (BBH) observations \citep{abbott2020prospects}. Additionally, the
-sensitivity of interferometers will be increased to capture more details of GW.
-Having instruments with higher sensitivity, GW models of equal or higher
-accuracy than observations should be used to extract GW information. Otherwise,
-the extracted information would be affected more by GW models instead of
-interferometer sensitivity, resulting in a bottleneck in GW analyses. Although
-GW models are accurate enough for current analyses, the accuracy of current
-models will no longer suffice for future data analyses
-\citep{purrer2020gravitational}. Hence, it is necessary for us to develop and
-improve GW models. 
+run on May 26, 2023. Because of the sensitivity improvement, the new run is
+expected to double the size of current binary black hole (BBH) observations
+\citep{abbott2020prospects}. The improved sensitivity also implies we expect to
+detect individual events with a higher signal-to-noise ratio (SNR). This means
+we can resolve more features in the signal, at the same time put a more
+stringent requirement on the accuracy of our waveform model\citep{fill}.
 
 % AD waveforms 
 
-Automatic differentiation (AD) is a method to calculate derivatives of functions
-up to machine precision. In traditional numerical calculations, derivatives are
-usually obtained through numerical derivatives. Symbolic derivatives were
-available but it was less efficient. Both methods were not viable in machine
-learning, where back-propagation requires precise and rapid derivative
-calculations. In {\python}, packages including \texttt{pytorch} \citep{pytorch},
-\texttt{tensorflow} \citep{tensorflow2015-whitepaper}, etc. utilizes AD to train
-machine learning models. AD's algorithm is intuitive in nature. Functions
-defined are decomposed into tree structures of primitives, such as addition or
-function evaluations. Since these operations are fundamental, they were saved as
-pairs internally. Differentiation proceeds forward following the tree structure,
-with the application of the chain rule in each step to evaluate its derivative.
-Analytic derivatives of such operations are applied in each step and the desired
-derivative can then be obtained by composing back the original function
-according to the original structure. {\ripple} \citep{ripple} was a new
-implementation of IMRPhenomD, one of the models within the Phenom family. It was first implemented
-in \texttt{lalsuite} using \texttt{C}. In order to make use of AD, it was
-rewritten using \jax, a {\python} package that supports AD. Using
-{\ripple}, one can apply AD to GW models to obtain precise derivatives, thus
-allowing one to freely use derivative-based algorithms to perform data analyses. 
-% Need to cite references for AD
+Due to the number of calibration parameters (often in a couple hundreds if not
+more), waveform models is usually calibrated in pieces \citep{fill}. This
+ignores the correlation between different parts of the waveform model and limits
+it quality. Recently, there has been efforts in rebuilding waveform models
+\citep{fill} that supports automatic differentiation (AD)\citep{fill}, which is
+a technique used to compute derivatives of functions down to machine precision
+without issues of scaling up to high dimension or expression swelling. In
+particular, {\ripple} \citep{ripple} exposes the calibration parameters to the
+user. This allows us to make use of infrastructures that are heavily used in
+machine learning, such as gradient descent and back propagation\cite{fill}, to
+improve the calibration of the waveform models.
 
 % Put more focus on the joint optimization instead of having a set of more accurate 
 % coefficients, since the method is the main point
 In this paper, we investigate the possibility of further improving the accuracy
-of IMRPhenomD by jointly optimizing all the fitting coefficients given NR
-waveforms, and what constraints one may face when trying to further improve. We
-find that simply by applying gradient descent algorithm, one can obtain a better
-set of waveform coefficients, thus improving the accuracy of the model.
-Furthermore, by comparing the accuracy of optimized and original waveforms, we
-find that model-generated waveforms are very sensitive to their source
-parameters. Specifically, IMRPhenomD favors certain parts of the parameter
-space. This means IMRPhenomD introduces systematic bias to other GW analysis
-tasks. This showcases the flaws of the ansatz and allows us to have a deeper
-understanding of Phenom models.  
+of a waveform model, IMRPhenomD\citep{fill}, by jointly optimizing all the
+calibration coefficients given a set of NR waveforms. Training on a small number
+of NR waveforms, we demonstrate one can improves the match between IMRPhenomD
+and NR waveforms over a decently sized parameter space, up to mass ratio $q=8$
+We also explore how different parts of the source parameter space (e.g. the
+primary and second spins) respond to the optimization procedure, by optimizing
+the waveform separately for different regions of the parameter space. This gives
+us hints on whether the waveform model performs equally well in different
+regions of the parameter space.
 
 The rest of the paper is structured as follows: In Sec.~\ref{sec:method}, we
 review the parameterization of the IMRPhenomD model and the mismatch function
