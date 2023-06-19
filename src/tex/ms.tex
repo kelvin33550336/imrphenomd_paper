@@ -142,7 +142,7 @@ parameterization affects the accuracy of the model.
 
 \section{Optimization Method} \label{sec:method}
 
-In this section, we first briefly review the contruction of the IMRPhenomD model and discuss
+In this section, we first briefly review the construction of the IMRPhenomD model and discuss
 how the calibration parameters enter the waveform.
 We then outline the mismatch and how it can be used as a loss fucntion. 
 Finally we discuss the gradient descent algorithm and our stopping criterion.
@@ -153,7 +153,7 @@ Finally we discuss the gradient descent algorithm and our stopping criterion.
 % 1. What is the model
 % 2. How do the parameters enter the model
 We start by giving a succinct summary of the IMRPhenomD model and the relevant parameters.
-Interested readers should refer to \citep{khan2016frequency} for more details on construction of the model.
+Interested readers should refer to \citep{khan2016frequency} for more details.
 
 Aligned-spin, frequency-domain waveform models (such as IMRPhenomD) can be written as a
 combination of amplitude and phase functions ($A$ and $\phi$ respectively):
@@ -232,13 +232,13 @@ respectively.
 
 %\kw{Need to work on this paragraph}
 Although initially independent, the stiching procedure means that each section
-of the waveform intrinsically depends on the full set of $\lambda$s. 
-A slightly inaccurate set of $\lambda$s can therefore lead to inaccuracies in
+of the waveform intrinsically depends on the full set of $\lambda$'s. 
+A slightly inaccurate set of $\lambda$'s can therefore lead to inaccuracies in
 the generated waveforms. 
-Thus, having a set of accurate waveform coefficients is crucial to the accuracy
-of the GW models. 
+Thus, the calibration of these coefficients is crucial to the accuracy
+of IMRPhenom GW models. 
 Importantly, since the fitting was performed on the individual segments,
-the final waveform is not guarenteed to have $\lambda$s close to global minima.
+the final waveform is not guarenteed to have $\lambda$'s close to global minima.
 
 % Generally, waveform coefficients 
 % are obtained by calibrating with NR waveforms, which are waveforms computed 
@@ -257,29 +257,32 @@ At the time of construction this piece-wise approach was necessary since
 $\lambda$ has 209 components, making the fitting to NR simulations computationally prohibitive.
 Here, for the first time we recalibrate the $\lambda$ coefficients jointly. 
 This is made possible by the use of gradient-based optimization algorithms,
-enabled by AD from \jax and {\ripple}, which are significatnly moe efficient in high dimensions.
+enabled by AD from \jax\, and {\ripple}, which are significatnly more efficient in high dimensions.
 % , gradients of IMRPhenomD can be easily obtained, thus
 % allowing the use of gradient-based algorithms for us to recalibrate the model.   
 
 \subsection{Loss Function} \label{subsec:loss}
 
-In order to recalibrate the model, we need to define an objective function that
-quantify the performance of the model. A common choice for such metric is the
-\textit{mismatch} function \citep{husa2016frequency}. It is defined as
+In order to optimize the coefficients, we need to define a loss function that
+quantifies the difference between waveform model and the target NR simulations which we want to match.
+Here we adopt a quantity commonly used in GW physics called the \textit{mismatch} function \citep{husa2016frequency}. 
+It is defined as
 \begin{align} \label{eq:mismatch}
 	\mathcal{M}(h_1, h_2)=1-\max_{t_0, \phi_0}\langle \hat{h}_1, \hat{h}_2\rangle,
 \end{align}
-where $h_{1,2}$ are the two GW waveform we are comparing, and $t_0$ and $\phi_0$
-are time shift and phase shift respectively. The $\langle h_1, h_2 \rangle$ is
-commonly referred as the inner product, which is defined as 
+where $h_{1,2}$ are the two GW waveforms we are comparing, and $t_0$ and $\phi_0$
+are a relative time and phase shift respectively. 
+The inner product, $\langle h_1, h_2 \rangle$, is defined as 
 \begin{align}\label{eq:inner_prod}
 	\langle h_1, h_2 \rangle = 4\Re\int_{f_{\mathrm{min}}}^{f_{\mathrm{max}}}\frac{h_1(f)h_2^{\ast}(f)}{S_n(f)}\,df,
 \end{align}
 where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain,
-$S_n(f)$ is the power spectral density(PSD) of noise from the instrument, $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are
-the relevant maximum and minimum frequencies for the integration. $t_0$ and $\phi_0$ are maximized by performing regression between $h_1$ and $h_2$. The mismatch
-is a quantity that is closely related to the mean square error (MSE) between the
-two waveforms, as it is often considered a weighted version of the MSE.
+$S_n(f)$ is the power spectral density (PSD), $f_{\mathrm{max}}$ and $f_{\mathrm{min}}$ are
+the relevant maximum and minimum frequencies for the integration.
+We note here that the mismatch can be viewed as the mean square error (MSE) between the
+two waveforms.
+
+\te{Up to here}
 
 Since we wish to optimize the model over the whole parameter space, we need to compare multiple model generated waveforms with NR waveforms. However, mismatch only quantifies the difference between IMRPhenomD and NR waveform for one particular set of intrinsic parameters. To take into account of various different waveforms in the parameter space, we pick waveforms from the different parts of the parameter space. We define the loss function as an average of training waveforms in two ways, the simple average of mismatches and the normalize average of mismatches,  
 \begin{align}
