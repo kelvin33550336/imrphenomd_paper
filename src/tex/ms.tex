@@ -93,7 +93,7 @@ stringent requirement on the accuracy of our waveform model\citep{fill}.
 
 % AD waveforms 
 
-Due to the number of calibration parameters (often in a couple hundreds if not
+Because of the large number of calibration parameters (often in a couple hundreds if not
 more), waveform models is usually calibrated in pieces \citep{fill}. This
 ignores the correlation between different parts of the waveform model and limits
 it quality. Recently, there has been efforts in rebuilding waveform models
@@ -109,14 +109,14 @@ improve the calibration of the waveform models.
 % coefficients, since the method is the main point
 In this paper, we investigate the possibility of further improving the accuracy
 of a waveform model, IMRPhenomD\citep{fill}, by jointly optimizing all the
-calibration coefficients given a set of NR waveforms. Training on a small number
-of NR waveforms, we demonstrate one can improves the match between IMRPhenomD
-and NR waveforms over a decently sized parameter space, up to mass ratio $q=8$
-We also explore how different parts of the source parameter space (e.g. the
-primary and second spins) respond to the optimization procedure, by optimizing
-the waveform separately for different regions of the parameter space. This gives
-us hints on whether the waveform model performs equally well in different
-regions of the parameter space.
+calibration coefficients given a set of NR waveforms. Training on a few NR
+waveforms, we demonstrate one can improve the match between IMRPhenomD and NR
+waveforms over a decently sized parameter space, up to mass ratio $q=8$ We also
+explore how different parts of the source parameter space (e.g. the primary and
+second spins) respond to the optimization procedure, by optimizing the waveform
+separately for different regions of the parameter space. This gives us hints on
+whether the waveform model performs equally well in different regions of the
+parameter space.
 
 The rest of the paper is structured as follows: In Sec.~\ref{sec:method}, we
 review the parameterization of the IMRPhenomD model and the mismatch function
