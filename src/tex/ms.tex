@@ -44,20 +44,20 @@
 \JHU
 
 \begin{abstract}
-    We present a simple and general method of recalibrating gravitational wave
-    (GW) phenomenological waveform models jointly. By using {\jax} and
-    {\ripple}, we can perform automatic differentiation to functions, which
-    allows us to use gradient-based optimization methods to recalibrate waveform
-    coefficients in IMRPhenomD model. This method reduces systematic bias
-    previously introduced to the model and generally can improve waveform
-    accuracy. With recalibrated coefficients, we found that the typical
-    \textit{mismatch} has a $50\%$ decrease. Furthermore, we analyze the
-    accuracy base on the waveform's intrinsic parameters. We found that waveform
-    accuracy has significant dependence on black hole spin. Reduced spin
-    approximation introduces degeneracy in spin, which prevented further
-    improvement. We isolated regions in the parameter space that does not fit
-    the waveform ansatz. These results allow us to understand more about how to
-    develop newer phenomenological models. 
+	We investigate the possibility of improving the accuracy of a
+	phenomenological waveform model, IMRPhenomD, by jointly optimizing all the
+	calibration coefficients at once, given a set of numerical relativity (NR)
+	waveforms. When IMRPhenomD was first calibrated to NR waveforms, different
+	parts of the waveform were calibrated separately. Using \ripple, a library
+	of waveform models compatible with automatic differentiation, we can perform
+	gradients-based optimization to all the waveform coefficients the same time,
+	which should improve the quality of waveform by capturing correlations
+	between previous separately fitted parts. We found that after recalibration,
+	the median mismatch between the model and NR waveforms decrease by $50\%$.
+	We further explore how different parts of the source parameter space respond
+	to the optimization procedure. We find that the degree of improvement
+	correlates with the spins of the source. This work shows a promising avenue
+	to help understand and treat systematic error in waveform models.
 \end{abstract}
 
 \section{Introduction} \label{sec:intro}
