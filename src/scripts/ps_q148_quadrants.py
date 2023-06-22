@@ -34,7 +34,11 @@ params = {
 
 mpl.rcParams.update(params)
 
-data = np.loadtxt(paths.data / "all_quadrants.dat")
+data1 = np.loadtxt(paths.data / "1pos2pos_mismatch.dat")
+data2 = np.loadtxt(paths.data / "1neg2pos_mismatch.dat")
+data3 = np.loadtxt(paths.data / "1neg2neg_mismatch.dat")
+data4 = np.loadtxt(paths.data / "1pos2neg_mismatch.dat")
+data = np.concatenate((data1, data2, data3, data4))
 
 logdiff = np.log10(data[:, 5] / data[:, 4])
 cm = plt.cm.get_cmap("RdYlBu")
