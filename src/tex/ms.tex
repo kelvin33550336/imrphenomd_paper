@@ -383,7 +383,8 @@ original coefficients given in \citep{khan2016frequency} because they likely lie
 neighborhood of the minimum that we wish to find. 
 We fix our learning rate, $\alpha$, to be $=10^{-6}$, which is small enough to ensure we 
 don't move far from the minimum.
-Finally, we stop the optimization when the validation loss stops decreasing.
+Finally, we stop the optimization when the validation loss stops decreasing 
+(see Sec.~\ref{sec:result} for description of the validation set).
 This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 
 \begin{figure}
@@ -472,27 +473,26 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 \section{Result and Comparison with Original Model} \label{sec:result}
 
 
-To evaluate how well the optimization procedure generalize to waveforms that are
+To evaluate how well the optimization procedure generalizes to waveforms that are
 not in the training set, we evaluate the mismatch between the fine-tuned model
-and the data provided in the SXS catalog for 536 NR waveforms. We select
-waveforms that share the same part of the parameter space with the training
-waveform, i.e. the waveforms with negligible eccentricity (${e<2\times10^{-3}}$)
-and precession (${\chi_{x,y}<5\times10^{-3}}$). Fig.~\ref{fig:intrin_space}
-shows how the training and testing waveforms are distributed in the
-$q-\chi_{PN}$ space.
+and an additional 536 NR waveforms in the SXS catalog i.e., the validation set.
+We select waveforms that share the same part of the parameter space with the training
+set i.e., waveforms with negligible eccentricity (${e<2\times10^{-3}}$)
+and precession (${\chi_{x,y}<5\times10^{-3}}$). Figure~\ref{fig:intrin_space}
+shows how the training and validation waveforms are distributed in the
+$q-\chi_{\rm PN}$ space.
 
-To illustrate the effect of optimiziation on an individual waveform level, we
-compare the mismatch of a particular waveform before and after optimization with
-respect to the NR waveform taken directly from the SXS catalog in Fig.
-\ref{fig:0154}. Compared to the original IMRPhenomD waveform, the
-optimized waveform has smaller residual from NR waveform both in amplitude and
-phase, particularly in the inspiral region, where the amplitude displays a
+To illustrate the effect of optimiziation on an individual waveform level, in Fig.
+\ref{fig:0154} we plot the phase and amplitude of a particular waveform before and after optimization together with
+the NR waveform taken directly from the SXS catalog. In the bottom panel one can see that,
+compared to the original IMRPhenomD waveform, the optimized waveform has smaller residuals both in amplitude and
+phase, particularly in the inspiral region where the amplitude displays a
 $50\%$ reduction in error. For a fair comparison, we selected one of the testing
-waveforms from the catalog presented in \citep{khan2016frequency}.
+waveforms from the catalog presented in \citep{khan2016frequency}.\te{Which one?}
 
 With the purpose of improving downstream tasks such as parameter estimation in
 mind, the more relevant metric of improvement is the distribution of improvement
-in mismatch over the entire training dataset. Fig. \ref{fig:q148} shows the
+in mismatch over the entire training dataset. Figure~\ref{fig:q148} shows the
 distribution of log-mismatch for the testing waveforms before and after the
 optimization procedure. For generality, we use a constant PSD in our loss
 function. One can see the distribution have been skewed toward lower mismatch,
