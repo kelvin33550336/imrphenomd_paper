@@ -280,7 +280,7 @@ we need to compare multiple model generated waveforms with NR waveforms.
 However, the mismatch is only defined for two input waveforms at a particular set of intrinsic parameters.
 We therefore define the loss function as an average of training waveforms in two ways,
 the simple average of mismatches and the normalized average of mismatches,  
-\begin{align}
+\begin{align}\label{eqn:loss}
 	\mathcal{L}_{\mathrm{ave}}&=\frac{1}{N}\sum_{i=1}^N\mathcal{M}_i \\
 	\mathcal{L}_{\mathrm{nl}}&=\frac{1}{N}\sum_{i=1}^N\frac{\mathcal{M}_i}{\mathcal{M}_{i,\mathrm{ini}}},
 \end{align}	
@@ -488,17 +488,17 @@ the NR waveform taken directly from the SXS catalog. In the bottom panel one can
 compared to the original IMRPhenomD waveform, the optimized waveform has smaller residuals both in amplitude and
 phase, particularly in the inspiral region where the amplitude displays a
 $50\%$ reduction in error. For a fair comparison, we selected one of the testing
-waveforms from the catalog presented in \citep{khan2016frequency}.\te{Which one?}
+waveforms from the catalog presented in \citep{khan2016frequency}.\te{Which one? Please write the name from the table.}
 
 With the purpose of improving downstream tasks such as parameter estimation in
 mind, the more relevant metric of improvement is the distribution of improvement
-in mismatch over the entire training dataset. Figure~\ref{fig:q148} shows the
-distribution of log-mismatch for the testing waveforms before and after the
-optimization procedure. For generality, we use a constant PSD in our loss
-function. One can see the distribution have been skewed toward lower mismatch,
-where the peak of the distribution is shifted by approximately an order of
-magnitude, and a median mismatch is reduced by 50\%. When using
-$\mathcal{L}_{\mathrm{nl}}$, we observe a similar improvement with a 22.9\%
+in mismatch over the entire validation dataset. Figure~\ref{fig:q148} shows the
+distribution of log-mismatches for the validation waveforms before and after the
+optimization procedure. Here we show results using a constant PSD in our loss
+function. One can see the distribution of the optimized waveform is skewed toward lower mismatches,
+with the peak of the distribution being shifted by approximately an order of
+magnitude, and a median mismatch being reduced by 50\% (see vertical dotted lines). When using
+$\mathcal{L}_{\mathrm{nl}}$, we observe a less pronounced improvement with a 22.9\%
 decrease in the median. 
 
 \begin{figure}[t]
@@ -524,53 +524,51 @@ decrease in the median.
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
-Note that the IMRPhenomD model was initially constructed and fitted using the
-{\zdethp} weighted mismatch. To ensure a fair comparison, we apply the same
-methods using the {\zdethp} PSD exhibit superior improvement compared to the
-unweighted mismatch. We find no significant qualitative and quantitative
-difference between the two PSDs in the resulting distribution of mismatches.
+Note that the IMRPhenomD model was initally tested using the
+{\zdethp} weighted mismatch. We would therefore like to examine whether using the {\zdethp} PSD in our loss function
+could lead to an improved to mismatch. Peforming the optimization again, we find no significant difference
+between the results using the two PSDs in the distribution of mismatches.
 
 To understand whether additional training data can further improve the
-performance of the model, we include waveforms that are not presence in the
-original IMRPhenomD calibration in our training dataset with parameters
-tabulated in Tab. \ref{tab:q1248}. We specifically choose to use $q=2$ events
+performance of the model, we include waveforms that are not present in the
+original IMRPhenomD calibration in our training dataset; the parameters
+can be found in Tab.~\ref{tab:q1248}. We specifically choose to use $q=2$ events
 since we have abundant $q=2$ NR waveforms to validate the final result. The new
 set of coefficients generated from this optimization process yields only
 marginal improvements in the newly produced waveforms, as seen in Fig.
-\ref{fig:q148_q1248_compare}. The high mismatch tail of the optimized
-distribution remains comparable to the original distribution, indicating that
+\ref{fig:q148_q1248_compare}. The high mismatch tail of the newly optimized
+distribution remains comparable to the distribution from the first optimization, indicating that
 the original dataset is sufficient for this task. Similarly, utilizing the
-{\zdethp} PSD to optimize the loss function with additional waveforms results in 
+{\zdethp} PSD in the loss function together with additional waveforms results in a
 similar level of improvement.
 
 To investigate the performance of recalibration over the source parameter space,
-we plot the improvement of mismatch in log projected over the parameter space of
-$q$ vs. $\chi_{\mathrm{PN}}$ in Fig. \ref{fig:ps_q148_qchi}. On the mass ratio
-axis, we can see the waveforms with $q\le4$ show most consistent average
-improvement. This is because that part of the parameter space is better covered
-by the training waveform, as compared to testing waveforms from $q=4$ to $q=8$,
-where some testing waveforms lie outside the source parameter space covered by
-the training set of waveforms. On the spin axis, we can see the waveform with
-$\chi_{\textrm{PN}}$ close to zero show the most consistent improvement, and we
-start deviate from 0, there could be fluctuations in the average improvement. On
-top of that, in the $q\le4$ region, there seems to be more consistent
-improvement of waveforms with $\chi_{\textrm{PN}}<0$. This can be understood as
-since the original waveform was developed for aligned spin system, the waveforms
-with $\chi_{\textrm{PN}}$ is less well-fitted \kw{Varify this.}, hence there
-could be more room for improvement. To show this, we plot the parameter space of
-$\chi_1$ vs. $\chi_2$ in Fig.~\ref{fig:ps_q148}. Waveforms along the diagonal
-axis, i.e. $\chi_1\approx\chi_2$, show good mismatch improvements as discussed
+we plot the improvement of the log-mismatch as a function of the parameter space
+$q-\chi_{\mathrm{PN}}$ in Fig. \ref{fig:ps_q148_qchi}. Red points indicate that the waveform
+is improved by the optimization procedure, while blue points indicate that the waveform mismatch
+\textit{increases} during optimization.
+We can see that waveforms with $q\le4$ show the most consistent average improvement.
+This is likely due to the better coverage of training waveforms in that part of the parameter space (see Fig.~\ref{fig:intrin_space}).
+On the spin axis, we can see the waveforms with
+$\chi_{\textrm{PN}}\sim0$ show the most consistent improvement. 
+When we move away from $\chi_{\textrm{PN}}\sim0$, the improvement fluctuates but exhibits an overall trend. 
+This is particularly true in the $q\le4$ region, where we see a consistent
+improvement of the waveform for $\chi_{\textrm{PN}}<0$. 
+Since the original waveform was developed for aligned-spin systems, the waveforms
+with opposite sign $\chi_{1,2}$ are likely less well-fit \kw{Verify this.}.
+To show this, we plot the parameter space $\chi_1 - \chi_2$ in Fig.~\ref{fig:ps_q148}. 
+Waveforms along the diagonal axis, $\chi_1\sim\chi_2$, show good mismatch improvements as discussed
 above. Meanwhile, the top-left ($\chi_1<0<\chi_2$) and bottom-right
-($\chi_1>0>\chi_2$) regions respond to optimization differently. In the top-left
-region, waveforms generally improve slightly with along optimization. However,
-waveforms in the bottom-right region do not improve after optimization. Some
-waveforms even turned worse after optimization. 
+($\chi_1>0>\chi_2$) regions respond to the optimization differently. In the top-left
+region, waveforms generally improve slightly after optimization. However,
+waveforms in the bottom-right region do not improve after optimization. 
 
- Given that the waveform model's ansatz may not be entirely compatible with NR,
+Given that the waveform model's ansatz may not be entirely compatible with NR,
 and the optimization procedure is carried out over a distribution of waveforms
 with varying source parameters, it is conceivable that different parts of the
 source parameter space may not share the same set of optimal IMRPhenomD
-parameters, mean there could be some trade-offs in accuracy between different
+parameters.
+This would mean that there are trade-offs in accuracy between different
 parts of the parameter space. If this is the cause of the lack of improvement in
 the high mismatch tail of the distribution, segmenting the parameter space into
 smaller subspaces should alleviate this problem. On the other hand, if the
@@ -644,27 +642,29 @@ We divided the parameter space into four regions to analyze the effect of the
 recalibration procedure on each region separately
 (Fig.~\ref{fig:ps_q148_quadrant}). The training waveforms used for fitting in
 this scenario are listed in Tab.~\ref{tab:quadrants} and the loss functions 
-are calculated using simple average of the mismatches. The top-left and
+are calculated using simple average of the mismatches, $\mathcal{L}_{\mathrm{ave}}$. The top-left and
 bottom-right regions have limited data for $q>4$, hence the results are only
 valid up to $q\lesssim4$. From Fig.~\ref{fig:ps_q148_quadrant}, we observe that
-equal-spin waveforms lying on the diagonal has great improvement. The
-improvement above the diagonal is also substantial compared to recalibrate using
-all waveforms at once, barring a few caused by some testing waveforms having
-$q>4$. This can be seen clearer in Fig.~\ref{fig:all_quadrants}, which we see
-that the optimized histogram shifts downward uniformly. On the other hand, the
-improvement below the diagonal is negligible, indicating our method struggles to
-further improve on top of the original IMRPhenomD waveform. Interestingly, we
-can see in the top-right and bottom-left quadrant, the lower right corner shows
-systematic worsening similar to the case of all waveforms. This hinted in
-general, the IMRPhenomD waveform ansatz does not fit well with waveforms with
-anti-aligned spin where the primary spin is positive.
+equal-spin waveforms lying on the diagonal improve the most. The
+improvement above the diagonal is also significantly more than when optimizing using
+all waveforms at once. This can be seen clearly in the top panel of Fig.~\ref{fig:all_quadrants}, where we see
+that the optimized histogram shifts to lower mismatches.\footnote{
+	Note that the top panel of Fig.~\ref{fig:all_quadrants} specifically shows the
+	distribution of mismatches for the top-left quadrant of Fig.~\ref{fig:ps_q148_quadrant}.
+} On the other hand, the
+improvement below the diagonal is negligible, indicating that our method struggles to
+further improve on top of the original IMRPhenomD waveform. 
+Interestingly, we can see in the bottom-right quadrant that the waveform does not show a significant change
+to the overall mismatch (see bottom panel of Fig.~\ref{fig:all_quadrants}). 
+This suggests that the IMRPhenomD waveform ansatz fits waveforms with
+$\chi_1>0$ and $\chi_2<0$ less well.
 
 \begin{figure}[t]
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
 	\caption{Distributions of mismatches in the top-left (Top) and bottom-right
-	(Bottom) regions. We use a constant noise spectrum to calculate mismatch and
+	(Bottom) regions of Fig.~\ref{fig:ps_q148_quadrant}. We use a constant noise spectrum to calculate mismatch and
 	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. Waveforms in the
 	top-left region generally improves while waveforms in the bottom-right
 	region has very little improvement, as indicated by the median (dashed
