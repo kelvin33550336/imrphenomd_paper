@@ -50,8 +50,8 @@ chi_PN = (test_data[:, 0] * test_data[:, 2] + test_data[:, 1] * test_data[:, 3])
 
 # train_data = np.loadtxt('./plotting_data/ps_train.dat', delimiter=' ') # [q, chi_PN, chi1, chi2]
 # test_data = np.loadtxt('./plotting_data/q148.dat', delimiter=' ') # [q, chi_PN, chi1, chi2, ori_loss, opt_loss]
-plt.scatter(train_data[:, 0], train_data[:, 1], s=80, color=c1, label="Training")
-plt.scatter(q, chi_PN, s=40, color=c2, label="Validation", marker="*", zorder=-20)
+plt.scatter(train_data[:, 0], train_data[:, 1], s=80, color=c1, label="Training", marker='*')
+plt.scatter(q, chi_PN, s=40, color=c2, label="Validation", zorder=-20)
 plt.legend()
 plt.xlabel("$q$")
 plt.ylabel("$\chi_{\mathrm{PN}}$")

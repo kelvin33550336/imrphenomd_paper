@@ -68,7 +68,7 @@ plt.hist(
     np.log10(q148[:, 5]),
     bins=bins,
     histtype="step",
-    label="Optimized $(\mathcal{L}_{\mathrm{mean}})$",
+    label="Optimized $(\mathcal{L}_{\mathrm{ave}})$",
     color=c2,
     linewidth=2,
 )
