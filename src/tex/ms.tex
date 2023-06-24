@@ -625,85 +625,90 @@ $\chi_1>0$ and $\chi_2<0$ less well.
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
-\section{Discussion} \label{sec:discussion}
+\section{Discussion and Conclusion} \label{sec:discussion}
 
 The results in this work show a promising way to understand and improve the
 accuracy of phenomenological waveform models by jointly optimizing all
-coefficients at once. There are a number of caveats multiple ways to improve the
-current work.
+coefficients at once. However, there are a number of caveats as well
+as multiple ways to improve upon the current work.
 
-While this study focuses on the IMRPhenomD model because its availability as an
-automatically differentiable waveform, other more sophisticate waveforms such as
+While this study focuses on the IMRPhenomD model due to its availability as an
+automatically differentiable waveform in \ripple, other more sophisticated waveforms such as
 IMRPhenomP \citep{hannam2014simple, khan2019phenomenological} and IMRPhenomXAS
-\citep{pratten2020setting,pratten2021computationally} can potentially benefit
-from recalibration even more, because of the larger number of calibration
-parameters. % Extend this a bit?
+\citep{pratten2020setting,pratten2021computationally} can also potentially benefit
+from recalibration. In fact, since these waveforms have a larger number of calibration
+parameters and are fit to a larger number of NR simulations, it is possible that the 
+improvement will be more dramatic than for IMRPhenomD. {\ripple} is being regularly
+updated with new waveforms, and future work should carefully examine whether these more
+modern waveforms can be improved. % Extend this a bit?
 
 The correlation we observe between the mismatches and the waveform's parameters
 can also be used to design more physical ansatz. For example, we see the
 recalibration process struggles to improve in the regime where $\chi_{1}$ is
-positive and $\chi_{2}$ is negative, this means there is a dependency between
-the two spins that is not captured by the ansatz. A systematic scheme that
-incorporate this recalibration scheme with waveform design will be handy in
-constructing new waveform models in the future. In making figure
-\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions
-because of simplicity. These simple cuts demonstrate the accuracy of the
-waveform can be further improved, but they are almost certainly not the optimal
-way to incorporate the extra information we have about the waveform. A more
-general way such as adding new functional dependency between the parameters
-should be explored in the future.
+positive and $\chi_{2}$ is negative. This means there is a dependency between
+the two spins that is not captured by the current ansatz. A systematic scheme that
+incorporates our calibration method with waveform design will be handy in
+constructing new waveform models in the future. 
 
-We use mismatch to quantify the accuracy of the waveform model in this work. It
-is a natural extension to investigate how would the recalibration affects
-downstream analysis such as parameter estimation and population analysis.
-Whether it is possible to reduce the systematic error in parameter estimation
-using recalibrated waveforms is an interesting question we will investigate in
-the sooner future. On top of this, recently relatively more differentiable
-sampler such as \citep{Wong:2022xvh} has been introduced to the community, one
-can also optimize the waveform directly using metrics from parameter estimation,
-such as bias in an injection-recovery run. This will be an example of
-more direct and efficient optimization of waveform models for downstream analysis.
+In making Fig.~\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions purely for simplicity.
+These simple cuts demonstrate the accuracy of the waveform can be further improved,
+but they are almost certainly not the optimal way to incorporate the extra information
+we have about the waveform. A more general way such as adding new functional dependency
+between the parameters should be explored in the future.
+
+In this work, we use the mismatch to quantify the accuracy of the waveform model. 
+A natural extension of this work to investigate how the recalibration process affects
+downstream analyses such as parameter estimation and population modeling.
+Differentiable samplers such as~\citep{Wong:2022xvh}, which have been recently
+introduced to the community, potentially allow one to optimize the waveform directly
+using metrics from parameter estimation. For example, minimizing the bias in an injection-recovery run
+could be used as a loss function. Overall, this approach could help reduce systematic waveform error
+in parameter estimation simply through recalibrated waveforms. We plan to investigate these avenues in
+the future.
 
 \kw{End here.}
 
-We have shown the result of recalibrating waveform coefficients. One thing to
-note is that our recalibration procedure is not exactly the same as the original
-calibration. For instance, we use a different set of NR waveforms, frequency
-range, etc. Nonetheless, as the decrease in mismatch is rather significant, this
-optimization procedure should be able to improve the accuracy of IMRPhenomD on a
-similar scale regardless of the differences. Here, the result serves as a
-demonstration of the general method used.  
+% As discussed in Sec.~\ref{sec:method} our recalibration procedure is not exactly the same as the original
+% calibration. For instance, we use a different set of NR waveforms, frequency
+% ranges, etc. Nonetheless, since the decrease in mismatch is rather significant, we believe that
+% the high-dimensional optimization procedure is primarily responsible to the improved performance.
 
-The results presented in Fig.~\ref{fig:q148_q1248_compare} demonstrate that
-increasing the number of training waveforms used in waveform optimization yields
-only a marginal increase in accuracy. Our analysis suggests that this marginal
-improvement is a consequence of over-determination of the waveform coefficients.
-Consequently, increasing the number of calibration NR waveforms is unlikely to
-result in any significant improvement of the model's accuracy. These
-observations suggest that the parameterized ansatz employed in our study may not
-be suitable for certain regions in the parameter space, leading to low mismatches
-for some waveforms while other waveforms remain at the high mismatch tail with
-negligible changes. This highlights the constraints of the model's flexibility
-that ultimately limit its performance.
+The results presented in Fig.~\ref{fig:q148_q1248_compare} indicate that
+increasing the number of training NR waveforms used in the waveform optimization yields
+only a marginal increase in accuracy. This observation suggests that the parameterized ansatz employed 
+in IMRPhenomD struggles to capture the full complexity of the NR waveforms. 
+However, as the accuracy requirements of waveform models increases with more sensitive detectors,
+more NR waveforms will be required to train more flexible Phenom models. 
+Accurate NR simulations must therefore be developed in parallel with waveform models
+to ensure we meet future detector accuracy requirements.
 
-The reduced spin approximation is a major contributor to the inaccuracies
-observed in the ansatz. In IMRPhenomD, this approximation employs a single spin
-parameter, $\chi_{\mathrm{PN}}$, as described in Sec.~\ref{sec:method}. The
-parameterization of BBH mergers using a single spin parameter results in a
-degeneracy within the parameter space. Specifically, black hole events with
-different spins may generate the same waveform due to identical values of
-$\chi_{\mathrm{PN}}$, leading to erroneous results, particularly for highly
-unequal spin events. This degeneracy produces straight lines in the parameter
-space with negative slopes that depend on the mass ratio, which can be seen in 
-Fig.~\ref{fig:ps_q148}. Notably, the ansatz performs better in the top-left
-region than the bottom-right region. In an attempt to address
-this issue, we partitioned the parameter space into four regions, as described
-in Sec.~\ref{sec:result}. With separate optimizations for each
-regions, Fig.~\ref{fig:ps_q148_quadrant} indicates that the top-left region's 
-performance has improved, while the bottom-right region hardly improves. 
-This observation suggests the ansatz is specific to certain regions of the 
-parameter space, with a preference for BBH events lying above the diagonal, 
-and it has limited enhancement for events lying below the diagonal. 
+Overall, the development of accurate waveform models is crucial for the success of GW astronomy.
+In this work, we have explored how modern computational tools (automatic differentiation and gradient descent)
+can help with this task. 
+Our method is general and can be applied to any waveform model that is differentiable.
+We therefore encourage the waveform development community to utlize these tools
+and hope that this work can effetively contribute to the development of accurate waveform models.
+
+% The reduced spin approximation is a major contributor to the inaccuracies
+% observed in the ansatz. In IMRPhenomD, this approximation employs a single spin
+% parameter, $\chi_{\mathrm{PN}}$, as described in Sec.~\ref{sec:method}. The
+% parameterization of BBH mergers using a single spin parameter results in a
+% degeneracy within the parameter space. Specifically, black hole events with
+% different spins may generate the same waveform due to identical values of
+% $\chi_{\mathrm{PN}}$, leading to erroneous results, particularly for highly
+% unequal spin events. This degeneracy produces straight lines in the parameter
+% space with negative slopes that depend on the mass ratio, which can be seen in 
+% Fig.~\ref{fig:ps_q148}. Notably, the ansatz performs better in the top-left
+% region than the bottom-right region. In an attempt to address
+% this issue, we partitioned the parameter space into four regions, as described
+% in Sec.~\ref{sec:result}. With separate optimizations for each
+% regions, Fig.~\ref{fig:ps_q148_quadrant} indicates that the top-left region's 
+% performance has improved, while the bottom-right region hardly improves. 
+% This observation suggests the ansatz is specific to certain regions of the 
+% parameter space, with a preference for BBH events lying above the diagonal, 
+% and it has limited enhancement for events lying below the diagonal. 
+
+\te{I suggest we end here}
 
 The division of the parameter space into four regions was a simple approach
 taken for practical reasons. A more systematic approach would involve the use of
@@ -720,7 +725,8 @@ choice of training waveforms also affects the final results greatly. Note that
 the choice of training waveforms listed in Tab.~\ref{tab:quadrants} were taken 
 arbitrarily to test the effectiveness of separate fitting. Hence, if one takes 
 a different set of training waveforms over the parameter space, the result might 
-give additional features that can test and explain IMRPhenomD better. 
+give additional features that can test and explain IMRPhenomD better. \te{I don't really
+understand this paragraph. Should we remove it?}
 
 % \section{Conclusion} \label{sec:conclusion}
 
@@ -770,7 +776,7 @@ give additional features that can test and explain IMRPhenomD better.
 % Furthermore, this approach is applicable to other GW model families, such as NR
 % surrogate models or EOB models introduced in Sec. \ref{sec:intro}. Such an approach could 
 % simplify NR waveform calibration procedures and lead to the improvement of 
-existing models.
+% existing models.
 
 
 \section{ACKNOWLEDGMENTS}
