@@ -627,6 +627,45 @@ $\chi_1>0$ and $\chi_2<0$ less well.
 
 \section{Discussion} \label{sec:discussion}
 
+The results in this work show a promising way to understand and improve the
+accuracy of phenomenological waveform models by jointly optimizing all
+coefficients at once. There are a number of caveats multiple ways to improve the
+current work.
+
+While this study focuses on the IMRPhenomD model because its availability as an
+automatically differentiable waveform, other more sophisticate waveforms such as
+IMRPhenomP \citep{hannam2014simple, khan2019phenomenological} and IMRPhenomXAS
+\citep{pratten2020setting,pratten2021computationally} can potentially benefit
+from recalibration even more, because of the larger number of calibration
+parameters. % Extend this a bit?
+
+The correlation we observe between the mismatches and the waveform's parameters
+can also be used to design more physical ansatz. For example, we see the
+recalibration process struggles to improve in the regime where $\chi_{1}$ is
+positive and $\chi_{2}$ is negative, this means there is a dependency between
+the two spins that is not captured by the ansatz. A systematic scheme that
+incorporate this recalibration scheme with waveform design will be handy in
+constructing new waveform models in the future. In making figure
+\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions
+because of simplicity. These simple cuts demonstrate the accuracy of the
+waveform can be further improved, but they are almost certainly not the optimal
+way to incorporate the extra information we have about the waveform. A more
+general way such as adding new functional dependency between the parameters
+should be explored in the future.
+
+We use mismatch to quantify the accuracy of the waveform model in this work. It
+is a natural extension to investigate how would the recalibration affects
+downstream analysis such as parameter estimation and population analysis.
+Whether it is possible to reduce the systematic error in parameter estimation
+using recalibrated waveforms is an interesting question we will investigate in
+the sooner future. On top of this, recently relatively more differentiable
+sampler such as \citep{Wong:2022xvh} has been introduced to the community, one
+can also optimize the waveform directly using metrics from parameter estimation,
+such as bias in an injection-recovery run. This will be an example of
+more direct and efficient optimization of waveform models for downstream analysis.
+
+\kw{End here.}
+
 We have shown the result of recalibrating waveform coefficients. One thing to
 note is that our recalibration procedure is not exactly the same as the original
 calibration. For instance, we use a different set of NR waveforms, frequency
@@ -683,61 +722,56 @@ arbitrarily to test the effectiveness of separate fitting. Hence, if one takes
 a different set of training waveforms over the parameter space, the result might 
 give additional features that can test and explain IMRPhenomD better. 
 
-Although our study primarily focused on the IMRPhenomD model, this simple yet
-versatile approach can be applied to other differentiable GW models, such as the
-IMRPhenomP \citep{hannam2014simple, khan2019phenomenological} or IMRPhenomX \citep{pratten2020setting,pratten2021computationally} 
-models within the same family. By jointly optimizing a new set of coefficients,
-it is expected that both models can be enhanced since they share similar
-construction principles to the IMRPhenomD model. For instance, they also use PN
-approximants as part of the ansatz in the inspiral segment. It will be interesting 
-to recalibratethe IMRPhenomXAS model \citep{pratten2020setting}. Because it is
-parameterized by an additional anti-symmetric spin parameter, it is expected not
-to exhibit the degeneracy previously described. With the currently developing 
-{\jax} IMRPhenomXAS model in {\ripple}, A more detailed investigation
-may provide valuable insights into the systematics of the Phenom models.
-Furthermore, this approach is applicable to other GW model families, such as NR
-surrogate models or EOB models introduced in Sec. \ref{sec:intro}. Such an approach could 
-simplify NR waveform calibration procedures and lead to the improvement of 
+% \section{Conclusion} \label{sec:conclusion}
+
+% In this paper, we have presented a systematic method to recalibrate GW models.
+% This method utilizes {\jax}'s automatic differentiation to apply
+% derivative-based optimization to recalibrate GW models jointly. Using the new
+% implementation of the IMRPhenomD model, {\ripple}, which is written in \jax, in
+% conjunction with NR waveforms from the SXS catalog, we recalibrate waveform
+% coefficients of the IMRPhenomD model. In general, the waveform accuracy can be
+% improved by 50\%. Comparing {\zdethp} weighted and unweighted mismatch, weighted
+% mismatches have a slightly better improvement. In contrast, different types of
+% loss function result in significantly different final mismatch distributions. As 
+% seen in Fig.~\ref{fig:q148}, $\mathcal{L}_{\mathrm{mean}}$ outperforms 
+% $\mathcal{L}_{\mathrm{fl}}$. By increasing the number of training waveforms, we see a 
+% slight improvement increase in Fig.~\ref{fig:q148_q1248_compare}. 
+
+% Furthermore, we investigated how the source parameters affect the
+% improvement. Fig.~\ref{fig:ps_q148} shows that the optimization procedure has a
+% certain preference for waveforms lying in the top-left region while the bottom-right 
+% region hardly improved. To further test this result, we recalibrate
+% waveforms in separate regions in parameter space. From Fig.~\ref{fig:ps_q148_quadrant}, 
+% we can see that this recalibration process gives further
+% improvement to the top-left region while the bottom-right region only have little 
+% improvement. This indicates that the ansatz has limited match in this region and 
+% does not fit most waveforms in this region, hence introduces bias to downstream GW 
+% analysis. This phenomenon is mainly due to the reduced spin approximation used in 
+% parameterizing the ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
+
+% While we naively separate the optimization process into 4 regions, one can
+% perform systematic region-selection. In principle, we can apply this general
+% method to other newer and more accurate models such as IMRPhenomX or IMRPhenomP
+% models. Then, we can perform all the above analyses to understand how to
+% construct better GW Phenom models in the future.  
+
+% Although our study primarily focused on the IMRPhenomD model, this simple yet
+% versatile approach can be applied to other differentiable GW models, such as the
+% IMRPhenomP \citep{hannam2014simple, khan2019phenomenological} or IMRPhenomX \citep{pratten2020setting,pratten2021computationally} 
+% models within the same family. By jointly optimizing a new set of coefficients,
+% it is expected that both models can be enhanced since they share similar
+% construction principles to the IMRPhenomD model. For instance, they also use PN
+% approximants as part of the ansatz in the inspiral segment. It will be interesting 
+% to recalibratethe IMRPhenomXAS model \citep{pratten2020setting}. Because it is
+% parameterized by an additional anti-symmetric spin parameter, it is expected not
+% to exhibit the degeneracy previously described. With the currently developing 
+% {\jax} IMRPhenomXAS model in {\ripple}, A more detailed investigation
+% may provide valuable insights into the systematics of the Phenom models.
+% Furthermore, this approach is applicable to other GW model families, such as NR
+% surrogate models or EOB models introduced in Sec. \ref{sec:intro}. Such an approach could 
+% simplify NR waveform calibration procedures and lead to the improvement of 
 existing models.
 
-% Moved down from intro
-% In particular, we find it is easier IMRPhenomD
-% favors certain parts of the parameter space. This means IMRPhenomD introduces
-% systematic bias to other GW analysis tasks. This showcases the flaws of the
-% ansatz and allows us to have a deeper understanding of Phenom models.  
-
-\section{Conclusion} \label{sec:conclusion}
-
-In this paper, we have presented a systematic method to recalibrate GW models.
-This method utilizes {\jax}'s automatic differentiation to apply
-derivative-based optimization to recalibrate GW models jointly. Using the new
-implementation of the IMRPhenomD model, {\ripple}, which is written in \jax, in
-conjunction with NR waveforms from the SXS catalog, we recalibrate waveform
-coefficients of the IMRPhenomD model. In general, the waveform accuracy can be
-improved by 50\%. Comparing {\zdethp} weighted and unweighted mismatch, weighted
-mismatches have a slightly better improvement. In contrast, different types of
-loss function result in significantly different final mismatch distributions. As 
-seen in Fig.~\ref{fig:q148}, $\mathcal{L}_{\mathrm{ave}}$ outperforms 
-$\mathcal{L}_{\mathrm{nl}}$. By increasing the number of training waveforms, we see a 
-slight improvement increase in Fig.~\ref{fig:q148_q1248_compare}. 
-
-Furthermore, we investigated how the source parameters affect the
-improvement. Fig.~\ref{fig:ps_q148} shows that the optimization procedure has a
-certain preference for waveforms lying in the top-left region while the bottom-right 
-region hardly improved. To further test this result, we recalibrate
-waveforms in separate regions in parameter space. From Fig.~\ref{fig:ps_q148_quadrant}, 
-we can see that this recalibration process gives further
-improvement to the top-left region while the bottom-right region only have little 
-improvement. This indicates that the ansatz has limited match in this region and 
-does not fit most waveforms in this region, hence introduces bias to downstream GW 
-analysis. This phenomenon is mainly due to the reduced spin approximation used in 
-parameterizing the ansatz, where degeneracies between $\chi_1$ and $\chi_2$ are introduced. 
-
-While we naively separate the optimization process into 4 regions, one can
-perform systematic region-selection. In principle, we can apply this general
-method to other newer and more accurate models such as IMRPhenomX or IMRPhenomP
-models. Then, we can perform all the above analyses to understand how to
-construct better GW Phenom models in the future.  
 
 \section{ACKNOWLEDGMENTS}
 
