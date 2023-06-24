@@ -73,6 +73,27 @@ ax[0].axvline(
     linestyle=(0, (1, 1.3)),
 )
 ax[0].hist(
+    np.log10(data2_q148), 
+    bins=bins, 
+    alpha=0.2, 
+    color=c2
+)
+ax[0].hist(
+    np.log10(data2_q148), 
+    bins=bins, 
+    label="Optimized (all))", 
+    color=c2, 
+    lw=2, 
+    histtype="step"
+)
+ax[0].axvline(
+    x=np.log10(np.median(data2_q148)),
+    color=c2,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+ax[0].hist(
     np.log10(data2[:, 5]),
     bins=bins,
     label="Optimized",
@@ -93,27 +114,7 @@ ax[0].axvline(
     alpha=1.0,
     linestyle=(0, (1, 1.3)),
 )
-ax[0].hist(
-    np.log10(data2_q148), 
-    bins=bins, 
-    alpha=0.2, 
-    color=c2
-)
-ax[0].hist(
-    np.log10(data2_q148), 
-    bins=bins, 
-    label="Optimized $(\mathcal{L}_{\mathrm{ave}})$", 
-    color=c2, 
-    lw=2, 
-    histtype="step"
-)
-ax[0].axvline(
-    x=np.log10(np.median(data2_q148)),
-    color=c2,
-    lw=2,
-    alpha=1.0,
-    linestyle=(0, (1, 1.3)),
-)
+
 ax[0].set_ylabel("Count")
 ax[0].legend(loc="upper left")
 
@@ -139,26 +140,6 @@ ax[1].axvline(
     linestyle=(0, (1, 1.3)),
 )
 ax[1].hist(
-    np.log10(data4[:, 5]), 
-    bins=bins, 
-    histtype="step", 
-    color=c3, 
-    lw=2
-)
-ax[1].hist(
-    np.log10(data4[:, 5]), 
-    bins=bins, 
-    color=c3, 
-    alpha=0.2
-)
-ax[1].axvline(
-    x=np.log10(np.median(data4[:, 5])),
-    color=c3,
-    lw=2,
-    alpha=1.0,
-    linestyle=(0, (1, 1.3)),
-)
-ax[1].hist(
     np.log10(data4_q148), 
     bins=bins, 
     alpha=0.2, 
@@ -178,6 +159,27 @@ ax[1].axvline(
     alpha=1.0,
     linestyle=(0, (1, 1.3)),
 )
+ax[1].hist(
+    np.log10(data4[:, 5]), 
+    bins=bins, 
+    histtype="step", 
+    color=c3, 
+    lw=2
+)
+ax[1].hist(
+    np.log10(data4[:, 5]), 
+    bins=bins, 
+    color=c3, 
+    alpha=0.2
+)
+ax[1].axvline(
+    x=np.log10(np.median(data4[:, 5])),
+    color=c3,
+    lw=2,
+    alpha=1.0,
+    linestyle=(0, (1, 1.3)),
+)
+
 ax[1].set_xlabel("$\log_{10}(\mathcal{M})$")
 ax[1].set_ylabel("Count")
 
