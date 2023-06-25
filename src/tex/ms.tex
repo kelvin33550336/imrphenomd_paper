@@ -237,7 +237,7 @@ $\mathcal{M}_{i,\mathrm{ini}}$ represents the initial mismatch of the individual
 training waveform, and $N$ is the total number of training waveforms.
 
 The two loss functions are chosen to give different 
-behaviour during the optimization process.
+behavior during the optimization process.
 The simple average, $\mathcal{L}_{\mathrm{mean}}$, serves as the simplest choice of loss function,
 but is prone to be dominated by a single point in parameter space with a large mismatch.
 Other points with smaller mismatches would be insignificant comparatively, and might not be able 
@@ -323,9 +323,9 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 	\script{loss.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/loss.pdf}
-	\caption{Loss functions against the number of iterations.
-	The vertical dotted line indicates minimum of the validation loss,
-	where we stop the optimization and obtain a new set of waveform coefficients, $\lambda$.}
+	\caption{Loss functions against the number of iterations. The vertical
+	dotted line indicates minimum of the validation loss, which is where we stop
+	the optimization.}
 	\label{fig:loss}
 \end{figure}
 
@@ -347,9 +347,12 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 	\script{intrin_space.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/intrin_space.pdf}
-	\caption{Distribution of training and validation NR waveforms in the $q-\chi_{PN}$
-	space. The blue stars represent the waveforms used to compute the training loss and the orange
-	dots represent the waveforms used for validation.}
+	\caption{Distribution of training and validation NR waveforms in the
+	$q-\chi_{PN}$ space. The blue stars represent the waveforms used to compute
+	the training loss and the orange dots represent the waveforms used for
+	validation. \kw{It is hard to see the blue stars on top of the orange. Play
+	around with the size of the dots and change the colors. Also add the extra
+	NR waveforms in table 2 with a different color but use the stars.}}}
 	\label{fig:intrin_space}
 \end{figure}
 
@@ -373,7 +376,7 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 	$q=m_1/m_2\geq 1$ and the spins are denoted by $\chi_{1,2}$. Out of the 11 waveforms listed
 	here, nine of them are also used in the original IMRPhenomD calibration. The remaining two
 	are SXS analogues to two of the BAM NR simulations used in the original calibration
-	\citep{khan2016frequency}.}
+	\citep{khan2016frequency}. \kw{BE EXPLICIT ABOUT WHAT DO YOU MEAN THE REMAINING TWO!}}
 	\label{tab:q148}
 \end{table}
 \begin{table}[t]
@@ -619,7 +622,7 @@ $\chi_1>0$ and $\chi_2<0$ less well.
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
 	\caption{Fractional mismatch change of the validation waveforms.
-	Each quadrant is fitted independently with to the NR waveforms listed in Tab.~\ref{tab:quadrants}.}
+	Each quadrant is fitted independently to the NR waveforms listed in Tab.~\ref{tab:quadrants}.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
@@ -663,13 +666,6 @@ using metrics from parameter estimation. For example, minimizing the bias in an 
 could be used as a loss function. Overall, this approach could help reduce systematic waveform error
 in parameter estimation simply through recalibrated waveforms. We plan to investigate these avenues in
 the future.
-
-\kw{End here.}
-
-% As discussed in Sec.~\ref{sec:method} our recalibration procedure is not exactly the same as the original
-% calibration. For instance, we use a different set of NR waveforms, frequency
-% ranges, etc. Nonetheless, since the decrease in mismatch is rather significant, we believe that
-% the high-dimensional optimization procedure is primarily responsible to the improved performance.
 
 The results presented in Fig.~\ref{fig:q148_q1248_compare} indicate that
 increasing the number of training NR waveforms used in the waveform optimization yields
