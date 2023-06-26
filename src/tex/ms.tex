@@ -274,7 +274,8 @@ in order to compute the mismatch, \eqref{eq:mismatch}.
 For this, we taper the time-series using Tukey window~\citep{usman2016pycbc}\footnote{
 	Specifically, we choose $\alpha=2t_{\mathrm{RD}}/T$, where
 	$t_{\mathrm{RD}}$ is the duration of ringdown (maximum amplitude to the end of the strain) and $T$ is the duration of the
-	entire GW strain. \te{What is $t_{\mathrm{RD}}$? and how is it computed?}
+	entire GW strain. 
+%	\te{What is $t_{\mathrm{RD}}$? and how is it computed?}
 } before using standard FFT routines to compute the Fourier transform.
 
 In addition to choosing the NR waveforms for the training set,
@@ -296,7 +297,7 @@ We point out that our treatment of NR waveforms is different from that of \citep
 In the original calibration process, the training waveforms are hybrids of NR and SpinAlignedEOB (SEOB) waveforms.
 The low frequency inspiral part is taken from the SEOB
 waveforms while the rest is taken from NR simulations.
-Instead, we solely use NR waveforms for calibration since most NR waveforms used (for both training and testing)
+Instead, we solely use NR waveforms for calibration since most NR waveforms used (for both training and validation)
 have long enough time series data, i.e.~$>15$ orbits \citep{boyle2019sxs}, to contain part of the inspiral segment and all
 merger and ringdown frequency information. We use the frequency limits
 $f_{\mathrm{min}}=0.1f_{\mathrm{RD}}$ and $f_{\mathrm{max}}=1.2f_{\mathrm{RD}}$,	
@@ -579,35 +580,35 @@ parameter space during training.
 
 We divided the parameter space into four regions to analyze the effect of the
 recalibration procedure on each region separately
-(Fig.~\ref{fig:ps_q148_quadrant}). The training waveforms used for fitting in
+(Fig.~\ref{fig:all_quadrants}~and~\ref{fig:ps_q148_quadrant}). The training waveforms used for fitting in
 this scenario are listed in Tab.~\ref{tab:quadrants} and the loss functions 
 are calculated using a simple average of the mismatches, $\mathcal{L}_{\mathrm{ave}}$. The top-left and
-bottom-right regions have limited data for $q>4$, hence the result is only valid up to $q\leq4$ and we take waveforms with $q\leq4$ as validation waveforms in these two regions. From Fig.~\ref{fig:ps_q148_quadrant}, we observe that
+bottom-right regions have limited data for $q>4$, hence the result is only valid up to $q\leq4$ and we take waveforms with $q\leq4$ as validation waveforms in these two regions. From top panel of Fig.~\ref{fig:ps_q148_quadrant}, we observe that
 equal-spin waveforms lying on the diagonal improve the most. 
-\kl{The improvement above the diagonal is also significant comparing with the original waveform model and it has a similar improvement as optimizing all waveform at once. Notice that optimizing over all waveforms gives a slightly better improvement. This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
+\kl{Both top-right and bottom-left region have good performance comparing with the original model. Especially for the bottom-right region, where the improvement is significantly better than optimizing with all waveforms. This suggests the ansatz are well-fitted to this part of the parameter space.
+Waveforms above the diagonal also give good improvements when comparing with the original model and it has a similar improvement as optimizing all waveforms at once. Notice optimizing over all waveforms gives a slightly better improvement. This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
 %The improvement above the diagonal is also significantly more than when optimizing using
 %all waveforms at once. This can be seen clearly in the top panel of Fig.~\ref{fig:all_quadrants}, where we see
 %that the optimized histogram shifts to lower mismatches.
 \footnote{
-	Note that the top panel of Fig.~\ref{fig:all_quadrants} specifically shows the
+	Note that the bottom-left panel of Fig.~\ref{fig:all_quadrants} specifically shows the
 	distribution of mismatches for the top-left quadrant of Fig.~\ref{fig:ps_q148_quadrant}.
-} On the other hand, the improvement below the diagonal is negligible, indicating that our method struggles to
+} 
+On the other hand, the improvement below the diagonal is negligible, indicating that our method struggles to
 further improve over the original IMRPhenomD waveform. 
 Interestingly, we can see in the bottom-right region that the waveform does not show a significant change
-to the overall mismatch (see bottom panel of Fig.~\ref{fig:all_quadrants}). 
+to the overall mismatch (see bottom-right panel of Fig.~\ref{fig:all_quadrants}). 
 This suggests that the IMRPhenomD waveform ansatz fits waveforms with
-$\chi_1>0$ and $\chi_2<0$ less well.
+$\chi_1>0$ and $\chi_2<0$ less well. 
 
 \begin{figure}[t]
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
-	\caption{Distributions of mismatches in the top-left (top) and bottom-right
-	(bottom) regions of Fig.~\ref{fig:ps_q148_quadrant}. We use a constant PSD to calculate the mismatch and
-	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. The waveform generally improves in the
-	top-left region while it shows very little improvement in the bottom-right,
-	as indicated by the change of the medians of each distribution (dashed
-	lines).}
+	\caption{Distributions of mismatches for both optimization schemes in all 4 regions of Fig.~\ref{fig:ps_q148_quadrant}. 
+	We use a constant PSD to calculate the mismatch and
+	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. The medians of each distributions are indicated by dashed
+	lines.}
 	\label{fig:all_quadrants}
 \end{figure}
 
@@ -615,8 +616,9 @@ $\chi_1>0$ and $\chi_2<0$ less well.
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{Fractional mismatch change of the validation waveforms.
-	Each quadrant is fitted independently to the NR waveforms listed in Tab.~\ref{tab:quadrants}.}
+	\caption{\textit{Top}: Fractional mismatch change of the validation waveforms.
+	Each quadrant is fitted independently to the NR waveforms listed in Tab.~\ref{tab:quadrants}.
+	\textit{Bottom}: Combined distribution of both optimization schemes shown in Fig.~\ref{fig:all_quadrants}.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
