@@ -35,9 +35,9 @@ params = {
 mpl.rcParams.update(params)
 
 data1 = np.loadtxt(paths.data / "1pos2pos_mismatch.dat")
-data2 = np.loadtxt(paths.data / "1neg2pos_mismatch.dat")
+data2 = np.loadtxt(paths.data / "q148_1neg2pos_region_f.dat")
 data3 = np.loadtxt(paths.data / "1neg2neg_mismatch.dat")
-data4 = np.loadtxt(paths.data / "1pos2neg_mismatch.dat")
+data4 = np.loadtxt(paths.data / "q148_1pos2neg_region_f.dat")
 data = np.concatenate((data1, data2, data3, data4))
 
 logdiff = np.log10(data[:, 5] / data[:, 4])

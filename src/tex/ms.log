@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.25)  25 MAY 2023 15:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.25)  25 JUN 2023 17:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -755,127 +755,282 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 39.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package natbib Warning: Citation `abbott2020prospects' on page 1 undefined on i
-nput line 68.
+Package natbib Warning: Citation `owen1996search' on page 1 undefined on input 
+line 67.
 
 
-Package natbib Warning: Citation `purrer2020gravitational' on page 1 undefined 
-on input line 76.
+Package natbib Warning: Citation `owen1999matched' on page 1 undefined on input
+ line 67.
+
+
+Package natbib Warning: Citation `Dax:2021tsq' on page 1 undefined on input lin
+e 69.
+
+
+Package natbib Warning: Citation `Christensen:2022bxb' on page 1 undefined on i
+nput line 69.
+
+
+Package natbib Warning: Citation `dynesty' on page 1 undefined on input line 69
+.
+
+
+Package natbib Warning: Citation `Islam:2022afg' on page 1 undefined on input l
+ine 69.
+
+
+Package natbib Warning: Citation `Romero-Shaw:2020owr' on page 1 undefined on i
+nput line 69.
+
+
+Package natbib Warning: Citation `zackay2018relative' on page 1 undefined on in
+put line 69.
+
+
+Package natbib Warning: Citation `Ashton:2018jfp' on page 1 undefined on input 
+line 69.
 
 
 Package natbib Warning: Citation `ossokine2020multipolar' on page 1 undefined o
-n input line 81.
+n input line 74.
 
 
 Package natbib Warning: Citation `cotesta2020frequency' on page 1 undefined on 
-input line 81.
+input line 74.
 
 
 Package natbib Warning: Citation `taracchini2014effective' on page 1 undefined 
-on input line 81.
+on input line 74.
 
 
 Package natbib Warning: Citation `islam2022surrogate' on page 1 undefined on in
-put line 82.
+put line 75.
 
 
 Package natbib Warning: Citation `varma2019surrogate' on page 1 undefined on in
-put line 82.
+put line 75.
 
 
 Package natbib Warning: Citation `varma2019surrogate2' on page 1 undefined on i
-nput line 82.
+nput line 75.
 
 
 Package natbib Warning: Citation `husa2016frequency' on page 1 undefined on inp
-ut line 83.
+ut line 77.
 
 
 Package natbib Warning: Citation `khan2016frequency' on page 1 undefined on inp
-ut line 83.
+ut line 77.
 
 
 Package natbib Warning: Citation `garcia2020multimode' on page 1 undefined on i
-nput line 83.
+nput line 77.
 
 
 Package natbib Warning: Citation `pratten2021computationally' on page 1 undefin
-ed on input line 83.
+ed on input line 77.
 
 
-Package natbib Warning: Citation `pytorch' on page 1 undefined on input line 10
-1.
+Package natbib Warning: Citation `LIGOScientific:2014pky' on page 1 undefined o
+n input line 87.
 
 
-Package natbib Warning: Citation `tensorflow2015-whitepaper' on page 1 undefine
-d on input line 102.
+Package natbib Warning: Citation `LIGOScientific:2021usb' on page 1 undefined o
+n input line 87.
 
 
-Package natbib Warning: Citation `ripple' on page 1 undefined on input line 110
+Package natbib Warning: Citation `LIGOScientific:2021djp' on page 1 undefined o
+n input line 87.
+
+
+Package natbib Warning: Citation `VIRGO:2014yos' on page 1 undefined on input l
+ine 87.
+
+
+Package natbib Warning: Citation `KAGRA:2020tym' on page 1 undefined on input l
+ine 87.
+
+
+Package natbib Warning: Citation `abbott2020prospects' on page 1 undefined on i
+nput line 89.
+
+
+Package natbib Warning: Citation `purrer2020gravitational' on page 1 undefined 
+on input line 93.
+
+
+Package natbib Warning: Citation `hu2022assessing' on page 1 undefined on input
+ line 93.
+
+
+Underfull \hbox (badness 4048) in paragraph at lines 85--94
+[]\OT1/cmr/m/n/10 The LIGO-VIRGO-KAGRA (LVK) col-lab-o-ra-tion
+ []
+
+
+Package natbib Warning: Citation `khan2016frequency' on page 1 undefined on inp
+ut line 100.
+
+
+Package natbib Warning: Citation `santamaria2010matching' on page 1 undefined o
+n input line 100.
+
+
+Package natbib Warning: Citation `pratten2021computationally' on page 1 undefin
+ed on input line 100.
+
+
+Package natbib Warning: Citation `khan2016frequency' on page 1 undefined on inp
+ut line 103.
+
+
+Package natbib Warning: Citation `ripple' on page 1 undefined on input line 104
 .
+
+
+Package natbib Warning: Citation `Iacovelli:2022bbs' on page 1 undefined on inp
+ut line 104.
+
+
+Package natbib Warning: Citation `Iacovelli:2022mbg' on page 1 undefined on inp
+ut line 104.
+
+
+Package natbib Warning: Citation `Coogan:2022qxs' on page 1 undefined on input 
+line 104.
+
+
+Package natbib Warning: Citation `ripple' on page 1 undefined on input line 107
+.
+
+
+Package natbib Warning: Citation `jax2018github' on page 1 undefined on input l
+ine 110.
+
+
+Package natbib Warning: Citation `pytorch' on page 1 undefined on input line 11
+0.
+
+
+Package natbib Warning: Citation `tensorflow2015' on page 1 undefined on input 
+line 110.
+
+
+Package natbib Warning: Citation `khan2016frequency' on page 1 undefined on inp
+ut line 115.
+
+
+Package natbib Warning: Citation `husa2016frequency' on page 1 undefined on inp
+ut line 115.
+
+
+Package natbib Warning: Citation `khan2016frequency' on page 1 undefined on inp
+ut line 117.
+
+
+Package natbib Warning: Citation `husa2016frequency' on page 1 undefined on inp
+ut line 117.
 
 [1{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
 Package natbib Warning: Citation `khan2016frequency' on page 2 undefined on inp
-ut line 140.
+ut line 134.
 
 
 Package natbib Warning: Citation `khan2016frequency' on page 2 undefined on inp
-ut line 149.
+ut line 150.
 
 
-Overfull \hbox (9.48915pt too wide) detected at line 168
-[][][][][]
+Underfull \hbox (badness 2772) in paragraph at lines 152--154
+[]\OT1/cmr/m/n/10 Aligned-spin, frequency-domain wave-form mod-els
  []
 
 
-Package natbib Warning: Citation `khan2016frequency' on page 2 undefined on inp
-ut line 169.
+Package natbib Warning: Citation `Buonanno:2009zt' on page 2 undefined on input
+ line 162.
+
+
+Package natbib Warning: Citation `Arun:2004hn' on page 2 undefined on input lin
+e 162.
 
 
 Package natbib Warning: Citation `khan2016frequency' on page 2 undefined on inp
-ut line 195.
-
-[2]
-
-Package natbib Warning: Citation `husa2016frequency' on page 3 undefined on inp
-ut line 218.
+ut line 166.
 
 
-Package natbib Warning: Citation `khan2016frequency' on page 3 undefined on inp
-ut line 262.
-
-
-Package natbib Warning: Citation `boyle2019sxs' on page 3 undefined on input li
-ne 263.
-
-[3]
-Overfull \hbox (10.88353pt too wide) in paragraph at lines 271--271
+Overfull \hbox (10.88353pt too wide) in paragraph at lines 166--166
 [][]| [] [][][]| 
  []
 
 
-Package natbib Warning: Citation `aasi2015advanced' on page 4 undefined on inpu
-t line 276.
+Package natbib Warning: Citation `Owen:1995tm' on page 2 undefined on input lin
+e 209.
 
 
-Package natbib Warning: Citation `husa2016frequency' on page 4 undefined on inp
-ut line 293.
+Package natbib Warning: Citation `husa2016frequency' on page 2 undefined on inp
+ut line 209.
 
+[2]
+
+Package natbib Warning: Citation `khan2016frequency' on page 3 undefined on inp
+ut line 256.
+
+
+Package natbib Warning: Citation `boyle2019sxs' on page 3 undefined on input li
+ne 257.
+
+
+Package natbib Warning: Citation `tukey' on page 3 undefined on input line 274.
+
+
+
+Overfull \hbox (10.88353pt too wide) in paragraph at lines 278--278
+[][]| [] [][][]| 
+ []
+
+
+Package natbib Warning: Citation `aasi2015advanced' on page 3 undefined on inpu
+t line 288.
+
+
+Package natbib Warning: Citation `gwtc1' on page 3 undefined on input line 293.
+
+
+
+Package natbib Warning: Citation `gwtc2' on page 3 undefined on input line 293.
+
+
+
+Package natbib Warning: Citation `gwtc21' on page 3 undefined on input line 293
+.
+
+
+Package natbib Warning: Citation `gwtc3' on page 3 undefined on input line 293.
+
+
+
+Package natbib Warning: Citation `husa2016frequency' on page 3 undefined on inp
+ut line 295.
+
+
+Package natbib Warning: Citation `khan2016frequency' on page 3 undefined on inp
+ut line 295.
+
+
+Package natbib Warning: Citation `boyle2019sxs' on page 3 undefined on input li
+ne 300.
+
+
+Package natbib Warning: Citation `santamaria2010matching' on page 3 undefined o
+n input line 307.
+
+[3]
 
 Package natbib Warning: Citation `khan2016frequency' on page 4 undefined on inp
-ut line 293.
+ut line 314.
 
 
-Package natbib Warning: Citation `boyle2019sxs' on page 4 undefined on input li
-ne 296.
-
-
-Package natbib Warning: Citation `khan2016frequency' on page 4 undefined on inp
-ut line 309.
-
-
-LaTeX Warning: File `figures/loss.pdf' not found on input line 318.
+LaTeX Warning: File `figures/loss.pdf' not found on input line 325.
 
 
 ! Package pdftex.def Error: File `figures/loss.pdf' not found: using draft sett
@@ -885,13 +1040,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.318 ...ics[width=\columnwidth]{figures/loss.pdf}
+l.325 ...ics[width=\columnwidth]{figures/loss.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `figures/intrin_space.pdf' not found on input line 340.
+LaTeX Warning: File `figures/intrin_space.pdf' not found on input line 349.
 
 
 ! Package pdftex.def Error: File `figures/intrin_space.pdf' not found: using dr
@@ -901,21 +1056,21 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.340 ...h=\columnwidth]{figures/intrin_space.pdf}
+l.349 ...h=\columnwidth]{figures/intrin_space.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
 Package natbib Warning: Citation `khan2016frequency' on page 4 undefined on inp
-ut line 365.
+ut line 375.
 
 
 Package natbib Warning: Citation `khan2016frequency' on page 4 undefined on inp
-ut line 365.
+ut line 375.
 
 
-LaTeX Warning: File `figures/0154.pdf' not found on input line 385.
+LaTeX Warning: File `figures/0154.pdf' not found on input line 395.
 
 
 ! Package pdftex.def Error: File `figures/0154.pdf' not found: using draft sett
@@ -925,33 +1080,52 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.385 ...phics[width=\textwidth]{figures/0154.pdf}
+l.395 ...phics[width=\textwidth]{figures/0154.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
+
+Package natbib Warning: Citation `khan2016frequency' on page 4 undefined on inp
+ut line 425.
+
 [4
+pdfTeX warning (ext4): destination with the same identifier (name{algocf.1}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.426 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.408 
+l.426 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.426 
       ]
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 408.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 426.
 
+[5
+pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.426 
+      ]
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 408.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 426.
 
 
 Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
 
 
-Package natbib Warning: Citation `khan2016frequency' on page 5 undefined on inp
-ut line 415.
-
-
-LaTeX Warning: File `figures/q148.pdf' not found on input line 430.
+LaTeX Warning: File `figures/q148.pdf' not found on input line 441.
 
 
 ! Package pdftex.def Error: File `figures/q148.pdf' not found: using draft sett
@@ -961,14 +1135,14 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.430 ...ics[width=\columnwidth]{figures/q148.pdf}
+l.441 ...ics[width=\columnwidth]{figures/q148.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `figures/q148_q1248_compare.pdf' not found on input line 44
-0.
+LaTeX Warning: File `figures/q148_q1248_compare.pdf' not found on input line 45
+1.
 
 
 ! Package pdftex.def Error: File `figures/q148_q1248_compare.pdf' not found: us
@@ -978,72 +1152,54 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.440 ...umnwidth]{figures/q148_q1248_compare.pdf}
+l.451 ...umnwidth]{figures/q148_q1248_compare.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[5
-pdfTeX warning (ext4): destination with the same identifier (name{algocf.1}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.460 M
-       otivated by the successful improvement of the waveforms, we expand th...
 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.460 M
-       otivated by the successful improvement of the waveforms, we expand th...
+Package natbib Warning: Citation `khan2016frequency' on page 6 undefined on inp
+ut line 464.
 
+
+Package natbib Warning: Citation `khan2019phenomenological' on page 6 undefined
+ on input line 464.
+
+
+Overfull \hbox (10.88353pt too wide) in paragraph at lines 464--464
+[][]| [] [][][]| 
+ []
+
+[6
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.460 M
-       otivated by the successful improvement of the waveforms, we expand th...
-
+l.480 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has
  been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.460 M
-       otivated by the successful improvement of the waveforms, we expand th...
-]
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 460.
-
-[6
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.460 M
-       otivated by the successful improvement of the waveforms, we expand th...
-]
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 460.
-
-
-Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
-
-[7
+l.480 
+      
 pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.510 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.510 
+l.480 
       ]
 
-LaTeX Warning: File `figures/ps_q148_qchi.pdf' not found on input line 514.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 480.
+
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 480.
+
+
+Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
+
+
+LaTeX Warning: File `figures/ps_q148_qchi.pdf' not found on input line 517.
 
 
 ! Package pdftex.def Error: File `figures/ps_q148_qchi.pdf' not found: using dr
@@ -1053,13 +1209,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.514 ...h=\columnwidth]{figures/ps_q148_qchi.pdf}
+l.517 ...h=\columnwidth]{figures/ps_q148_qchi.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `figures/ps_q148_chi1chi2.pdf' not found on input line 524.
+LaTeX Warning: File `figures/ps_q148_chi1chi2.pdf' not found on input line 529.
 
 
 
@@ -1070,32 +1226,34 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.524 ...olumnwidth]{figures/ps_q148_chi1chi2.pdf}
+l.529 ...olumnwidth]{figures/ps_q148_chi1chi2.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[8
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
+
+Overfull \hbox (10.88353pt too wide) in paragraph at lines 594--594
+[][]| [] [][][]| 
+ []
+
+[7
+pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.585 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.585 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
- been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.585 
+l.600 
       ]
 
-LaTeX Warning: File `figures/all_quadrants.pdf' not found on input line 589.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 600.
+
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 600.
+
+
+Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
+
+
+LaTeX Warning: File `figures/all_quadrants.pdf' not found on input line 604.
 
 
 ! Package pdftex.def Error: File `figures/all_quadrants.pdf' not found: using d
@@ -1105,13 +1263,13 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.589 ...=\columnwidth]{figures/all_quadrants.pdf}
+l.604 ...=\columnwidth]{figures/all_quadrants.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `figures/ps_q148_quadrants.pdf' not found on input line 599
+LaTeX Warning: File `figures/ps_q148_quadrants.pdf' not found on input line 617
 .
 
 
@@ -1122,60 +1280,91 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.599 ...lumnwidth]{figures/ps_q148_quadrants.pdf}
+l.617 ...lumnwidth]{figures/ps_q148_quadrants.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
+
+[8
+pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.630 W
+       hile this study focuses on the IMRPhenomD model due to its availabili...
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.630 W
+       hile this study focuses on the IMRPhenomD model due to its availabili...
+
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.630 W
+       hile this study focuses on the IMRPhenomD model due to its availabili...
+]
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 630.
+
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 630.
+
+
+Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
+
+
+Package natbib Warning: Citation `hannam2014simple' on page 9 undefined on inpu
+t line 632.
+
+
+Package natbib Warning: Citation `khan2019phenomenological' on page 9 undefined
+ on input line 632.
+
+
+Package natbib Warning: Citation `pratten2020setting' on page 9 undefined on in
+put line 633.
+
+
+Package natbib Warning: Citation `pratten2021computationally' on page 9 undefin
+ed on input line 633.
+
+
+Package natbib Warning: Citation `Wong:2022xvh' on page 9 undefined on input li
+ne 657.
 
 [9
 pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.644 
+l.672 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.644 
+l.672 
       ]
-
-Package natbib Warning: Citation `hannam2014simple' on page 10 undefined on inp
-ut line 664.
-
-
-Package natbib Warning: Citation `khan2019phenomenological' on page 10 undefine
-d on input line 664.
-
-
-Package natbib Warning: Citation `pratten2020setting' on page 10 undefined on i
-nput line 664.
-
-
-Package natbib Warning: Citation `pratten2021computationally' on page 10 undefi
-ned on input line 664.
-
-
-Package natbib Warning: Citation `pratten2020setting' on page 10 undefined on i
-nput line 669.
-
 No file ms.bbl.
 
 Package natbib Warning: There were undefined citations.
 
 [10] (./ms.aux)
 Package rerunfilecheck Info: File `ms.out' has not changed.
-(rerunfilecheck)             Checksum: 63F42DE04D06686D5D340887E6857E31;1153.
+(rerunfilecheck)             Checksum: FF972390A5A66268C2F8F15217B4C307;1209.
  ) 
 Here is how much of TeX's memory you used:
- 16084 strings out of 476024
- 244307 string characters out of 5794016
- 1882382 words of memory out of 5000000
- 36220 multiletter control sequences out of 15000+600000
+ 16074 strings out of 476024
+ 244164 string characters out of 5794016
+ 1879382 words of memory out of 5000000
+ 36209 multiletter control sequences out of 15000+600000
  523686 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,12n,90p,917b,511s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,90p,419b,511s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb><c:/texlive/2022/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2022/texmf-dist
@@ -1183,28 +1372,26 @@ texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2022/texmf-dist
 e1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmex10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmmi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/
-texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/20
-22/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2022/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2022/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pf
-b><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texli
-ve/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2022/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy5.pfb><c:/texlive/2022/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmsy7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy9.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
-><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb><c:/texli
-ve/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texlive/2022/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb><c:/texlive/2022/texmf-dist/
-fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on ms.pdf (10 pages, 383369 bytes).
+6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/
+texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/20
+22/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2022/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr5.pfb><c:/texlive/2022/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr6.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmr7.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
+><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texliv
+e/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2022/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2022/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmti10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmti8.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb
+><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texl
+ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
+Output written on ms.pdf (10 pages, 362910 bytes).
 PDF statistics:
- 327 PDF objects out of 1000 (max. 8388607)
- 249 compressed objects within 3 object streams
- 50 named destinations out of 1000 (max. 500000)
- 73 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 306 PDF objects out of 1000 (max. 8388607)
+ 231 compressed objects within 3 object streams
+ 51 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

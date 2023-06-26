@@ -350,9 +350,7 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 	\caption{Distribution of training and validation NR waveforms in the
 	$q-\chi_{PN}$ space. The blue stars represent the waveforms used to compute
 	the training loss and the orange dots represent the waveforms used for
-	validation. \kw{It is hard to see the blue stars on top of the orange. Play
-	around with the size of the dots and change the colors. Also add the extra
-	NR waveforms in table 2 with a different color but use the stars.}}}
+	validation.}
 	\label{fig:intrin_space}
 \end{figure}
 
@@ -374,9 +372,7 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 	\end{tabularx}
 	\caption{List of waveforms used to recalibrate the model. The mass ratio is defined as
 	$q=m_1/m_2\geq 1$ and the spins are denoted by $\chi_{1,2}$. Out of the 11 waveforms listed
-	here, nine of them are also used in the original IMRPhenomD calibration. The remaining two
-	are SXS analogues to two of the BAM NR simulations used in the original calibration
-	\citep{khan2016frequency}. \kw{BE EXPLICIT ABOUT WHAT DO YOU MEAN THE REMAINING TWO!}}
+	here, two SXS waveforms are analogues to two of the BAM NR simulations used in the original calibration (SXS:BBH:1417 as A7 and SXS:BBH:1418 as A9 in \citep{khan2016frequency}). The rest of the SXS waveforms are also used in the original IMRPhenomD calibration.}
 	\label{tab:q148}
 \end{table}
 \begin{table}[t]
@@ -586,20 +582,18 @@ recalibration procedure on each region separately
 (Fig.~\ref{fig:ps_q148_quadrant}). The training waveforms used for fitting in
 this scenario are listed in Tab.~\ref{tab:quadrants} and the loss functions 
 are calculated using a simple average of the mismatches, $\mathcal{L}_{\mathrm{ave}}$. The top-left and
-bottom-right regions have limited data for $q>4$, hence the results are only
-valid up to $q\lesssim4$. From Fig.~\ref{fig:ps_q148_quadrant}, we observe that
+bottom-right regions have limited data for $q>4$, hence the result is only valid up to $q\leq4$ and we take waveforms with $q\leq4$ as validation waveforms in these two regions. From Fig.~\ref{fig:ps_q148_quadrant}, we observe that
 equal-spin waveforms lying on the diagonal improve the most. 
-\kl{The improvement above the diagonal is also significant comparing with the original waveform model. However, the improvement are not as profound as optimizing all waveform at once. This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters. }
+\kl{The improvement above the diagonal is also significant comparing with the original waveform model and it has a similar improvement as optimizing all waveform at once. Notice that optimizing over all waveforms gives a slightly better improvement. This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
 %The improvement above the diagonal is also significantly more than when optimizing using
 %all waveforms at once. This can be seen clearly in the top panel of Fig.~\ref{fig:all_quadrants}, where we see
 %that the optimized histogram shifts to lower mismatches.
 \footnote{
 	Note that the top panel of Fig.~\ref{fig:all_quadrants} specifically shows the
 	distribution of mismatches for the top-left quadrant of Fig.~\ref{fig:ps_q148_quadrant}.
-} On the other hand, the
-improvement below the diagonal is negligible, indicating that our method struggles to
+} On the other hand, the improvement below the diagonal is negligible, indicating that our method struggles to
 further improve over the original IMRPhenomD waveform. 
-Interestingly, we can see in the bottom-right quadrant that the waveform does not show a significant change
+Interestingly, we can see in the bottom-right region that the waveform does not show a significant change
 to the overall mismatch (see bottom panel of Fig.~\ref{fig:all_quadrants}). 
 This suggests that the IMRPhenomD waveform ansatz fits waveforms with
 $\chi_1>0$ and $\chi_2<0$ less well.
