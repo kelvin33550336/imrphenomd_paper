@@ -511,7 +511,6 @@ behavior as a function of the source parameters, the results will always be
 biased, and we should not expect any improvement, even if we segment the
 parameter space during training.
 
-
 \begin{figure}[t]
 	\script{ps_q148_qchi.py}
 	\centering
@@ -600,8 +599,9 @@ Interestingly, we can see in the bottom-right region that the waveform does not 
 to the overall mismatch (see bottom-right panel of Fig.~\ref{fig:all_quadrants}). 
 This suggests that the IMRPhenomD waveform ansatz fits waveforms with
 $\chi_1>0$ and $\chi_2<0$ less well. 
+\kl{Overall, the improvement for both optimization schemes are similar (bottom panel of Fig.~\ref{fig:ps_q148_quadrant}). Although split region optimization uses more training waveforms, some of the waveforms, e.g. opposite spins, hinders the optimization procedure and hence gives a slightly worse result when comparing with optimization over all waveforms.}
 
-\begin{figure}[t]
+\begin{figure*}[t]
 	\script{all_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/all_quadrants.pdf}
@@ -610,13 +610,13 @@ $\chi_1>0$ and $\chi_2<0$ less well.
 	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. The medians of each distributions are indicated by dashed
 	lines.}
 	\label{fig:all_quadrants}
-\end{figure}
+\end{figure*}
 
 \begin{figure}[t]
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{\textit{Top}: Fractional mismatch change of the validation waveforms.
+	\caption{\textit{Top}: Fractional mismatch change of the validation waveforms ().
 	Each quadrant is fitted independently to the NR waveforms listed in Tab.~\ref{tab:quadrants}.
 	\textit{Bottom}: Combined distribution of both optimization schemes shown in Fig.~\ref{fig:all_quadrants}.}
 	\label{fig:ps_q148_quadrant}

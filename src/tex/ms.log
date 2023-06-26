@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.25)  26 JUN 2023 16:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.2.25)  26 JUN 2023 16:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -933,6 +933,16 @@ ut line 117.
 
 [1{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
+LaTeX Warning: Reference `sec:method' on page 2 undefined on input line 126.
+
+
+LaTeX Warning: Reference `sec:result' on page 2 undefined on input line 130.
+
+
+LaTeX Warning: Reference `sec:discussion' on page 2 undefined on input line 133
+.
+
+
 Package natbib Warning: Citation `khan2016frequency' on page 2 undefined on inp
 ut line 134.
 
@@ -978,6 +988,15 @@ ut line 256.
 
 Package natbib Warning: Citation `boyle2019sxs' on page 3 undefined on input li
 ne 257.
+
+
+LaTeX Warning: Reference `tab:q148' on page 3 undefined on input line 262.
+
+
+LaTeX Warning: Reference `tab:q1248' on page 3 undefined on input line 263.
+
+
+LaTeX Warning: Reference `eq:mismatch' on page 3 undefined on input line 273.
 
 
 Package natbib Warning: Citation `usman2016pycbc' on page 3 undefined on input 
@@ -1026,8 +1045,17 @@ n input line 308.
 
 [3]
 
+LaTeX Warning: Reference `alg:gradient' on page 4 undefined on input line 314.
+
+
 Package natbib Warning: Citation `khan2016frequency' on page 4 undefined on inp
 ut line 315.
+
+
+LaTeX Warning: Reference `sec:result' on page 4 undefined on input line 320.
+
+
+LaTeX Warning: Reference `fig:loss' on page 4 undefined on input line 321.
 
 
 LaTeX Warning: File `figures/loss.pdf' not found on input line 326.
@@ -1086,6 +1114,13 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
+LaTeX Warning: Reference `fig:intrin_space' on page 4 undefined on input line 4
+16.
+
+
+LaTeX Warning: Reference `fig:0154' on page 4 undefined on input line 421.
+
+
 Package natbib Warning: Citation `khan2016frequency' on page 4 undefined on inp
 ut line 426.
 
@@ -1125,6 +1160,9 @@ LaTeX Warning: A float is stuck (cannot be placed) on input line 427.
 Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
 
 
+LaTeX Warning: Reference `fig:q148' on page 6 undefined on input line 430.
+
+
 LaTeX Warning: File `figures/q148.pdf' not found on input line 442.
 
 
@@ -1139,6 +1177,12 @@ l.442 ...ics[width=\columnwidth]{figures/q148.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
+
+
+LaTeX Warning: Reference `tab:q148' on page 6 undefined on input line 446.
+
+
+LaTeX Warning: Reference `tab:q148' on page 6 undefined on input line 446.
 
 
 LaTeX Warning: File `figures/q148_q1248_compare.pdf' not found on input line 45
@@ -1158,6 +1202,24 @@ Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
+LaTeX Warning: Reference `tab:q148' on page 6 undefined on input line 458.
+
+
+LaTeX Warning: Reference `tab:q148' on page 6 undefined on input line 458.
+
+
+LaTeX Warning: Reference `tab:q1248' on page 6 undefined on input line 458.
+
+
+LaTeX Warning: Reference `tab:q148' on page 6 undefined on input line 458.
+
+
+LaTeX Warning: Reference `tab:q148' on page 6 undefined on input line 458.
+
+
+LaTeX Warning: Reference `tab:q1248' on page 6 undefined on input line 458.
+
+
 Package natbib Warning: Citation `khan2016frequency' on page 6 undefined on inp
 ut line 465.
 
@@ -1169,6 +1231,13 @@ Package natbib Warning: Citation `khan2019phenomenological' on page 6 undefined
 Overfull \hbox (10.88353pt too wide) in paragraph at lines 465--465
 [][]| [] [][][]| 
  []
+
+
+LaTeX Warning: Reference `tab:q1248' on page 6 undefined on input line 472.
+
+
+LaTeX Warning: Reference `fig:q148_q1248_compare' on page 6 undefined on input 
+line 476.
 
 [6
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has
@@ -1199,7 +1268,18 @@ LaTeX Warning: A float is stuck (cannot be placed) on input line 481.
 Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
 
 
-LaTeX Warning: File `figures/ps_q148_qchi.pdf' not found on input line 518.
+LaTeX Warning: Reference `fig:ps_q148_qchi' on page 7 undefined on input line 4
+84.
+
+
+LaTeX Warning: Reference `fig:intrin_space' on page 7 undefined on input line 4
+88.
+
+
+LaTeX Warning: Reference `fig:ps_q148' on page 7 undefined on input line 494.
+
+
+LaTeX Warning: File `figures/ps_q148_qchi.pdf' not found on input line 517.
 
 
 ! Package pdftex.def Error: File `figures/ps_q148_qchi.pdf' not found: using dr
@@ -1209,13 +1289,19 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.518 ...h=\columnwidth]{figures/ps_q148_qchi.pdf}
+l.517 ...h=\columnwidth]{figures/ps_q148_qchi.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-LaTeX Warning: File `figures/ps_q148_chi1chi2.pdf' not found on input line 530.
+LaTeX Warning: Reference `tab:q148' on page 7 undefined on input line 523.
+
+
+LaTeX Warning: Reference `tab:q148' on page 7 undefined on input line 523.
+
+
+LaTeX Warning: File `figures/ps_q148_chi1chi2.pdf' not found on input line 529.
 
 
 
@@ -1226,15 +1312,53 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.530 ...olumnwidth]{figures/ps_q148_chi1chi2.pdf}
+l.529 ...olumnwidth]{figures/ps_q148_chi1chi2.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
-Overfull \hbox (10.88353pt too wide) in paragraph at lines 596--596
+LaTeX Warning: Reference `tab:q148' on page 7 undefined on input line 532.
+
+
+LaTeX Warning: Reference `tab:q148' on page 7 undefined on input line 532.
+
+
+LaTeX Warning: Reference `fig:all_quadrants' on page 7 undefined on input line 
+582.
+
+
+LaTeX Warning: Reference `fig:ps_q148_quadrant' on page 7 undefined on input li
+ne 582.
+
+
+LaTeX Warning: Reference `tab:quadrants' on page 7 undefined on input line 583.
+
+
+
+LaTeX Warning: Reference `fig:ps_q148_quadrant' on page 7 undefined on input li
+ne 585.
+
+
+LaTeX Warning: Reference `fig:all_quadrants' on page 7 undefined on input line 
+595.
+
+
+LaTeX Warning: Reference `fig:ps_q148_quadrant' on page 7 undefined on input li
+ne 595.
+
+
+Overfull \hbox (10.88353pt too wide) in paragraph at lines 595--595
 [][]| [] [][][]| 
  []
+
+
+LaTeX Warning: Reference `fig:all_quadrants' on page 7 undefined on input line 
+599.
+
+
+LaTeX Warning: Reference `fig:ps_q148_quadrant' on page 7 undefined on input li
+ne 602.
 
 [7
 pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) ha
@@ -1258,6 +1382,19 @@ LaTeX Warning: A float is stuck (cannot be placed) on input line 603.
 
 Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
 
+[8
+pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.603 
+      
+pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
+ been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.603 
+      ]
 
 LaTeX Warning: File `figures/all_quadrants.pdf' not found on input line 607.
 
@@ -1274,21 +1411,16 @@ l.607 ...=\columnwidth]{figures/all_quadrants.pdf}
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-[8
-pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.616 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{table.3}) has
- been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.616 
-      ]
 
-LaTeX Warning: File `figures/ps_q148_quadrants.pdf' not found on input line 620
+LaTeX Warning: Reference `fig:ps_q148_quadrant' on page 9 undefined on input li
+ne 611.
+
+
+LaTeX Warning: Reference `fig:ps_q148_quadrant' on page 9 undefined on input li
+ne 611.
+
+
+LaTeX Warning: File `figures/ps_q148_quadrants.pdf' not found on input line 618
 .
 
 
@@ -1299,49 +1431,78 @@ See the pdftex.def package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.620 ...lumnwidth]{figures/ps_q148_quadrants.pdf}
+l.618 ...lumnwidth]{figures/ps_q148_quadrants.pdf}
                                                   
 Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
 
+LaTeX Warning: Reference `tab:quadrants' on page 9 undefined on input line 621.
+
+
+
+LaTeX Warning: Reference `fig:all_quadrants' on page 9 undefined on input line 
+621.
+
+
+LaTeX Warning: Reference `tab:quadrants' on page 9 undefined on input line 621.
+
+
+
+LaTeX Warning: Reference `fig:all_quadrants' on page 9 undefined on input line 
+621.
+
+
 Package natbib Warning: Citation `hannam2014simple' on page 9 undefined on inpu
-t line 635.
+t line 634.
 
 
 Package natbib Warning: Citation `khan2019phenomenological' on page 9 undefined
- on input line 635.
+ on input line 634.
 
 
 Package natbib Warning: Citation `pratten2020setting' on page 9 undefined on in
-put line 636.
+put line 635.
 
 
 Package natbib Warning: Citation `pratten2021computationally' on page 9 undefin
-ed on input line 636.
+ed on input line 635.
+
+
+LaTeX Warning: Reference `fig:ps_q148_quadrant' on page 9 undefined on input li
+ne 650.
 
 
 Package natbib Warning: Citation `Wong:2022xvh' on page 9 undefined on input li
-ne 660.
+ne 659.
 
-[9
-pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.675 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) ha
-s been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.675 
-      ]
+
+LaTeX Warning: Reference `fig:q148_q1248_compare' on page 9 undefined on input 
+line 666.
+
 No file ms.bbl.
 
 Package natbib Warning: There were undefined citations.
 
-[10] (./ms.aux)
+[9] [10
+pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.692 \end{document}
+                    
+pdfTeX warning (ext4): destination with the same identifier (name{figure.9}) ha
+s been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  \__shipout_drop_firstpage_...
+l.692 \end{document}
+                    ] (./ms.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `ms.out' has not changed.
 (rerunfilecheck)             Checksum: FF972390A5A66268C2F8F15217B4C307;1209.
  ) 
@@ -1352,7 +1513,7 @@ Here is how much of TeX's memory you used:
  36210 multiletter control sequences out of 15000+600000
  523686 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 90i,12n,90p,413b,511s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,12n,90p,409b,511s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb><c:/texlive/2022/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2022/texmf-dist
@@ -1376,10 +1537,10 @@ sfonts/cm/cmti10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm
 /cmti8.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb
 ><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><c:/texl
 ive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on ms.pdf (10 pages, 363018 bytes).
+Output written on ms.pdf (10 pages, 361613 bytes).
 PDF statistics:
- 307 PDF objects out of 1000 (max. 8388607)
- 232 compressed objects within 3 object streams
+ 264 PDF objects out of 1000 (max. 8388607)
+ 198 compressed objects within 2 object streams
  51 named destinations out of 1000 (max. 500000)
  65 words of extra memory for PDF output out of 10000 (max. 10000000)
 
