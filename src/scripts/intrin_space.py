@@ -37,9 +37,11 @@ mpl.rcParams.update(params)
 # red = "#B02423"
 c1 = "#0562ED"
 c2 = "#FE6100"
-# c2 = "#FFB000"
+c3 = '#266D1F'
 
-train_data = np.loadtxt(paths.data / "ps_train.dat")
+
+train_data = np.loadtxt(paths.data / "ps_train.dat")[:11]
+add_train_data = np.loadtxt(paths.data / "ps_train.dat")[11:]
 test_data = np.loadtxt(paths.data / "q148.dat")
 
 q = test_data[:, 0] / test_data[:, 1]
@@ -50,8 +52,9 @@ chi_PN = (test_data[:, 0] * test_data[:, 2] + test_data[:, 1] * test_data[:, 3])
 
 # train_data = np.loadtxt('./plotting_data/ps_train.dat', delimiter=' ') # [q, chi_PN, chi1, chi2]
 # test_data = np.loadtxt('./plotting_data/q148.dat', delimiter=' ') # [q, chi_PN, chi1, chi2, ori_loss, opt_loss]
-plt.scatter(train_data[:, 0], train_data[:, 1], s=160, color=c1, label="Training", marker='*')
-plt.scatter(q, chi_PN, s=20, color=c2, label="Validation", zorder=-20)
+plt.scatter(train_data[:, 0], train_data[:, 1], s=180, color=c1, label="Training", marker='*')
+plt.scatter(add_train_data[:, 0], add_train_data[:, 1], s=180, color=c3, label='Add. Training', marker='*')
+plt.scatter(q, chi_PN, s=10, color=c2, label="Validation", zorder=-20)
 plt.legend()
 plt.xlabel("$q$")
 plt.ylabel("$\chi_{\mathrm{PN}}$")

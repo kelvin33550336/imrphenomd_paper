@@ -33,17 +33,10 @@ params = {
 }
 
 mpl.rcParams.update(params)
-# blue = "#102F68"
-# red = "#B02423"
-# c1 = "#4e7ab1"  # blue Nash
-# c1 = "#b14a49"  # red Nash
-# c2 = "#406a3d"  # green Nash
-c1 = "#648FFF"
+
+c1 = "#0562ED"
 c2 = "#FE6100"
-# 16, 47, 104)
-# \definecolor{darkgreen}{rgb}{0.075,0.302,0.047}
-# % \definecolor{dullred}{rgb}{0.706,0.208,0.192}
-# \definecolor{dullred}{RGB}{176, 36, 35}
+
 train_data = np.loadtxt(paths.data / "train_waveform_loss.txt")
 validation_data = np.loadtxt(paths.data / "validation_waveform_loss.txt")
 
