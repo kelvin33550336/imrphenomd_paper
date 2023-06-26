@@ -35,7 +35,7 @@ params = {
 mpl.rcParams.update(params)
 # blue = "#102F68"
 # red = "#B02423"
-c1 = "#648FFF"
+c1 = "#0562ED"
 c2 = "#FE6100"
 # c2 = "#FFB000"
 

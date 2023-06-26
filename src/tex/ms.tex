@@ -206,7 +206,7 @@ enabled by AD from \jax\, and {\ripple}, which are significantly more efficient 
 
 In order to optimize the coefficients, we need to define a loss function that
 quantifies the difference between the waveform model and the target NR simulations which we want to match.
-Here we adopt a quantity commonly used in GW physics called the \textit{mismatch} function \citep{Owen:1995tm, husa2016frequency}. 
+Here we adopt a quantity commonly used in GW physics called the \textit{mismatch} function \citep{owen1996search, husa2016frequency}. 
 It is defined as
 \begin{align} \label{eq:mismatch}
 	\mathcal{M}(h_1, h_2)=1-\max_{t_0, \phi_0}\langle \hat{h}_1, \hat{h}_2\rangle,
@@ -271,7 +271,7 @@ as most BBH events observed by LIGO and Virgo have $q\leq8$.
 The SXS NR waveforms are given as time-series strain.
 Since IMRPhenomD is modeled in the frequency domain, we need to Fourier transform the simulation results
 in order to compute the mismatch, \eqref{eq:mismatch}.
-For this, we taper the time-series using Tukey window~\citep{tukey}\footnote{
+For this, we taper the time-series using Tukey window~\citep{usman2016pycbc}\footnote{
 	Specifically, we choose $\alpha=2t_{\mathrm{RD}}/T$, where
 	$t_{\mathrm{RD}}$ is the duration of ringdown (maximum amplitude to the end of the strain) and $T$ is the duration of the
 	entire GW strain. \te{What is $t_{\mathrm{RD}}$? and how is it computed?}
