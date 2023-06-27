@@ -36,7 +36,7 @@ mpl.rcParams.update(params)
 
 c1 = "#102F68"
 c2 = "#B02423"
-c3 = "#FFB300"
+c3 = "#B58500"
 
 data1 = np.loadtxt(paths.data / "1pos2pos_mismatch.dat")
 data2 = np.loadtxt(paths.data / "q148_1neg2pos_region_f.dat")

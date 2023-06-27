@@ -35,7 +35,7 @@ params = {
 mpl.rcParams.update(params)
 
 c2 = "#B02423"
-c3 = "#FFB300"
+c3 = "#B58500"
 
 data1 = np.loadtxt(paths.data / "1pos2pos_mismatch.dat")
 data2 = np.loadtxt(paths.data / "q148_1neg2pos_region_f.dat")
@@ -51,29 +51,17 @@ data_q148 = np.concatenate((data1, data2, data3, data4))
 
 logdiff = np.log10(data_region[:, 5] / data_region[:, 4])
 
-fig, ax = plt.subplots(2, 1, figsize=(7, 12))
-
-cm = plt.cm.get_cmap("RdYlBu")
-colors = logdiff
-sc = ax[0].scatter(data_region[:, 2], data_region[:, 3], c=colors, vmin=-1, vmax=1, s=30, cmap=cm)
-cbar = plt.colorbar(sc, ticks=[-1, -0.5, 0, 0.5, 1], ax=ax[0])
-cbar.ax.set_ylabel(
-    "$\log_{10}(\mathcal{M}_f/\mathcal{M}_i)$", rotation=270, labelpad=20
-)
-cbar.ax.set_yticklabels(["$<-1$", "$-0.5$", "$0$", "$0.5$", "$>1$"])
-ax[0].set_xlabel("$\chi_1$")
-ax[0].set_ylabel("$\chi_2$")
-
 bins = np.linspace(-5, -1, 15)
 
-ax[1].hist(np.log10(data_q148[:,5]), alpha=0.2, bins=bins, color=c2)
-ax[1].hist(np.log10(data_q148[:,5]), histtype='step', lw=2, bins=bins, color=c2, label='Optimized (All Regions)')
-ax[1].hist(np.log10(data_region[:,5]), alpha=0.2, bins=bins, color=c3)
-ax[1].hist(np.log10(data_region[:,5]), histtype='step', lw=2, bins=bins, color=c3, label='Optimized (Split Regions)')
-ax[1].axvline(x=np.log10(np.median(data_q148[:,5])), color=c2, ls='--', lw=2)
-ax[1].axvline(x=np.log10(np.median(data_region[:,5])), color=c3, ls='--', lw=2)
-ax[1].set_xlabel("$\log_{10}(\mathcal{M})$")
-ax[1].set_ylabel("Count")
-ax[1].legend(loc='upper left')
+plt.figure(figsize=(6, 5))
+plt.hist(np.log10(data_q148[:,5]), alpha=0.2, bins=bins, color=c2)
+plt.hist(np.log10(data_q148[:,5]), histtype='step', lw=2, bins=bins, color=c2, label='Optimized (All Regions)')
+plt.hist(np.log10(data_region[:,5]), alpha=0.2, bins=bins, color=c3)
+plt.hist(np.log10(data_region[:,5]), histtype='step', lw=2, bins=bins, color=c3, label='Optimized (Split Regions)')
+plt.axvline(x=np.log10(np.median(data_q148[:,5])), color=c2, ls='--', lw=2)
+plt.axvline(x=np.log10(np.median(data_region[:,5])), color=c3, ls='--', lw=2)
+plt.set_xlabel("$\log_{10}(\mathcal{M})$")
+plt.set_ylabel("Count")
+plt.legend(loc='upper left')
 
 plt.savefig(paths.figures / "ps_q148_quadrants.pdf", bbox_inches="tight")
