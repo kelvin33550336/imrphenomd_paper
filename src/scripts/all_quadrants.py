@@ -60,12 +60,12 @@ ax[0, 0].hist(np.log10(data1[:, 4]), bins=bins, alpha=0.2, color=c1)
 ax[0, 0].hist(np.log10(data1[:, 4]), bins=bins, label="Original", color=c1, lw=2, histtype="step")
 ax[0,0].axvline(x=np.log10(np.median(data1[:, 4])), color=c1,zorder=-20,lw=2,alpha=1.0,linestyle=(0, (1, 1.3)))
 
-ax[0, 0].hist(np.log10(data1[:, 5]),bins=bins,label="Optimized (Split Regions)",histtype="step",color=c3,linewidth=2)
+ax[0, 0].hist(np.log10(data1[:, 5]),bins=bins,label="Opt. (Split)",histtype="step",color=c3,linewidth=2)
 ax[0, 0].hist(np.log10(data1[:, 5]),bins=bins,color=c3,alpha=0.2)
 ax[0, 0].axvline(x=np.log10(np.median(data1[:, 5])),color=c3,lw=2,alpha=1.0,linestyle=(0, (1, 1.3)))
 
 ax[0, 0].hist(np.log10(data1_q148[:, 5]), bins=bins, alpha=0.2, color=c2)
-ax[0, 0].hist(np.log10(data1_q148[:, 5]), bins=bins, label="Optimized (All Regions)", color=c2, lw=2, histtype="step")
+ax[0, 0].hist(np.log10(data1_q148[:, 5]), bins=bins, label="Opt. (All)", color=c2, lw=2, histtype="step")
 ax[0, 0].axvline(x=np.log10(np.median(data1_q148[:, 5])),color=c2,lw=2,alpha=1.0,linestyle=(0, (1, 1.3)))
 
 ax[0, 0].set_ylabel("Count")
