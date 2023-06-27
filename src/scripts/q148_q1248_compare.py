@@ -48,7 +48,7 @@ q148_logdiff = np.log10(q148_data[:, 5] / q148_data[:, 4])
 q1248_logdiff = np.log10(q1248_data[:, 5] / q1248_data[:, 4])
 
 plt.hist(q148_logdiff, bins=bins, alpha=0.2, color=c1)
-plt.hist(q148_logdiff, bins=bins, label="Optimized", color=c1, histtype="step", lw=2)
+plt.hist(q148_logdiff, bins=bins, label="Without Extra Data", color=c1, histtype="step", lw=2)
 plt.axvline(
     x=np.median(q148_logdiff),
     color=c1,
@@ -66,7 +66,7 @@ plt.hist(
 plt.hist(
     q1248_logdiff,
     bins=bins,
-    label=f"Add. NR data",
+    label=f"With Extra Data",
     histtype="step",
     color=c2,
     linewidth=2,

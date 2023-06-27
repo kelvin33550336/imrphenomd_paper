@@ -130,6 +130,7 @@ ax[1, 1].set_ylim(0, 21)
 ax[1, 1].yaxis.set_ticks([0, 5, 10, 15, 20])
 plt.setp(ax[1, 1].get_yticklabels(), visible=False)
 
+
 ax[0, 0].text(-1.5, 42.8, r'$\chi_1,\chi_2>0$',
         horizontalalignment='left',
         verticalalignment='top',
