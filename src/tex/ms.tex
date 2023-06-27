@@ -252,7 +252,7 @@ and examine the differences between them.
 \subsection{Optimization Scheme} \label{subsec:optimization}
 
 To compute the loss functions, we have to choose NR waveforms for calculating the mismatch.
-Originally, 19 NR simulations  were used to calibrate IMRPhenomD \citep{khan2016frequency}; 9 of these 
+Originally, 19 NR simulations were used to calibrate IMRPhenomD \citep{khan2016frequency}; nine of these 
 are from the SXS catalog \citep{boyle2019sxs} and 10 BAM simulations. 
 As BAM waveforms are not publicly available, we cannot use a training set identical to the original work.
 Instead, we take the same nine waveforms from the SXS catalog plus two additional waveforms which closely mimic
@@ -264,7 +264,7 @@ Additional NR waveforms which are used for further calibration are listed in Tab
 The training set has a maximum mass ratio of eight due to the lack 
 of high mass ratio simulations in the SXS catalog.
 In fact, the SXS catalog only has NR waveforms with $q\leq10$.
-Nevertheless, we are interested in the behavior of IMRPhenomD model with small $q$,
+Nevertheless, we are interested in the behavior of the IMRPhenomD model with small $q$,
 as most BBH events observed by LIGO and Virgo have $q\leq8$.
 
 The SXS NR waveforms are given as time-series strain.
@@ -274,11 +274,11 @@ For this, we taper the time-series using Tukey window~\citep{tukey}\footnote{
 	Specifically, we choose $\alpha=2t_{\mathrm{RD}}/T$, where
 	$t_{\mathrm{RD}}$ is the duration of ringdown and $T$ is the duration of the
 	entire GW strain. \te{What is $t_{\mathrm{RD}}$? and how is it computed?}
-} before using standard FFT routines to compute the Fourier transform.
+} before using standard routines to compute the fast Fourier transform.
 
 
 In addition to choosing the NR waveforms for the training set,
-one needs to choose a relevant PSD for mismatch.
+one needs to choose a relevant PSD for the mismatch.
 We have opted to use a flat PSD for the mismatch calculation,
 as it provides results that are independent of the detector sensitivity and mass scale.
 The use of a flat PSD ensures that the improvement in accuracy is due mainly
@@ -313,7 +313,7 @@ With the loss function evaluated, we apply gradient descent to optimize the tuna
 coefficients as shown in Algorithm~\ref{alg:gradient}. We take $\lambda_i$ to be the 
 original coefficients given in \citep{khan2016frequency} because they likely lie in the
 neighborhood of the minimum that we wish to find. 
-We fix our learning rate, $\alpha$, to be $=10^{-6}$, which is small enough to ensure we 
+We fix our learning rate, $\alpha$, to be $10^{-6}$, which is small enough to ensure we 
 don't move far from the minimum.
 Finally, we stop the optimization when the validation loss stops decreasing 
 (see Sec.~\ref{sec:result} for description of the validation set).
