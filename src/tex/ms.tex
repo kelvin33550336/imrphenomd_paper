@@ -273,16 +273,10 @@ Since IMRPhenomD is modeled in the frequency domain, we need to Fourier transfor
 in order to compute the mismatch, \eqref{eq:mismatch}.
 For this, we taper the time-series using Tukey window~\citep{usman2016pycbc}\footnote{
 	Specifically, we choose $\alpha=2t_{\mathrm{RD}}/T$, where
-<<<<<<< HEAD
 	$t_{\mathrm{RD}}$ is the duration of ringdown (maximum amplitude to the end of the strain) and $T$ is the duration of the
 	entire GW strain. 
 %	\te{What is $t_{\mathrm{RD}}$? and how is it computed?}
 } before using standard FFT routines to compute the Fourier transform.
-=======
-	$t_{\mathrm{RD}}$ is the duration of ringdown and $T$ is the duration of the
-	entire GW strain. \te{What is $t_{\mathrm{RD}}$? and how is it computed?}
-} before using standard routines to compute the fast Fourier transform.
->>>>>>> main
 
 In addition to choosing the NR waveforms for the training set,
 one needs to choose a relevant PSD for the mismatch.
