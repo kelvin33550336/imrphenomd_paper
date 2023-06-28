@@ -87,7 +87,7 @@ The LIGO-VIRGO-KAGRA (LVK) collaboration
 VIRGO:2014yos,KAGRA:2020tym} recently started their fourth observational
 run on May 26, 2023. Impressively, they are
 expected to double the total number of observed binary black holes (BBHs)~\citep{abbott2020prospects}.
-Morover, the improved sensitivity also implies that we expect to
+Moreover, the improved sensitivity also implies that we expect to
 detect individual events with a higher signal-to-noise ratio (SNR) than ever before. This means
 we can resolve more features in the signal, therefore putting more
 stringent requirements on the accuracy of our waveform model \citep{purrer2020gravitational, hu2022assessing}.
@@ -298,7 +298,7 @@ For this, we taper the time-series using Tukey window~\citep{usman2016pycbc}\foo
 	$t_{\mathrm{RD}}$ is the duration of ringdown (maximum amplitude to the end of the strain) and $T$ is the duration of the
 	entire GW strain. 
 %	\te{What is $t_{\mathrm{RD}}$? and how is it computed?}
-} before using standard FFT routines to compute the Fourier transform.
+} before using standard FFT routines to compute the fast Fourier transform.
 
 In addition to choosing the NR waveforms for the training set,
 one needs to choose a relevant PSD for the mismatch.
@@ -411,7 +411,7 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 
 To evaluate how well the optimization procedure generalizes to waveforms that are
 not in the training set, we evaluate the mismatch between the fine-tuned model
-and an additional 536 NR waveforms in the SXS catalog i.e., the validation set.
+and an additional 526 NR waveforms in the SXS catalog i.e., the validation set.
 We select waveforms that share the same part of the parameter space with the training
 set, i.e., waveforms with negligible eccentricity (${e<2\times10^{-3}}$)
 and precession (${\chi_{x,y}<5\times10^{-3}}$). Figure~\ref{fig:intrin_space}
@@ -456,7 +456,7 @@ decrease in the median.
 	Tab.~\ref{tab:q148} while the green distribution uses waveforms
 	listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Mismatches are calculated
 	using a constant PSD with the loss function $\mathcal{L}_{\mathrm{ave}}$. 
-	The dashed lines represent the median of the distributions, which decreased \te{by an additional 10.4\% during optimization with the additional data.}}
+	The dashed lines represent the median of the distributions, which decreased by an additional 10.8\% during optimization with the additional data.}
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
@@ -464,7 +464,7 @@ Note that the performance of the IMRPhenomD model was initially tested using the
 {\zdethp} weighted mismatch.\footnote{
 	Note, however, that the mismatch was never directly used during the calibration process~\citep{khan2016frequency, khan2019phenomenological}.
 } We would therefore like to examine whether using the {\zdethp} PSD in our loss function
-could lead to an improved to mismatch. Performing the optimization again, we find no significant difference
+could lead to an improved mismatch. Performing the optimization again, we find no significant difference
 between the results using the two PSDs in the distribution of mismatches.
 
 To understand whether additional training data can further improve the
@@ -585,8 +585,8 @@ this scenario are listed in Tab.~\ref{tab:quadrants} and the loss functions
 are calculated using a simple average of the mismatches, $\mathcal{L}_{\mathrm{ave}}$. The top-left and
 bottom-right regions have limited data for $q>4$, hence the result is only valid up to $q\leq4$ and we take waveforms with $q\leq4$ as validation waveforms in these two regions. From top panel of Fig.~\ref{fig:ps_q148_quadrant}, we observe that
 equal-spin waveforms lying on the diagonal improve the most. 
-\kl{Both top-right and bottom-left region have good performance comparing with the original model. Especially for the bottom-right region, where the improvement is significantly better than optimizing with all waveforms. This suggests the ansatz are well-fitted to this part of the parameter space.
-Waveforms above the diagonal also give good improvements when comparing with the original model and it has a similar improvement as optimizing all waveforms at once. Notice optimizing over all waveforms gives a slightly better improvement. This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
+\kl{Both top-right and bottom-left region have good performance comparing with the original model. Especially for the bottom-left region, where the improvement is significantly better than optimizing all regions simultaneously. This suggests the ansatz are well-fitted to this part of the parameter space.
+Waveforms above the diagonal also give good improvements when comparing with the original model and it has a similar improvement as optimizing all waveforms at once. Notice optimizing all regions gives a slightly better improvement. This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
 %The improvement above the diagonal is also significantly more than when optimizing using
 %all waveforms at once. This can be seen clearly in the top panel of Fig.~\ref{fig:all_quadrants}, where we see
 %that the optimized histogram shifts to lower mismatches.
@@ -600,7 +600,7 @@ Interestingly, we can see in the bottom-right region that the waveform does not 
 to the overall mismatch (see bottom-right panel of Fig.~\ref{fig:all_quadrants}). 
 This suggests that the IMRPhenomD waveform ansatz fits waveforms with
 $\chi_1>0$ and $\chi_2<0$ less well. 
-\kl{Overall, the improvement for both optimization schemes are similar (bottom panel of Fig.~\ref{fig:ps_q148_quadrant}). Although split region optimization uses more training waveforms, some of the waveforms, e.g. opposite spins, hinders the optimization procedure and hence gives a slightly worse result when comparing with optimization over all waveforms.}
+\kl{Overall, the improvement for both optimization schemes are similar (bottom panel of Fig.~\ref{fig:ps_q148_quadrant}). Although split region optimization uses more training waveforms, some of the waveforms, e.g. opposite spins, hinders the optimization procedure and hence gives a slightly worse result when comparing with all region optimization.}
 
 \begin{figure*}[t]
 	\script{all_quadrants.py}
