@@ -54,14 +54,40 @@ logdiff = np.log10(data_region[:, 5] / data_region[:, 4])
 bins = np.linspace(-5, -1, 15)
 
 plt.figure(figsize=(6, 5))
-plt.hist(np.log10(data_q148[:,5]), alpha=0.2, bins=bins, color=c2)
-plt.hist(np.log10(data_q148[:,5]), histtype='step', lw=2, bins=bins, color=c2, label='Opt. (All)')
-plt.hist(np.log10(data_region[:,5]), alpha=0.2, bins=bins, color=c3)
-plt.hist(np.log10(data_region[:,5]), histtype='step', lw=2, bins=bins, color=c3, label='Opt. (Split)')
-plt.axvline(x=np.log10(np.median(data_q148[:,5])), color=c2, ls='--', lw=2)
-plt.axvline(x=np.log10(np.median(data_region[:,5])), color=c3, ls='--', lw=2)
+plt.hist(np.log10(data_q148[:, 5]), alpha=0.2, bins=bins, color=c2)
+plt.hist(
+    np.log10(data_q148[:, 5]),
+    histtype="step",
+    lw=2,
+    bins=bins,
+    color=c2,
+    label="Opt. (All)",
+)
+plt.hist(np.log10(data_region[:, 5]), alpha=0.2, bins=bins, color=c3)
+plt.hist(
+    np.log10(data_region[:, 5]),
+    histtype="step",
+    lw=2,
+    bins=bins,
+    color=c3,
+    label="Opt. (Split)",
+)
+plt.axvline(
+    x=np.log10(np.median(data_q148[:, 5])),
+    color=c2,
+    zorder=-20,
+    lw=2,
+    linestyle=(0, (1, 1.3)),
+)
+plt.axvline(
+    x=np.log10(np.median(data_region[:, 5])),
+    color=c3,
+    zorder=-20,
+    lw=2,
+    linestyle=(0, (1, 1.3)),
+)
 plt.xlabel("$\log_{10}(\mathcal{M})$")
 plt.ylabel("Count")
-plt.legend(loc='upper left')
+plt.legend(loc="upper left")
 
 plt.savefig(paths.figures / "ps_q148_quadrants.pdf", bbox_inches="tight")

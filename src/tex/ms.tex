@@ -129,10 +129,11 @@ that is used as an objective/loss function for the calibration, followed by outl
 specific optimization scheme used for recalibration. In
 Sec.~\ref{sec:result}, we give the optimization result by comparing mismatches
 of the optimized waveforms with the original waveforms. We also show how the
-optimization result differs as a function of the source parameters. In
+optimization result differs as a function of the source parameters. Finally, in
 Sec.~\ref{sec:discussion}, we discuss the difference between our calibration
 procedure and the procedure used in \citep{khan2016frequency}. We also explain how the reduced spin
-parameterization affects the accuracy of the model.
+parameterization affects the accuracy of the model. 
+Note that throughout this paper we use the terms recalibration and optimization interchangeably.
 
 \section{Optimization Method} \label{sec:method}
 
@@ -168,6 +169,16 @@ which depend purely on $\Lambda$ and can be calibrated to numerical relativity (
 The three sections are then \textit{stitched} together using step functions.
 Importantly, the parameterizations are chosen such that they can be made $\mathcal{C}^1$ continuous at the
 boundary between each section.
+
+\begin{figure}
+	\script{loss.py}
+	\centering
+	\includegraphics[width=\columnwidth]{figures/loss.pdf}
+	\caption{Loss functions against the number of iterations. The vertical
+	dotted line indicates the minimum of the validation loss, which is where we stop
+	the optimization.}
+	\label{fig:loss}
+\end{figure}
 
 In practice the $\Lambda$ parameters are fit for each section independently, i.e., intermediate coefficients are fit whilst ignoring the MR region.
 Finally, to map the grid of tuned $\Lambda$ parameters back to the intrinsic parameter space, IMRPhenomD uses the polynomial function:
@@ -222,6 +233,17 @@ $S_n(f)$ is the power spectral density (PSD), and $f_{\mathrm{max}}$ ($f_{\mathr
 the maximum (minimum) frequency for the integration.
 We note here that the mismatch can be viewed as the mean square error (MSE) between the
 two waveforms.
+
+\begin{figure}[t]
+	\script{intrin_space.py}
+	\centering
+	\includegraphics[width=\columnwidth]{figures/intrin_space.pdf}
+	\caption{Distribution of training and validation NR waveforms in the
+	$q-\chi_{\rm PN}$ space. The blue stars represent the waveforms used to compute
+	the training loss, green triangles represent extra training data, and the 
+	orange dots represent the waveforms used for validation.}
+	\label{fig:intrin_space}
+\end{figure}
 
 Since we wish to optimize the model over the whole parameter space,
 we need to compare multiple model generated waveforms with NR waveforms.
@@ -320,16 +342,6 @@ Finally, we stop the optimization when the validation loss stops decreasing
 (see Sec.~\ref{sec:result} for description of the validation set).
 This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 
-\begin{figure}
-	\script{loss.py}
-	\centering
-	\includegraphics[width=\columnwidth]{figures/loss.pdf}
-	\caption{Loss functions against the number of iterations. The vertical
-	dotted line indicates minimum of the validation loss, which is where we stop
-	the optimization.}
-	\label{fig:loss}
-\end{figure}
-
 \begin{algorithm}[t]
 	\caption{Gradient descent pseudocode}
 	\label{alg:gradient}
@@ -343,17 +355,6 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 		$\lambda\leftarrow\lambda-\alpha\nabla\mathcal{L}$\\
 	} \Return{$\lambda$}
 \end{algorithm}
-
-\begin{figure}[t]
-	\script{intrin_space.py}
-	\centering
-	\includegraphics[width=\columnwidth]{figures/intrin_space.pdf}
-	\caption{Distribution of training and validation NR waveforms in the
-	$q-\chi_{PN}$ space. The blue stars represent the waveforms used to compute
-	the training loss, green triangles represent extra training data, and the 
-	orange dots represent the waveforms used for validation.}
-	\label{fig:intrin_space}
-\end{figure}
 
 \begin{table}[t]
 	\centering
@@ -371,7 +372,7 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 		SXS:BBH:0063 & 8.0 &  0.00    &  0.00    \\
 		SXS:BBH:0065 & 8.0 &  0.50    &  0.46    \\ \midrule\bottomrule
 	\end{tabularx}
-	\caption{List of waveforms used to recalibrate the model. The mass ratio is defined as
+	\caption{List of NR waveforms used to recalibrate the model. The mass ratio is defined as
 	$q=m_1/m_2\geq 1$ and the spins are denoted by $\chi_{1,2}$. Out of the 11 waveforms listed
 	here, two SXS waveforms are analogues to two of the BAM NR simulations used in the original calibration (SXS:BBH:1417 as A7 and SXS:BBH:1418 as A9 in \citep{khan2016frequency}). The rest of the SXS waveforms are also used in the original IMRPhenomD calibration.}
 	\label{tab:q148}
@@ -399,7 +400,7 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 	$\chi_1=\chi_2=-0.8$. The original mismatch is $2.8\times10^{-4}$ and
 	the optimized mismatch is $5.3\times10^{-5}$. \textit{Top}: Here we show the
 	amplitude (left) and phase (right) of the NR, original IMRPhenomD, and optimized IMRPhenomD
-	waveform. \textit{Bottom}: Here we show the relative error between the NR and
+	waveforms. \textit{Bottom}: Here we show the relative error between the NR and
 	IMRPhenomD waveform ampltiudes (left) as well as the absolute error of the phases between the NR and
 	IMRPhenomD waveforms (right).}
 	\label{fig:0154}
@@ -440,9 +441,9 @@ decrease in the median.
 	\script{q148.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/q148.pdf}
-	\caption{Distributions of waveform mismatches calculated using 
-	$\mathcal{L}_{\mathrm{ave}}$. We use the training waveforms listed in 
-	Tab.~\ref{tab:q148} and	mismatches are weighted with a constant PSD. 
+	\caption{Distributions of mismatches before and after optimization using the 
+	$\mathcal{L}_{\mathrm{ave}}$ loss function. Mismatches are calculated using the training waveforms listed in 
+	Tab.~\ref{tab:q148} and	are weighted with a constant PSD. 
 	The dashed lines represent the median of the distributions, which decreased by 45.3\% during optimization.}
 	\label{fig:q148}
 \end{figure}
@@ -455,7 +456,7 @@ decrease in the median.
 	Tab.~\ref{tab:q148} while the green distribution uses waveforms
 	listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Mismatches are calculated
 	using a constant PSD with the loss function $\mathcal{L}_{\mathrm{ave}}$. 
-	The dashed lines represent the median of the distributions, which decreased by 10.4\% during optimization.}
+	The dashed lines represent the median of the distributions, which decreased \te{by an additional 10.4\% during optimization with the additional data.}}
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
@@ -607,7 +608,7 @@ $\chi_1>0$ and $\chi_2<0$ less well.
 	\includegraphics[width=\textwidth]{figures/all_quadrants.pdf}
 	\caption{Distributions of mismatches for both split region optimization and all region optimization in all 4 
 	regions. We use a constant PSD to calculate the mismatch and
-	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. The medians of each distributions are indicated by dashed
+	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. The medians of each distribution are indicated by dashed
 	lines.}
 	\label{fig:all_quadrants}
 \end{figure*}
@@ -616,7 +617,7 @@ $\chi_1>0$ and $\chi_2<0$ less well.
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{Combined distribution of both optimization schemes shown in Fig.~\ref{fig:all_quadrants}.}
+	\caption{Combined mismatch distributions for both optimization schemes shown in Fig.~\ref{fig:all_quadrants}.}
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
