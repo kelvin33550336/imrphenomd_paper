@@ -583,16 +583,22 @@ recalibration procedure on each region separately
 (Fig.~\ref{fig:all_quadrants}~and~\ref{fig:ps_q148_quadrant}). The training waveforms used for fitting in
 this scenario are listed in Tab.~\ref{tab:quadrants} and the loss functions 
 are calculated using a simple average of the mismatches, $\mathcal{L}_{\mathrm{ave}}$. The top-left and
-bottom-right regions have limited data for $q>4$, hence the result is only valid up to $q\leq4$ and we take waveforms with $q\leq4$ as validation waveforms in these two regions. 
-\kl{From Fig.~\ref{fig:all_quadrants}, we observe that both top-right and bottom-left region have good performance comparing with the original model. Especially for the bottom-left region, where the improvement is significantly better than optimizing all regions simultaneously. This suggests the ansatz are well-fitted to this part of the parameter space.
-Waveforms lying in the top-left region also give good improvements when comparing with the original model and it has a similar improvement as optimizing all waveforms at once. Notice optimizing all regions gives a slightly better improvement. This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
-On the other hand, the improvement in the bottom-right region is negligible, indicating that our method struggles to
-further improve over the original IMRPhenomD waveform. 
-Interestingly, we can see in the bottom-right region that the waveform does not show a significant change
-to the overall mismatch (see bottom-right panel of Fig.~\ref{fig:all_quadrants}). 
-This suggests that the IMRPhenomD waveform ansatz fits waveforms with
-$\chi_1>0$ and $\chi_2<0$ less well. 
-\kl{Overall, the improvement for both optimization schemes are similar (Fig.~\ref{fig:ps_q148_quadrant}). Although split region optimization uses more training waveforms, some of the waveforms, e.g. opposite spins, hinders the optimization procedure and hence gives a slightly worse result when comparing with all region optimization.}
+bottom-right regions have limited data for $q>4$, hence the result is only valid up to $q\leq4$ and we only use waveforms with $q\leq4$ as validation waveforms for these two regions. 
+From Fig.~\ref{fig:all_quadrants}, we observe that both the top-right and bottom-left regions improve significantly over the original model.
+This is especially pronounced for the bottom-left region, where the improvement is significantly better than optimizing all regions simultaneously.
+This suggests the ansatz fits this part of the parameter space well.
+The top-left region also improves over the original model although it is similar to when optimizing all waveforms at once.
+% Notice optimizing all regions gives a slightly better improvement.
+% This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
+On the other hand, the bottom-right region does not improve over the original model, indicating that a change to the ansatz is required to fit the NR data better.
+% Interestingly, we can see in the bottom-right region that the waveform does not show a significant change
+% to the overall mismatch (see bottom-right panel of Fig.~\ref{fig:all_quadrants}). 
+% This suggests that the IMRPhenomD waveform ansatz fits waveforms with
+% $\chi_1>0$ and $\chi_2<0$ less well. 
+
+Overall, the improvement for both optimization schemes are similar (Fig.~\ref{fig:ps_q148_quadrant}).
+Although split region optimization uses more training waveforms, some of the waveforms,
+e.g. opposite spins, hinders the optimization procedure and hence gives a slightly worse result when comparing with all region optimization.
 
 \begin{figure*}[t]
 	\script{all_quadrants.py}
