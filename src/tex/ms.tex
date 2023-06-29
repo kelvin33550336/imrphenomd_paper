@@ -1,7 +1,5 @@
-% Define document class
 \documentclass[twocolumn]{aastex631}
 \usepackage{showyourwork}
-
 \usepackage{graphicx}
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{algorithmic}
@@ -17,6 +15,7 @@
 \newcommand{\python}{\texttt{python}}
 \newcommand{\jax}{\texttt{jax}}
 \newcommand{\zdethp}{\texttt{zdethp}}
+
 \definecolor{rb4}{HTML}{27408B}
 \newcommand{\kw}[1]{{\color{rb4}[KW: #1 ]}}
 \definecolor{cyan}{HTML}{0097A7}
@@ -28,13 +27,10 @@
 \newcommand{\flatiron}{\affiliation{Center for Computational Astrophysics, Flatiron Institute, New York, NY 10010, USA}}
 \newcommand{\JHU}{\affiliation{William H. Miller III Department of Physics and Astronomy, Johns Hopkins University, Baltimore, Maryland 21218, USA}} 
 
-% Begin!
 \begin{document}
 
-% Title
 \title{Recalibrating Gravitational Wave Phenomenological Waveform Model}
 
-% Author list
 \author{Kelvin K.~H.~Lam} 
 \email{kelvin33550336@gmail.com}
 \cuhk
@@ -61,8 +57,6 @@
 
 \section{Introduction} \label{sec:intro}
 
-% Brief intro of waveform models
-
 Many data analysis tasks in gravitational wave (GW) astrophysics, such
 as match filtering~\citep{owen1996search, owen1999matched} and parameter 
 estimation~\citep{Dax:2021tsq, Christensen:2022bxb, dynesty, Islam:2022afg, 
@@ -80,8 +74,6 @@ internal parameters that can be calibrated to NR waveforms. The quality of the
 waveform model is therefore determined by the ansatz used and the accuracy of the
 calibrated parameters.
 
-% Why there is a need
-
 The LIGO-VIRGO-KAGRA (LVK) collaboration
 ~\citep{LIGOScientific:2014pky,LIGOScientific:2021usb,LIGOScientific:2021djp,
 VIRGO:2014yos,KAGRA:2020tym} recently started their fourth observational
@@ -91,8 +83,6 @@ Moreover, the improved sensitivity also implies that we expect to
 detect individual events with a higher signal-to-noise ratio (SNR) than ever before. This means
 we can resolve more features in the signal, therefore putting more
 stringent requirements on the accuracy of our waveform model \citep{purrer2020gravitational, hu2022assessing}.
-
-% AD waveforms 
 
 Because of the large number of calibration parameters (often a few hundred if not
 more), waveform models are usually calibrated separately for the inspiral, merger,
@@ -109,8 +99,6 @@ user. This allows us to make use of common techniques from
 machine learning, such as gradient descent and back propagation \citep{jax2018github, 
 pytorch, tensorflow2015}, to improve the calibration of the waveform models.
 
-% Put more focus on the joint optimization instead of having a set of more accurate 
-% coefficients, since the method is the main point
 In this paper, we investigate the possibility of further improving the accuracy
 of a waveform model, IMRPhenomD \citep{khan2016frequency, husa2016frequency}, by jointly optimizing all the
 calibration coefficients for given a set of NR waveforms. Using a similar set of NR
@@ -144,9 +132,6 @@ Finally we discuss the gradient descent algorithm and our stopping criterion.
 
 \subsection{Waveform Model} \label{subsec:waveform_model}
 
-% Paragraphs we need:
-% 1. What is the model
-% 2. How do the parameters enter the model
 We start by giving a succinct summary of the IMRPhenomD model and the relevant parameters.
 Interested readers should refer to \citep{khan2016frequency} for more details.
 
@@ -197,7 +182,6 @@ parameter, which is defined as
 Here, $m_{1,2}$ and $\chi_{1,2}$ are the primary and secondary mass and spin,
 respectively. 
 
-%\kw{Need to work on this paragraph}
 Although initially independent, the stitching procedure means that each section
 of the waveform intrinsically depends on the full set of $\lambda$'s. 
 A slightly inaccurate set of $\lambda$'s can therefore lead to inaccuracies in
@@ -293,12 +277,13 @@ as most BBH events observed by LIGO and Virgo have $q\leq8$.
 The SXS NR waveforms are given as time-series strain.
 Since IMRPhenomD is modeled in the frequency domain, we need to Fourier transform the simulation results
 in order to compute the mismatch, \eqref{eq:mismatch}.
-For this, we taper the time-series using Tukey window~\citep{usman2016pycbc}\footnote{
+For this, we taper the time-series using Tukey window \citep{usman2016pycbc}
+\footnote{
 	Specifically, we choose $\alpha=2t_{\mathrm{RD}}/T$, where
 	$t_{\mathrm{RD}}$ is the duration of ringdown (maximum amplitude to the end of the strain) and $T$ is the duration of the
 	entire GW strain. 
-%	\te{What is $t_{\mathrm{RD}}$? and how is it computed?}
-} before using standard FFT routines to compute the fast Fourier transform.
+} 
+before using standard FFT routines to compute the fast Fourier transform.
 
 In addition to choosing the NR waveforms for the training set,
 one needs to choose a relevant PSD for the mismatch.
@@ -330,7 +315,6 @@ When compared with IMRPhenomC, the frequency range is slightly extended to have 
 frequency \citep{santamaria2010matching}.
 We use the dimensionless frequency spacing $M\Delta f=2.5\times10^{-6}$, 
 which is sufficient to capture all features of the GW strain. 
-
 
 With the loss function evaluated, we apply gradient descent to optimize the tunable
 coefficients as shown in Algorithm~\ref{alg:gradient}. We take $\lambda_i$ to be the 
@@ -408,7 +392,6 @@ This can be seen in Fig.~\ref{fig:loss} at around $12000$ iterations.
 
 \section{Result and Comparison with Original Model} \label{sec:result}
 
-
 To evaluate how well the optimization procedure generalizes to waveforms that are
 not in the training set, we evaluate the mismatch between the fine-tuned model
 and an additional 526 NR waveforms in the SXS catalog i.e., the validation set.
@@ -444,7 +427,7 @@ decrease in the median.
 	\caption{Distributions of mismatches before and after optimization using the 
 	$\mathcal{L}_{\mathrm{ave}}$ loss function. Mismatches are calculated using the training waveforms listed in 
 	Tab.~\ref{tab:q148} and	are weighted with a constant PSD. 
-	The dashed lines represent the median of the distributions, which decreased by 45.3\% during optimization.}
+	The dotted lines represent the median of the distributions, which decreased by 45.3\% during optimization.}
 	\label{fig:q148}
 \end{figure}
 \begin{figure}[t]
@@ -456,7 +439,7 @@ decrease in the median.
 	Tab.~\ref{tab:q148} while the green distribution uses waveforms
 	listed in Tab.~\ref{tab:q148}~and~\ref{tab:q1248}. Mismatches are calculated
 	using a constant PSD with the loss function $\mathcal{L}_{\mathrm{ave}}$. 
-	The dashed lines represent the median of the distributions, which decreased by an additional 10.8\% during optimization with the additional data.}
+	The dotted lines represent the median of the distributions, which decreased by an additional 10.8\% during optimization with the additional data.}
 	\label{fig:q148_q1248_compare}
 \end{figure}
 
@@ -588,13 +571,7 @@ From Fig.~\ref{fig:all_quadrants}, we observe that both the top-right and bottom
 This is especially pronounced for the bottom-left region, where the improvement is significantly better than optimizing all regions simultaneously.
 This suggests the ansatz fits this part of the parameter space well.
 The top-left region also improves over the original model although it is similar to when optimizing all waveforms at once.
-% Notice optimizing all regions gives a slightly better improvement.
-% This shows that the ansatz can achieve a better fit using training waveforms with similar spins, even for waveforms with non-equal spin parameters.}
 On the other hand, the bottom-right region does not improve over the original model, indicating that a change to the ansatz is required to fit the NR data better.
-% Interestingly, we can see in the bottom-right region that the waveform does not show a significant change
-% to the overall mismatch (see bottom-right panel of Fig.~\ref{fig:all_quadrants}). 
-% This suggests that the IMRPhenomD waveform ansatz fits waveforms with
-% $\chi_1>0$ and $\chi_2<0$ less well. 
 
 Overall, the improvement for both optimization schemes are similar (Fig.~\ref{fig:ps_q148_quadrant}).
 Although split region optimization uses more training waveforms, some of the waveforms,
@@ -606,7 +583,7 @@ e.g. opposite spins, hinders the optimization procedure and hence gives a slight
 	\includegraphics[width=\textwidth]{figures/all_quadrants.pdf}
 	\caption{Distributions of mismatches for both split region optimization and all region optimization in all 4 
 	regions. We use a constant PSD to calculate the mismatch and
-	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. The medians of each distribution are indicated by dashed
+	$\mathcal{L}_{\mathrm{ave}}$ as the loss function. The medians of each distribution are indicated by dotted
 	lines.}
 	\label{fig:all_quadrants}
 \end{figure*}
@@ -615,7 +592,7 @@ e.g. opposite spins, hinders the optimization procedure and hence gives a slight
 	\script{ps_q148_quadrants.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/ps_q148_quadrants.pdf}
-	\caption{Combined mismatch distributions for both optimization schemes shown in Fig.~\ref{fig:all_quadrants}.}
+	\caption{Combined mismatch distributions for both optimization schemes shown in Fig.~\ref{fig:all_quadrants}. The medians of both distributions are indicated by dotted lines. }
 	\label{fig:ps_q148_quadrant}
 \end{figure}
 
@@ -634,7 +611,7 @@ from recalibration. In fact, since these waveforms have a larger number of calib
 parameters and are fit to a larger number of NR simulations, it is possible that the 
 improvement will be more dramatic than for IMRPhenomD. {\ripple} is being regularly
 updated with new waveforms, and future work should carefully examine whether these more
-modern waveforms can be improved. % Extend this a bit?
+modern waveforms can be improved. 
 
 The correlation we observe between the mismatches and the waveform's parameters
 can also be used to design more physical ansatz. For example, we see the
@@ -676,14 +653,13 @@ Our method is general and can be applied to any waveform model that is different
 We therefore encourage the waveform development community to utilize these tools
 and hope that this work can effectively contribute to the development of accurate waveform models.
 
-
-
 \section{ACKNOWLEDGMENTS}
 
 We thank Will M.~Farr, Max Isi, and Mark Hannam for helpful discussions; we also
 thank Carl-Johan Haster, Neil J.~Cornish and Thomas Dent for comments on the
 draft. The Flatiron Institute is a division of the Simons Foundation. T.E.\ is
 supported by the Horizon Postdoctoral Fellowship.
+
 \bibliography{bib}
 
 \end{document}
