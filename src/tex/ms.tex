@@ -149,7 +149,8 @@ parameters} which will be discussed below.
 The phase and amplitude functions are then split into three sections which represent the
 inspiral, intermediate, and merger-ringdown (MR) parts of the waveform. 
 During inspiral, $A$ and $\phi$ are known analytically from post-Newtonian (PN) theory;
-IMRPhenomD uses the TaylorF2 model \citep{Buonanno:2009zt, Arun:2004hn} which is known up to 3.5PN order.
+IMRPhenomD uses the TaylorF2 model \citep{Buonanno:2009zt, Arun:2004hn} which is known up 
+to 3.5PN order \kl{augmented with the next four higher order PN terms}.
 To model the intermediate and MR regions, IMRPhenomD (and all waveforms in the IMRPhenom family)
 uses a series of parameterizations\footnote{
 	The parameterizations for both the amplitude and phase functions can be found in \citep{khan2016frequency}.
@@ -421,7 +422,7 @@ distribution of log-mismatches for the validation waveforms before and after the
 optimization procedure. Here we show results using a constant PSD in our loss
 function. One can see the distribution of the optimized waveform is skewed toward lower mismatches,
 with the peak of the distribution being shifted by approximately an order of
-magnitude, and the median mismatch being reduced by 50\% (see vertical dotted lines). When using
+magnitude. The median mismatch is reduced by 50\% (see vertical dotted lines) \kl{while the tail hardly changes}. When using
 $\mathcal{L}_{\mathrm{norm}}$, we observe a less pronounced improvement with a 22.9\%
 decrease in the median. 
 
@@ -628,14 +629,26 @@ constructing new waveform models in the future.
 
 \kl{We note that in comparison to the original IMRPhenomD calibration, we restricted the 
 parameter space to $q\leq8$ and directly used NR waveform instead of hybridized SEOB-NR 
-waveforms, which clearly put the original IMRPhemonD result in a 
-disadvantage. We have tried to train the model using a set of training waveforms of the same 
-intrinsic parameters, but with BAM waveforms replaced with SEOBNR waveforms. The result 
-shows a marginal improvement, which corresponds to the stitching problem discussed before.
-However, it is known that IMRPhenomD has a large inaccuracy in the large mass-ratio regime, 
-and is rarely used in this region of parameter space. Hence, we focus on showing AD with 
-gradient descent, as a general and robust method, can be used to further optimize models 
-independent of the training waveforms used.}
+waveforms in training and validation purposes. These choices put the original IMRPhemonD 
+result in a disadvantage, as both the parameter space and frequency range are restricted. 
+We tested our result by training the model using a set of training waveforms of the same 
+intrinsic parameters, but with BAM waveforms replaced with SEOBNR waveforms. We can see 
+the result in Fig.~\ref{fig:q14818}, where the mismatch median changes by around $8\%$, 
+This improvement mainly corresponds to the stitching problem discussed before. 
+Nevertheless, it is known that IMRPhenomD has a large inaccuracy in the large mass-ratio 
+regime, and is rarely used in this region of parameter space. Hence, we focus on showing 
+AD with gradient descent, as a general and robust method, can be used to further optimize 
+models independent of the training waveforms used.} 
+
+\begin{figure}[t]
+	\script{q14818.py}
+	\centering
+	\includegraphics[width=\columnwidth]{figures/q14818.pdf}
+	\caption{Distributions of mismatches before and after optimization using the 
+		$\mathcal{L}_{\mathrm{ave}}$ loss function. Mismatches are calculated using the training waveforms listed in \cite{khan2016frequency}, but BAM waveforms are replaced by SEOBNRv4 waveforms of the same intrinsic parameters. 
+		Mismatches are calculated with a constant PSD. The dotted lines represent the median of the distributions, which decreased by $8.2\%$ during optimization.}
+	\label{fig:q14818}
+\end{figure}
 
 In making Fig.~\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions 
 purely for simplicity. These simple cuts demonstrate the accuracy of the waveform can be 
