@@ -4,6 +4,8 @@
 \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{algorithmic}
 
+\usepackage[normalem]{ulem}
+
 \SetKwInput{Parameters}{Parameters}
 \SetKwInput{Variables}{Variables}
 
@@ -261,7 +263,9 @@ and examine the differences between them.
 
 To compute the loss functions, we have to choose NR waveforms for calculating the mismatch.
 Originally, 19 NR simulations were used to calibrate IMRPhenomD \citep{khan2016frequency}; nine of these 
-are from the SXS catalog \citep{boyle2019sxs} and 10 BAM simulations. 
+are from the SXS catalog 
+\footnote{We took the CoM-corrected waveforms with 4th-order extrapolation.} 
+\citep{boyle2019sxs} and 10 BAM simulations. 
 As BAM waveforms are not publicly available, we cannot use a training set identical to the original work.
 Instead, we take the same nine waveforms from the SXS catalog plus two additional waveforms which closely mimic
 two of the low mass ratio BAM simulations. 
@@ -617,16 +621,27 @@ modern waveforms can be improved.
 The correlation we observe between the mismatches and the waveform's parameters
 can also be used to design more physical ansatz. For example, we see the
 recalibration process struggles to improve in the regime where $\chi_{1}$ is
-positive and $\chi_{2}$ is negative. This means there is a dependency between
-the two spins that is not captured by the current ansatz. A systematic scheme that
+positive and $\chi_{2}$ is negative. \kl{\sout{This means there is a dependency between
+the two spins that is not captured by the current ansatz.}} A systematic scheme that
 incorporates our calibration method with waveform design will be handy in
 constructing new waveform models in the future. 
 
-In making Fig.~\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions purely for simplicity.
-These simple cuts demonstrate the accuracy of the waveform can be further improved,
-but they are almost certainly not the optimal way to incorporate the extra information
-we have about the waveform. A more general way such as adding new functional dependency
-between the parameters should be explored in the future.
+\kl{We note that in comparison to the original IMRPhenomD calibration, we restricted the 
+parameter space to $q\leq8$ and directly used NR waveform instead of hybridized SEOB-NR 
+waveforms, which clearly put the original IMRPhemonD result in a 
+disadvantage. We have tried to train the model using a set of training waveforms of the same 
+intrinsic parameters, but with BAM waveforms replaced with SEOBNR waveforms. The result 
+shows a marginal improvement, which corresponds to the stitching problem discussed before.
+However, it is known that IMRPhenomD has a large inaccuracy in the large mass-ratio regime, 
+and is rarely used in this region of parameter space. Hence, we focus on showing AD with 
+gradient descent, as a general and robust method, can be used to further optimize models 
+independent of the training waveforms used.}
+
+In making Fig.~\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions 
+purely for simplicity. These simple cuts demonstrate the accuracy of the waveform can be 
+further improved, but they are almost certainly not the optimal way to incorporate the 
+extra information we have about the waveform. A more general way such as adding new 
+functional dependency between the parameters should be explored in the future.
 
 In this work, we use the mismatch to quantify the accuracy of the waveform model. 
 A natural extension of this work is to investigate how the recalibration process affects
