@@ -25,7 +25,7 @@
 \definecolor{rr}{RGB}{173, 37, 37}
 \newcommand{\te}[1]{{\color{rr}[TE: #1 ]}}
 \definecolor{cyan}{HTML}{0097A7}
-\newcommand{\rr}[1]{{\color{cyan}[#1]}}
+\newcommand{\corr}[1]{{\color{red}[corr: #1 ]}}
 
 \newcommand{\cuhk}{\affiliation{Department of Physics, The Chinese University of Hong Kong, Shatin, N.T., Hong Kong}}
 \newcommand{\flatiron}{\affiliation{Center for Computational Astrophysics, Flatiron Institute, New York, NY 10010, USA}}
@@ -62,7 +62,7 @@
 \section{Introduction} \label{sec:intro}
 
 Many data analysis tasks in gravitational wave (GW) astrophysics, such
-as \rr{matched} filtering~\citep{owen1996search, owen1999matched} and parameter 
+as \corr{matched} filtering~\citep{owen1996search, owen1999matched} and parameter 
 estimation~\citep{Dax:2021tsq, Christensen:2022bxb, dynesty, Islam:2022afg, 
 Romero-Shaw:2020owr, zackay2018relative, Ashton:2018jfp}, rely upon accurate waveform
 models. Since the generation of numerical relativity (NR) waveforms is
@@ -144,7 +144,7 @@ combination of amplitude and phase functions ($A$ and $\phi$ respectively):
 \begin{align}\label{eq:}
 	h(f,\theta,\Lambda) = A(f,\theta,\Lambda)e^{-i\phi(f,\theta,\Lambda^i)}\,,
 \end{align}
-where $f$ is the frequency, $\theta$ are the intrinsic parameters of the binary, and $\Lambda^i$ \rr{($i=1,2,\cdots,19$) is a set of 19 additional
+where $f$ is the frequency, $\theta$ are the intrinsic parameters of the binary, and $\Lambda^i$ \corr{($i=1,2,\cdots,19$) is a set of 19 additional
 parameters} which will be discussed below. 
 The phase and amplitude functions are then split into three sections which represent the
 inspiral, intermediate, and merger-ringdown (MR) parts of the waveform. 
@@ -164,7 +164,7 @@ boundary between each section.
 	\script{loss.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/loss.pdf}
-	\caption{\rr{Average Loss $\mathcal{L}_{\mathrm{ave}}$} against the number of iterations. The vertical
+	\caption{\corr{Average Loss $\mathcal{L}_{\mathrm{ave}}$} against the number of iterations. The vertical
 	dotted line indicates the minimum of the validation loss, which is where we stop
 	the optimization.}
 	\label{fig:loss}
@@ -220,7 +220,7 @@ The inner product, $\langle h_1, h_2 \rangle$, is defined as
 where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain,
 $S_n(f)$ is the power spectral density (PSD), and $f_{\mathrm{max}}$ ($f_{\mathrm{min}}$) is
 the maximum (minimum) frequency for the integration.
-We note here that the mismatch can be viewed as \rr{a} mean square error (MSE) between the
+We note here that the mismatch can be viewed as \corr{a} mean square error (MSE) between the
 two waveforms.
 
 \begin{figure}[t]
@@ -244,18 +244,18 @@ the simple average of mismatches and the normalized average of mismatches,
 	\mathcal{L}_{\mathrm{norm}}&=\frac{1}{N}\sum_{i=1}^N\frac{\mathcal{M}_i}{\mathcal{M}_{i,\mathrm{ini}}},
 \end{align}	
 where $\mathcal{M}_i$ represents the mismatch of an individual training waveform,
-$\mathcal{M}_{i,\mathrm{ini}}$ represents the mismatch \rr{between original IMRPhenomD waveforms and NR waveforms}, and $N$ is the total number of training waveforms.
+$\mathcal{M}_{i,\mathrm{ini}}$ represents the mismatch \corr{between original IMRPhenomD waveforms and NR waveforms}, and $N$ is the total number of training waveforms.
 
 The two loss functions are chosen to give different 
 behavior during the optimization process.
-The simple average, \rr{$\mathcal{L}_{\mathrm{ave}}$}, serves as the simplest choice of loss function,
+The simple average, \corr{$\mathcal{L}_{\mathrm{ave}}$}, serves as the simplest choice of loss function,
 but is prone to be dominated by a single point in parameter space with a large mismatch.
 Other points with smaller mismatches would be insignificant comparatively, and might not be able 
 to improve under such a loss function.
 Alternatively, the normalized average, $\mathcal{L}_{\mathrm{norm}}$, eliminates the aforementioned issue
 by encouraging the waveform to improve at each training point at a similar rate.
 The ratio in $\mathcal{L}_{\mathrm{norm}}$ will therefore remain approximately the same for each training point.
-Conversely, \rr{$\mathcal{L}_{\mathrm{ave}}$} allows the loss function to automatically adjust
+Conversely, \corr{$\mathcal{L}_{\mathrm{ave}}$} allows the loss function to automatically adjust
 and preferentially optimize the largest mismatches, encouraging the waveform to have similar mismatches everywhere.
 In this paper, we show the results of using both loss functions 
 and examine the differences between them. 
