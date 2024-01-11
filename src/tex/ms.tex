@@ -150,7 +150,7 @@ The phase and amplitude functions are then split into three sections which repre
 inspiral, intermediate, and merger-ringdown (MR) parts of the waveform. 
 During inspiral, $A$ and $\phi$ are known analytically from post-Newtonian (PN) theory;
 IMRPhenomD uses the TaylorF2 model \citep{Buonanno:2009zt, Arun:2004hn} which is known up 
-to 3.5PN order \kl{augmented with the next four higher order PN terms}.
+to 3.5PN order \corr{augmented with the next four higher order PN terms}.
 To model the intermediate and MR regions, IMRPhenomD (and all waveforms in the IMRPhenom family)
 uses a series of parameterizations\footnote{
 	The parameterizations for both the amplitude and phase functions can be found in \citep{khan2016frequency}.
@@ -265,8 +265,7 @@ and examine the differences between them.
 To compute the loss functions, we have to choose NR waveforms for calculating the mismatch.
 Originally, 19 NR simulations were used to calibrate IMRPhenomD \citep{khan2016frequency}; nine of these 
 are from the SXS catalog 
-\footnote{We took the CoM-corrected waveforms with 4th-order extrapolation.} 
-\citep{boyle2019sxs} and 10 BAM simulations. 
+\citep{boyle2019sxs} and 10 BAM simulations\footnote{\corr{We took the CoM-corrected waveforms with 4th-order extrapolation.}} . 
 As BAM waveforms are not publicly available, we cannot use a training set identical to the original work.
 Instead, we take the same nine waveforms from the SXS catalog plus two additional waveforms which closely mimic
 two of the low mass ratio BAM simulations. 
@@ -422,7 +421,7 @@ distribution of log-mismatches for the validation waveforms before and after the
 optimization procedure. Here we show results using a constant PSD in our loss
 function. One can see the distribution of the optimized waveform is skewed toward lower mismatches,
 with the peak of the distribution being shifted by approximately an order of
-magnitude. The median mismatch is reduced by 50\% (see vertical dotted lines) \kl{while the tail hardly changes}. When using
+magnitude. The median mismatch is reduced by 50\% (see vertical dotted lines) \corr{while the tail hardly changes}. When using
 $\mathcal{L}_{\mathrm{norm}}$, we observe a less pronounced improvement with a 22.9\%
 decrease in the median. 
 
@@ -622,23 +621,24 @@ modern waveforms can be improved.
 The correlation we observe between the mismatches and the waveform's parameters
 can also be used to design more physical ansatz. For example, we see the
 recalibration process struggles to improve in the regime where $\chi_{1}$ is
-positive and $\chi_{2}$ is negative. \kl{\sout{This means there is a dependency between
-the two spins that is not captured by the current ansatz.}} A systematic scheme that
+positive and $\chi_{2}$ is negative. \corr{\sout{This means there is a dependency between
+the two spins} \sout{that is not captured by the current ansatz.}} A systematic scheme that
 incorporates our calibration method with waveform design will be handy in
 constructing new waveform models in the future. 
 
-\kl{We note that in comparison to the original IMRPhenomD calibration, we restricted the 
-parameter space to $q\leq8$ and directly used NR waveform instead of hybridized SEOB-NR 
-waveforms in training and validation purposes. These choices put the original IMRPhemonD 
-result in a disadvantage, as both the parameter space and frequency range are restricted. 
-We tested our result by training the model using a set of training waveforms of the same 
-intrinsic parameters, but with BAM waveforms replaced with SEOBNR waveforms. We can see 
-the result in Fig.~\ref{fig:q14818}, where the mismatch median changes by around $8\%$, 
-This improvement mainly corresponds to the stitching problem discussed before. 
-Nevertheless, it is known that IMRPhenomD has a large inaccuracy in the large mass-ratio 
-regime, and is rarely used in this region of parameter space. Hence, we focus on showing 
-AD with gradient descent, as a general and robust method, can be used to further optimize 
-models independent of the training waveforms used.} 
+\corr{We note that the parameter space we use is restricted to $q\leq8$, while waveforms 
+of $q=18$ are used in the original calibration trials. Also, we have directly used NR 
+waveforms instead of hybridized SEOB-NR waveforms for training and validation purposes. 
+These choices put the original IMRPhenomD result at a disadvantage, as both the parameter 
+space and frequency range are restricted. We tested our result by training the model 
+using a set of training waveforms of the same intrinsic parameters, but with BAM waveforms 
+replaced with SEOBNR waveforms. We can see the result in Fig.~\ref{fig:q14818}, where the 
+mismatch median decreases by about $8\%$, This mismatch improvement mainly concerns the 
+stitching problem discussed before. Nevertheless, it is known that IMRPhenomD has a large 
+inaccuracy in the large mass-ratio regime, and is rarely used in this region of parameter 
+space. Hence, we focus on showing AD with gradient descent, as a general and robust method, 
+can be used to further optimize GW waveform models with arbitrary sets of training 
+waveforms used.} 
 
 \begin{figure}[t]
 	\script{q14818.py}
