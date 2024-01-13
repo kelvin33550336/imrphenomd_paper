@@ -142,7 +142,7 @@ Interested readers should refer to \citep{khan2016frequency} for more details.
 Aligned-spin, frequency-domain waveform models (such as IMRPhenomD) can be written as a
 combination of amplitude and phase functions ($A$ and $\phi$ respectively):
 \begin{align}\label{eq:}
-	h(f,\theta,\Lambda) = A(f,\theta,\Lambda)e^{-i\phi(f,\theta,\Lambda^i)}\,,
+	h(f,\theta,\Lambda^i) = A(f,\theta,\Lambda^i)e^{-i\phi(f,\theta,\Lambda^i)}\,,
 \end{align}
 where $f$ is the frequency, $\theta$ are the intrinsic parameters of the binary, and $\Lambda^i$ \corr{($i=1,2,\cdots,19$) is a set of 19 additional
 parameters} which will be discussed below. 
@@ -619,15 +619,19 @@ updated with new waveforms, and future work should carefully examine whether the
 modern waveforms can be improved. 
 
 The correlation we observe between the mismatches and the waveform's parameters
-can also be used to design more physical ansatz. For example, we see the
-recalibration process struggles to improve in the regime where $\chi_{1}$ is
-positive and $\chi_{2}$ is negative. \corr{\sout{This means there is a dependency between
-the two spins} \sout{that is not captured by the current ansatz.}} A systematic scheme that
-incorporates our calibration method with waveform design will be handy in
-constructing new waveform models in the future. 
+can also be used to design more physical ansatz. For example, we see the 
+recalibration process struggles to improve in the regime where $\chi_{1}$ is 
+positive and $\chi_{2}$ is negative. This means there is a dependency between the two 
+spins that is not captured in the current ansatz. \corr{In fact, this issue can 
+be explained by PN theory, where the leading spin-orbit coupling term depends on 
+the effective spin while higher order terms depends on both $\chi_1$ and $\chi_2$. 
+Nevertheless, we hope to show a systematic scheme that could reveal hidden degeneracies, 
+as illustrated by the effective spin degeneracy. Hence, such systematic scheme that 
+incorporates our calibration method with waveform design will be handy in constructing 
+new waveform models in the future. }
 
 \corr{We note that the parameter space we use is restricted to $q\leq8$, while waveforms 
-of $q=18$ are used in the original calibration trials. Also, we have directly used NR 
+of $q=18$ are used in the original calibration trial. Also, we have directly used NR 
 waveforms instead of hybridized SEOB-NR waveforms for training and validation purposes. 
 These choices put the original IMRPhenomD result at a disadvantage, as both the parameter 
 space and frequency range are restricted. We tested our result by training the model 
@@ -650,7 +654,7 @@ waveforms used.}
 	\label{fig:q14818}
 \end{figure}
 
-In making Fig.~\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions 
+In making Fig.~\ref{fig:all_quadrants}~and~\ref{fig:ps_q148_quadrant}, we split the parameter space into four regions 
 purely for simplicity. These simple cuts demonstrate the accuracy of the waveform can be 
 further improved, but they are almost certainly not the optimal way to incorporate the 
 extra information we have about the waveform. A more general way such as adding new 
