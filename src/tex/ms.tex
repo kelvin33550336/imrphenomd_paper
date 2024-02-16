@@ -18,15 +18,6 @@
 \newcommand{\jax}{\texttt{jax}}
 \newcommand{\zdethp}{\texttt{zdethp}}
 
-\definecolor{rb4}{HTML}{27408B}
-\newcommand{\kw}[1]{{\color{rb4}[KW: #1 ]}}
-\definecolor{cyan}{HTML}{0097A7}
-\newcommand{\kl}[1]{{\color{cyan}[KL: #1 ]}}
-\definecolor{rr}{RGB}{173, 37, 37}
-\newcommand{\te}[1]{{\color{rr}[TE: #1 ]}}
-\definecolor{cyan}{HTML}{0097A7}
-\newcommand{\corr}[1]{{\color{red}[corr: #1 ]}}
-
 \newcommand{\cuhk}{\affiliation{Department of Physics, The Chinese University of Hong Kong, Shatin, N.T., Hong Kong}}
 \newcommand{\flatiron}{\affiliation{Center for Computational Astrophysics, Flatiron Institute, New York, NY 10010, USA}}
 \newcommand{\JHU}{\affiliation{William H. Miller III Department of Physics and Astronomy, Johns Hopkins University, Baltimore, Maryland 21218, USA}} 
@@ -48,21 +39,24 @@
 	phenomenological waveform model, IMRPhenomD, by jointly optimizing all the
 	calibration coefficients at once, given a set of numerical relativity (NR)
 	waveforms. When IMRPhenomD was first calibrated to NR waveforms, different
-	parts (i.e., the inspiral, merger, and ringdown) of the waveform were calibrated separately. 
-	Using \ripple, a library of waveform models compatible with automatic differentiation, we can, for the first time,
-	perform gradient-based optimization on all the waveform coefficients at the same time.
-	This joint optimization process allows us to capture previously ignored correlations between separate parts of the waveform.
-	We found that after recalibration, the median mismatch between the model and NR waveforms decreases by $50\%$.
-	We further explore how different regions of the source parameter space respond
-	to the optimization procedure. We find that the degree of improvement
-	correlates with the spins of the source. This work shows a promising avenue
-	to help understand and treat systematic error in waveform models.
+	parts (i.e., the inspiral, merger, and ringdown) of the waveform were 
+	calibrated separately. 	Using \ripple, a library of waveform models 
+	compatible with automatic differentiation, we can, for the first time, 
+	perform gradient-based optimization on all the waveform coefficients at the 
+	same time. This joint optimization process allows us to capture previously 
+	ignored correlations between separate parts of the waveform. We found that 
+	after recalibration, the median mismatch between the model and NR waveforms 
+	decreases by $50\%$. We further explore how different regions of the source 
+	parameter space respond to the optimization procedure. We find that the 
+	degree of improvement correlates with the spins of the source. This work 
+	shows a promising avenue to help understand and treat systematic error 
+	in waveform models.
 \end{abstract}
 
 \section{Introduction} \label{sec:intro}
 
 Many data analysis tasks in gravitational wave (GW) astrophysics, such
-as \corr{matched} filtering~\citep{owen1996search, owen1999matched} and parameter 
+as matched filtering~\citep{owen1996search, owen1999matched} and parameter 
 estimation~\citep{Dax:2021tsq, Christensen:2022bxb, dynesty, Islam:2022afg, 
 Romero-Shaw:2020owr, zackay2018relative, Ashton:2018jfp}, rely upon accurate waveform
 models. Since the generation of numerical relativity (NR) waveforms is
@@ -144,17 +138,16 @@ combination of amplitude and phase functions ($A$ and $\phi$ respectively):
 \begin{align}\label{eq:}
 	h(f,\theta,\Lambda^i) = A(f,\theta,\Lambda^i)e^{-i\phi(f,\theta,\Lambda^i)}\,,
 \end{align}
-where $f$ is the frequency, $\theta$ are the intrinsic parameters of the binary, and $\Lambda^i$ \corr{($i=1,2,\cdots,19$) is a set of 19 additional
-parameters} which will be discussed below. 
+where $f$ is the frequency, $\theta$ are the intrinsic parameters of the binary, and $\Lambda^i$ ($i=1,2,\cdots,19$) is a set of 19 additional
+parameters which will be discussed below. 
 The phase and amplitude functions are then split into three sections which represent the
 inspiral, intermediate, and merger-ringdown (MR) parts of the waveform. 
 During inspiral, $A$ and $\phi$ are known analytically from post-Newtonian (PN) theory;
 IMRPhenomD uses the TaylorF2 model \citep{Buonanno:2009zt, Arun:2004hn} which is known up 
-to 3.5PN order \corr{augmented with the next four higher order PN terms}.
+to 3.5PN order augmented with the next four higher order PN terms.
 To model the intermediate and MR regions, IMRPhenomD (and all waveforms in the IMRPhenom family)
-uses a series of parameterizations\footnote{
-	The parameterizations for both the amplitude and phase functions can be found in \citep{khan2016frequency}.
-} 
+uses a series of parameterizations
+\footnote{The parameterizations for both the amplitude and phase functions can be found in \citep{khan2016frequency}.} 
 which depend purely on $\Lambda^i$ and can be calibrated to numerical relativity (NR) simulations.
 The three sections are then \textit{stitched} together using step functions.
 Importantly, the parameterizations are chosen such that they can be made $\mathcal{C}^1$ continuous at the
@@ -164,7 +157,7 @@ boundary between each section.
 	\script{loss.py}
 	\centering
 	\includegraphics[width=\columnwidth]{figures/loss.pdf}
-	\caption{\corr{Average Loss $\mathcal{L}_{\mathrm{ave}}$} against the number of iterations. The vertical
+	\caption{Average Loss $\mathcal{L}_{\mathrm{ave}}$ against the number of iterations. The vertical
 	dotted line indicates the minimum of the validation loss, which is where we stop
 	the optimization.}
 	\label{fig:loss}
@@ -220,7 +213,7 @@ The inner product, $\langle h_1, h_2 \rangle$, is defined as
 where $\hat{h}=h/\sqrt{\langle h, h \rangle}$ is the normalized GW strain,
 $S_n(f)$ is the power spectral density (PSD), and $f_{\mathrm{max}}$ ($f_{\mathrm{min}}$) is
 the maximum (minimum) frequency for the integration.
-We note here that the mismatch can be viewed as \corr{a} mean square error (MSE) between the
+We note here that the mismatch can be viewed as a mean square error (MSE) between the
 two waveforms.
 
 \begin{figure}[t]
@@ -244,18 +237,18 @@ the simple average of mismatches and the normalized average of mismatches,
 	\mathcal{L}_{\mathrm{norm}}&=\frac{1}{N}\sum_{i=1}^N\frac{\mathcal{M}_i}{\mathcal{M}_{i,\mathrm{ini}}},
 \end{align}	
 where $\mathcal{M}_i$ represents the mismatch of an individual training waveform,
-$\mathcal{M}_{i,\mathrm{ini}}$ represents the mismatch \corr{between original IMRPhenomD waveforms and NR waveforms}, and $N$ is the total number of training waveforms.
+$\mathcal{M}_{i,\mathrm{ini}}$ represents the mismatch between original IMRPhenomD waveforms and NR waveforms, and $N$ is the total number of training waveforms.
 
 The two loss functions are chosen to give different 
 behavior during the optimization process.
-The simple average, \corr{$\mathcal{L}_{\mathrm{ave}}$}, serves as the simplest choice of loss function,
+The simple average, $\mathcal{L}_{\mathrm{ave}}$, serves as the simplest choice of loss function,
 but is prone to be dominated by a single point in parameter space with a large mismatch.
 Other points with smaller mismatches would be insignificant comparatively, and might not be able 
 to improve under such a loss function.
 Alternatively, the normalized average, $\mathcal{L}_{\mathrm{norm}}$, eliminates the aforementioned issue
 by encouraging the waveform to improve at each training point at a similar rate.
 The ratio in $\mathcal{L}_{\mathrm{norm}}$ will therefore remain approximately the same for each training point.
-Conversely, \corr{$\mathcal{L}_{\mathrm{ave}}$} allows the loss function to automatically adjust
+Conversely, $\mathcal{L}_{\mathrm{ave}}$ allows the loss function to automatically adjust
 and preferentially optimize the largest mismatches, encouraging the waveform to have similar mismatches everywhere.
 In this paper, we show the results of using both loss functions 
 and examine the differences between them. 
@@ -265,7 +258,8 @@ and examine the differences between them.
 To compute the loss functions, we have to choose NR waveforms for calculating the mismatch.
 Originally, 19 NR simulations were used to calibrate IMRPhenomD \citep{khan2016frequency}; nine of these 
 are from the SXS catalog 
-\citep{boyle2019sxs} and 10 BAM simulations\footnote{\corr{We took the CoM-corrected waveforms with 4th-order extrapolation.}} . 
+\citep{boyle2019sxs} and 10 BAM simulations. 
+\footnote{We took the CoM-corrected waveforms with 4th-order extrapolation.}
 As BAM waveforms are not publicly available, we cannot use a training set identical to the original work.
 Instead, we take the same nine waveforms from the SXS catalog plus two additional waveforms which closely mimic
 two of the low mass ratio BAM simulations. 
@@ -421,7 +415,7 @@ distribution of log-mismatches for the validation waveforms before and after the
 optimization procedure. Here we show results using a constant PSD in our loss
 function. One can see the distribution of the optimized waveform is skewed toward lower mismatches,
 with the peak of the distribution being shifted by approximately an order of
-magnitude. The median mismatch is reduced by 50\% (see vertical dotted lines) \corr{while the tail hardly changes}. When using
+magnitude. The median mismatch is reduced by 50\% (see vertical dotted lines) while the tail hardly changes. When using
 $\mathcal{L}_{\mathrm{norm}}$, we observe a less pronounced improvement with a 22.9\%
 decrease in the median. 
 
@@ -620,17 +614,17 @@ modern waveforms can be improved.
 
 The correlation we observe between the mismatches and the waveform's parameters
 can also be used to design more physical ansatz. For example, we see the 
-recalibration process struggles to improve in the regime where $\chi_{1}$ is 
-positive and $\chi_{2}$ is negative. This means there is a dependency between the two 
-spins that is not captured in the current ansatz. \corr{In fact, this issue can 
+recalibration process struggles to improve in the regime where $\chi_1$ is 
+positive and $\chi_2$ is negative. This means there is a dependency between the two 
+spins that is not captured in the current ansatz. In fact, this issue can 
 be explained by PN theory, where the leading spin-orbit coupling term depends on 
 the effective spin while higher order terms depends on both $\chi_1$ and $\chi_2$. 
 Nevertheless, we hope to show a systematic scheme that could reveal hidden degeneracies, 
 as illustrated by the effective spin degeneracy. Hence, such systematic scheme that 
 incorporates our calibration method with waveform design will be handy in constructing 
-new waveform models in the future. }
+new waveform models in the future. 
 
-\corr{We note that the parameter space we use is restricted to $q\leq8$, while waveforms 
+We note that the parameter space we use is restricted to $q\leq8$, while waveforms 
 of $q=18$ are used in the original calibration trial. Also, we have directly used NR 
 waveforms instead of hybridized SEOB-NR waveforms for training and validation purposes. 
 These choices put the original IMRPhenomD result at a disadvantage, as both the parameter 
@@ -641,7 +635,7 @@ mismatch median decreases by about $8\%$. Nevertheless, it is known that IMRPhen
 inaccuracy in the large mass-ratio regime, and is rarely used in this region of parameter 
 space. Hence, we focus on showing that AD with gradient descent, as a general and robust method, 
 can be used to further optimize GW waveform models with arbitrary sets of training 
-waveforms used.} 
+waveforms used.
 
 \begin{figure}[t]
 	\script{q14818.py}
