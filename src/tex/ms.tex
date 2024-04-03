@@ -13,6 +13,8 @@
 \usepackage{float}
 \usepackage[italicdiff]{physics}
 
+\newcommand{\corr}[1]{{\color{red}[corr: #1 ]}}
+
 \newcommand{\ripple}{\texttt{ripple}}
 \newcommand{\python}{\texttt{python}}
 \newcommand{\jax}{\texttt{jax}}
@@ -40,14 +42,15 @@
 	calibration coefficients at once, given a set of numerical relativity (NR)
 	waveforms. When IMRPhenomD was first calibrated to NR waveforms, different
 	parts (i.e., the inspiral, merger, and ringdown) of the waveform were 
-	calibrated separately. 	Using \ripple, a library of waveform models 
+	calibrated separately. Using \ripple, a library of waveform models 
 	compatible with automatic differentiation, we can, for the first time, 
 	perform gradient-based optimization on all the waveform coefficients at the 
 	same time. This joint optimization process allows us to capture previously 
-	ignored correlations between separate parts of the waveform. We found that 
-	after recalibration, despite the tail of the mismatch distribution remains 
-	similar, the median mismatch between the model and NR waveforms 
-	decreases by $50\%$. We further explore how different regions of the source 
+	ignored correlations between separate parts of the waveform. \corr{We found 
+	that after recalibrating with a slightly restricted parameter subspace 
+	$(q\leq8)$, despite the tail of the mismatch distribution remains similar, 
+	the median mismatch between the model and NR waveforms decreases by 
+	$50\%$.} We further explore how different regions of the source 
 	parameter space respond to the optimization procedure. We find that the 
 	degree of improvement correlates with the spins of the source. This work 
 	shows a promising avenue to help understand and treat systematic error 
@@ -112,15 +115,17 @@ parameter space.
 
 The rest of the paper is structured as follows: In Sec.~\ref{sec:method}, we
 review the parameterization of the IMRPhenomD model and the mismatch function
-that is used as an objective/loss function for the calibration, followed by outlining the
-specific optimization scheme used for recalibration. In
+that is used as an objective/loss function for the calibration, followed by 
+outlining the specific optimization scheme used for recalibration. In
 Sec.~\ref{sec:result}, we give the optimization result by comparing mismatches
 of the optimized waveforms with the original waveforms. We also show how the
 optimization result differs as a function of the source parameters. Finally, in
-Sec.~\ref{sec:discussion}, we discuss the difference between our calibration
-procedure and the procedure used in \citep{khan2016frequency}. We also explain how the reduced spin
-parameterization affects the accuracy of the model. 
-Note that throughout this paper we use the terms recalibration and optimization interchangeably.
+Sec.~\ref{sec:discussion}, we discuss the differences between our calibration
+procedure and the procedure used in \citep{khan2016frequency}. \corr{We point 
+out how some caveats, such as the difference in training waveforms, limit our 
+conclusion to the mismatch improvement.} We also explain how the reduced spin 
+parameterization affects the accuracy of the model. Note that throughout this 
+paper we use the terms recalibration and optimization interchangeably.
 
 \section{Optimization Method} \label{sec:method}
 
@@ -194,7 +199,7 @@ At the time of construction this piece-wise approach was necessary since
 $\lambda$ has 209 components, making the fitting to NR simulations computationally prohibitive.
 Here, for the first time we recalibrate the $\lambda$ coefficients jointly. 
 This is made possible by the use of gradient-based optimization algorithms,
-enabled by AD from \jax\, and {\ripple}, which are significantly more efficient in high dimensions.  
+enabled by AD from \jax\, and {\ripple}, which are significantly more efficient in high dimensions. 
 
 \subsection{Loss Function} \label{subsec:loss}
 
@@ -232,7 +237,7 @@ Since we wish to optimize the model over the whole parameter space,
 we need to compare multiple model generated waveforms with NR waveforms.
 However, the mismatch is only defined for two input waveforms at a particular set of intrinsic parameters.
 We therefore define the loss function as an average of training waveforms in two ways,
-the simple average of mismatches and the normalized average of mismatches,  
+the simple average of mismatches and the normalized average of mismatches, 
 \begin{align}\label{eqn:loss}
 	\mathcal{L}_{\mathrm{ave}}&=\frac{1}{N}\sum_{i=1}^N\mathcal{M}_i \\
 	\mathcal{L}_{\mathrm{norm}}&=\frac{1}{N}\sum_{i=1}^N\frac{\mathcal{M}_i}{\mathcal{M}_{i,\mathrm{ini}}},
@@ -628,15 +633,17 @@ new waveform models in the future.
 We note that the parameter space we use is restricted to $q\leq8$, while waveforms 
 of $q=18$ are used in the original calibration trial. Also, we have directly used NR 
 waveforms instead of hybridized SEOB-NR waveforms for training and validation purposes. 
-These choices put the original IMRPhenomD result at a disadvantage, as both the parameter 
-space and frequency range are restricted. We tested our result by training the model 
-using a set of training waveforms of the same intrinsic parameters, but with BAM waveforms 
-replaced with SEOBNR waveforms. We can see the result in Fig.~\ref{fig:q14818}, where the 
-mismatch median decreases by about $8\%$. Nevertheless, it is known that IMRPhenomD has a large 
-inaccuracy in the large mass-ratio regime, and is rarely used in this region of parameter 
-space. Hence, we focus on showing that AD with gradient descent, as a general and robust method, 
-can be used to further optimize GW waveform models with arbitrary sets of training 
-waveforms used.
+\corr{These choices may put the original IMRPhenomD result at a disadvantage when 
+assessing accuracy, as both the parameter space and frequency range are restricted.} We 
+tested our result by training the model using a set of training waveforms of the same 
+intrinsic parameters, but with BAM waveforms replaced with SEOBNR waveforms. We can see 
+the result in Fig.~\ref{fig:q14818}, where the mismatch median decreases by about $8\%$. 
+Nevertheless, it is known that IMRPhenomD has a large inaccuracy in the large mass-ratio 
+regime, and is rarely used in this region of parameter space. Hence, we focus on showing 
+that AD with gradient descent, as a general and robust method, can be used to further 
+optimize GW waveform models with arbitrary sets of training waveforms used. \corr{With 
+more publicly available data in the future, more systematic studies should be made to 
+precisely assess the improvement one can get out of further optimization. }
 
 \begin{figure}[t]
 	\script{q14818.py}
