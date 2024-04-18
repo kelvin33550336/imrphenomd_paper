@@ -13,8 +13,6 @@
 \usepackage{float}
 \usepackage[italicdiff]{physics}
 
-\newcommand{\corr}[1]{{\color{red}[corr: #1 ]}}
-
 \newcommand{\ripple}{\texttt{ripple}}
 \newcommand{\python}{\texttt{python}}
 \newcommand{\jax}{\texttt{jax}}
@@ -46,11 +44,11 @@
 	compatible with automatic differentiation, we can, for the first time, 
 	perform gradient-based optimization on all the waveform coefficients at the 
 	same time. This joint optimization process allows us to capture previously 
-	ignored correlations between separate parts of the waveform. \corr{We found 
+	ignored correlations between separate parts of the waveform. We found 
 	that after recalibrating with a slightly restricted parameter subspace 
 	$(q\leq8)$, despite the tail of the mismatch distribution remains similar, 
 	the median mismatch between the model and NR waveforms decreases by 
-	$50\%$.} We further explore how different regions of the source 
+	$50\%$. We further explore how different regions of the source 
 	parameter space respond to the optimization procedure. We find that the 
 	degree of improvement correlates with the spins of the source. This work 
 	shows a promising avenue to help understand and treat systematic error 
@@ -121,9 +119,9 @@ Sec.~\ref{sec:result}, we give the optimization result by comparing mismatches
 of the optimized waveforms with the original waveforms. We also show how the
 optimization result differs as a function of the source parameters. Finally, in
 Sec.~\ref{sec:discussion}, we discuss the differences between our calibration
-procedure and the procedure used in \citep{khan2016frequency}. \corr{Additionally, 
+procedure and the procedure used in \citep{khan2016frequency}. Additionally, 
 we discuss some caveats (such as the difference in training waveforms) that limit 
-our conclusions on the mismatch improvement.} We also explain how the reduced spin 
+our conclusions on the mismatch improvement. We also explain how the reduced spin 
 parameterization affects the accuracy of the model. Note that throughout this 
 paper we use the terms recalibration and optimization interchangeably.
 
@@ -633,17 +631,17 @@ new waveform models in the future.
 We note that the parameter space we use is restricted to $q\leq8$, while waveforms 
 of $q=18$ are used in the original calibration trial. Also, we have directly used NR 
 waveforms instead of hybridized SEOB-NR waveforms for training and validation purposes. 
-\corr{These choices may put the original IMRPhenomD result at a disadvantage when 
-assessing accuracy, as both the parameter space and frequency range are restricted.} We 
+These choices may put the original IMRPhenomD result at a disadvantage when 
+assessing accuracy, as both the parameter space and frequency range are restricted. We 
 tested our result by training the model using a set of training waveforms of the same 
 intrinsic parameters, but with BAM waveforms replaced with SEOBNR waveforms. We can see 
 the result in Fig.~\ref{fig:q14818}, where the mismatch median decreases by about $8\%$. 
 Nevertheless, it is known that IMRPhenomD has a large inaccuracy in the large mass-ratio 
 regime, and is rarely used in this region of parameter space. Hence, we focus on showing 
 that AD with gradient descent, as a general and robust method, can be used to further 
-optimize GW waveform models with arbitrary sets of training waveforms used. \corr{With 
+optimize GW waveform models with arbitrary sets of training waveforms used. With 
 more publicly available data in the future, more systematic studies should be made to 
-precisely assess the improvement one can get out of further optimization. }
+precisely assess the improvement one can get out of further optimization. 
 
 \begin{figure}[t]
 	\script{q14818.py}
